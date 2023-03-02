@@ -26,7 +26,7 @@ allprojects {
     apply plugin: "maven-publish"
 
     archivesBaseName = rootProject.archives_base_name
-    version = rootProject.mod_version
+    version = "${rootProject.mod_version}.${getVersionMetadata()}-fabric-mc${rootProject.minecraft_version}"
     group = rootProject.maven_group
 
     repositories {
@@ -42,4 +42,15 @@ allprojects {
     java {
         withSourcesJar()
     }
+}
+
+static def getVersionMetadata() {
+    def build_id = System.getenv("GITHUB_RUN_NUMBER")
+
+    // CI builds only
+    if (build_id != null) {
+        return build_id
+    }
+    // No tracking information could be found about the build
+    return "unknown"
 }

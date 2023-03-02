@@ -1,0 +1,84 @@
+name: Publish Release
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Upload assets to releases
+        run: ./gradlew build
+        
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ github.run_number }}"
+          prerelease: false
+          title: "Remove Reloading Screen ${{ github.run_number }}"
+          files: |
+            forge/build/libs/*
+            fabric/build/libs/*
+
+      - name: Publish to Modrinth & CurseForge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: ZP7xHXtw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 833233
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          
+          files-primary: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: forge/build/libs/*-@(dev|sources|javadoc).jar
+
+          version-type: release
+
+          loaders: forge
+
+          version-resolver: latest
+          
+          dependencies: |
+            cloth-config | includes | 8.2.88
+            
+          java: |
+            17
+            
+      - name: Publish to Modrinth & CurseForge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: ZP7xHXtw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 833233
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          
+          files-primary: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: fabric/build/libs/*-@(dev|sources|javadoc).jar
+
+          version-type: release
+
+          loaders: fabric
+
+          version-resolver: latest
+          
+          dependencies: |
+            fabric-api | depends | *
+            cloth-config | includes | 8.2.88
+            
+          java: |
+            17
