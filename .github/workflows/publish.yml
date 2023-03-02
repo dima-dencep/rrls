@@ -34,7 +34,7 @@ jobs:
             forge/build/libs/*
             fabric/build/libs/*
 
-      - name: Publish to Modrinth & CurseForge
+      - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.2
         with:
           modrinth-id: ZP7xHXtw
@@ -58,7 +58,7 @@ jobs:
           java: |
             17
             
-      - name: Publish to Modrinth & CurseForge
+      - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.2
         with:
           modrinth-id: ZP7xHXtw
