@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+issueTrackerURL = "https://github.com/dimadencep/RemoveReloadingScreen/issues"
+license = "AGPL-3.0-or-later"
+
+[[mods]]
+modId = "rrls"
+version = "${version}"
+displayURL="https://github.com/dimadencep/RemoveReloadingScreen#readme"
+displayName = "Remove Reload Screen"
+authors = "dima_dencep"
+description = "Removes the resource reload screen, instead the text is now just above the middle of the screen!"
+logoFile = "icon.png"
+
+[[dependencies.rrls]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.rrls]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.rrls]]
+modId = "cloth_config"
+mandatory = false
+versionRange = "[8.2.88,)"
+ordering = "NONE"
+side = "CLIENT"

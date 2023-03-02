@@ -1,0 +1,13 @@
+{
+  "text.autoconfig.rrls.title": "Fuck Reloading Screen",
+  "rrls.reloadresources": "Перезагрузка ресурсов...",
+  "text.autoconfig.rrls.option.enabled": "Прятать зкран перезагрузки",
+  "text.autoconfig.rrls.option.rgbText": "Разноцветный текст при перезагрузке",
+  "text.autoconfig.rrls.option.loadingScreenHide": "Прятать загрузочный экран",
+  "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
+  "text.autoconfig.rrls.option.showInGui": "Показывать текст перезагрузки в меню",
+  "text.autoconfig.rrls.option.showInGame": "Показывать текст перезагрузки в игре",
+  "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",
+  "text.autoconfig.rrls.option.reloadText": "Текст перезагрузки",
+  "text.autoconfig.rrls.option.reloadText.@Tooltip": "Поддерживает локализацию"
+}

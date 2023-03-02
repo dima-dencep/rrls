@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "rrls",
+	"version": "${version}",
+	"name": "Remove Reload Screen",
+	"description": "Removes the resource reload screen, instead the text is now just above the middle of the screen!",
+	"authors": [
+		"dima_dencep"
+	],
+	"contact": {
+		"homepage": "https://github.com/dimadencep/RemoveReloadingScreen#readme",
+		"sources": "https://github.com/dimadencep/RemoveReloadingScreen",
+		"issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
+	},
+	"license": "AGPL-3.0-or-later",
+	"icon": "assets/rrls/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.github.dimadencep.mods.rrls.fabric.FabricMainMod"
+		],
+		"modmenu": [
+			"com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"
+		]
+	},
+	"mixins": [
+		"rrls.mixins.json",
+		"rrls-common.mixins.json"
+	],
+	"depends": {
+		"fabric": "*",
+		"fabric-api": "*",
+		"minecraft": ">=1.19.2"
+	},
+	"suggests": {
+		"cloth-config": ">=8.2.88"
+	}
+}
