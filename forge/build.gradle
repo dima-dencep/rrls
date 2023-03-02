@@ -2,6 +2,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
+version = "${rootProject.mod_version}.${getVersionMetadata()}-forge-mc${rootProject.minecraft_version}"
+
 architectury {
     platformSetupLoomIde()
     forge()
