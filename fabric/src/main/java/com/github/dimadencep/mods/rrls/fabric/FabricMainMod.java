@@ -19,11 +19,10 @@ public class FabricMainMod extends MainMod implements ClientModInitializer {
         });
 
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-            if (reloadHandler.getReload() != null && config.showInGui) {
-                ScreenEvents.afterRender(screen).register((screen2, pose, mouseX, mouseY, delta) ->
-                        DrawableHelper.drawCenteredText(pose, this.client.textRenderer, I18n.translate(config.reloadText), screen2.width / 2, 70, config.rgbText ? getColor() : -1)
-                );
-            }
+            ScreenEvents.afterRender(screen).register((screen2, pose, mouseX, mouseY, delta) -> {
+                if (reloadHandler.getReload() != null && config.showInGui)
+                    DrawableHelper.drawCenteredText(pose, this.client.textRenderer, I18n.translate(config.reloadText), screen2.width / 2, 70, config.rgbText ? getColor() : -1);
+            });
         });
 
         ClientTickEvents.START_CLIENT_TICK.register(reloadHandler::tick);
