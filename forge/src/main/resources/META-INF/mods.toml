@@ -28,7 +28,7 @@ side = "BOTH"
 
 [[dependencies.rrls]]
 modId = "cloth_config"
-mandatory = false
+mandatory = true
 versionRange = "[8.2.88,)"
 ordering = "NONE"
 side = "CLIENT"
