@@ -40,13 +40,13 @@ jobs:
           loaders: forge
 
           game-versions: |
-            1.19.2
+            1.16.5
           
           dependencies: |
-            cloth-config | includes | 8.2.88
+            cloth-config | depends | *
             
           java: |
-            17
+            8
             
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.2
@@ -65,11 +65,11 @@ jobs:
           loaders: fabric
 
           game-versions: |
-            1.19.2
+            1.16.5
           
           dependencies: |
             fabric-api | depends | *
-            cloth-config | includes | 8.2.88
+            cloth-config | includes | 4.16.91
             
           java: |
-            17
+            8

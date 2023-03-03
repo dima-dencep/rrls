@@ -3,7 +3,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.MainMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.gui.screen.SplashScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceReload;
 import org.spongepowered.asm.mixin.Final;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Mixin(SplashOverlay.class)
+@Mixin(SplashScreen.class)
 public abstract class SplashOverlayMixin extends Overlay {
     @Shadow @Final private ResourceReload reload;
     @Shadow @Final private Consumer<Optional<Throwable>> exceptionHandler;

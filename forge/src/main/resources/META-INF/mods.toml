@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
+loaderVersion = "[36,)"
 issueTrackerURL = "https://github.com/dimadencep/RemoveReloadingScreen/issues"
 license = "AGPL-3.0-or-later"
 
@@ -15,20 +15,20 @@ logoFile = "icon.png"
 [[dependencies.rrls]]
 modId = "forge"
 mandatory = true
-versionRange = "[43,)"
+versionRange = "[36,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.rrls]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.2,)"
+versionRange = "[1.16.5,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.rrls]]
-modId = "cloth_config"
+modId = "cloth-config"
 mandatory = true
-versionRange = "[8.2.88,)"
+versionRange = "[4.16.91,)"
 ordering = "NONE"
 side = "CLIENT"
