@@ -22,17 +22,6 @@ jobs:
 
       - name: Upload assets to releases
         run: ./gradlew build
-        
-      - name: Create release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          title: "Remove Reloading Screen ${{ github.run_number }}"
-          files: |
-            forge/build/libs/*
-            fabric/build/libs/*
 
       - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.2
