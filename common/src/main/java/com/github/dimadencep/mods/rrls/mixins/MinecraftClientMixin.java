@@ -8,6 +8,7 @@ import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -53,8 +54,8 @@ public abstract class MinecraftClientMixin {
 
             SystemToast.show(toastManager,
                     SystemToast.Type.PACK_LOAD_FAILURE,
-                    Text.translatable("resourcePack.load_fail"),
-                    resourceName == null ? Text.translatable("gui.all") : resourceName);
+                    new TranslatableText("resourcePack.load_fail"),
+                    resourceName == null ? new TranslatableText("gui.all") : resourceName);
         });
     }
 }
