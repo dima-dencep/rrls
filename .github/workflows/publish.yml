@@ -32,8 +32,6 @@ jobs:
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          
           files-primary: forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
           files-secondary: forge/build/libs/*-@(dev|sources|javadoc).jar
 
@@ -58,8 +56,6 @@ jobs:
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           
           files-primary: fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
           files-secondary: fabric/build/libs/*-@(dev|sources|javadoc).jar
