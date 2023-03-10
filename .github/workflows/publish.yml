@@ -32,18 +32,20 @@ jobs:
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
           files-primary: forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-          files-secondary: forge/build/libs/*-@(dev|sources|javadoc|shadow).jar
+          files-secondary: forge/build/libs/*-@(dev|sources|javadoc).jar
 
           version-type: release
 
           loaders: forge
 
           game-versions: |
-            1.19.2
+            1.19.3
           
           dependencies: |
-            cloth-config | includes | 8.2.88
+            cloth-config | includes | 9.0.94
             
           java: |
             17
@@ -57,19 +59,21 @@ jobs:
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
           files-primary: fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-          files-secondary: fabric/build/libs/*-@(dev|sources|javadoc|shadow).jar
+          files-secondary: fabric/build/libs/*-@(dev|sources|javadoc).jar
 
           version-type: release
 
           loaders: fabric
 
           game-versions: |
-            1.19.2
+            1.19.3
           
           dependencies: |
             fabric-api | depends | *
-            cloth-config | includes | 8.2.88
+            cloth-config | includes | 9.0.94
             
           java: |
             17
