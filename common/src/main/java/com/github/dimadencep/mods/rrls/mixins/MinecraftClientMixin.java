@@ -4,8 +4,6 @@ import com.github.dimadencep.mods.rrls.MainMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.resource.ResourceReloadLogger;
-import net.minecraft.client.toast.SystemToast;
-import net.minecraft.client.toast.ToastManager;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -24,13 +22,13 @@ public abstract class MinecraftClientMixin {
 
     @Shadow protected abstract CompletableFuture<Void> reloadResources(boolean force);
 
-    @Shadow public abstract ToastManager getToastManager();
-
     @Shadow @Final public GameOptions options;
 
     @Shadow @Final private ResourceReloadLogger resourceReloadLogger;
 
     @Shadow @Final private ResourcePackManager resourcePackManager;
+
+    @Shadow protected abstract void showResourceReloadFailureToast(@Nullable Text description);
 
     /**
      * @author dima_dencep
@@ -48,8 +46,8 @@ public abstract class MinecraftClientMixin {
             this.options.write();
         }
 
-        this.reloadResources(true).thenRun(() -> {
-            ToastManager toastManager = this.getToastManager();
+        this.reloadResources(true).thenRun(() -> this.showResourceReloadFailureToast(resourceName == null ? Text.translatable("gui.all") : resourceName));
+    }
 
             SystemToast.show(toastManager,
                     SystemToast.Type.PACK_LOAD_FAILURE,

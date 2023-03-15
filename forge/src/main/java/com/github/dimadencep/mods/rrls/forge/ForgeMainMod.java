@@ -31,13 +31,13 @@ public class ForgeMainMod extends MainMod {
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
         if (reloadHandler.getReload() != null && config.showInGame)
-            DrawableHelper.drawCenteredText(event.getPoseStack(), this.client.textRenderer, I18n.translate(config.reloadText), event.getWindow().getScaledWidth() / 2, 70, config.rgbText ? getColor() : -1);
+            DrawableHelper.drawCenteredTextWithShadow(event.getPoseStack(), this.client.textRenderer, I18n.translate(config.reloadText), event.getWindow().getScaledWidth() / 2, 70, config.rgbText ? getColor() : -1);
     }
 
     @SubscribeEvent
     public void onScreenRender(ScreenEvent.Render event) {
         if (reloadHandler.getReload() != null && config.showInGui)
-            DrawableHelper.drawCenteredText(event.getPoseStack(), this.client.textRenderer, I18n.translate(config.reloadText), event.getScreen().width / 2, 70, config.rgbText ? getColor() : -1);
+            DrawableHelper.drawCenteredTextWithShadow(event.getPoseStack(), this.client.textRenderer, I18n.translate(config.reloadText), event.getScreen().width / 2, 70, config.rgbText ? getColor() : -1);
     }
 
     @SubscribeEvent
