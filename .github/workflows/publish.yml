@@ -25,21 +25,11 @@ jobs:
       - name: Upload assets to releases
         run: ./gradlew build
 
-      - name: Get previous tag
-        id: previousTag
-        run: |
-          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
-          echo "previousTag: $name"
-          echo "previousTag=$name" >> $GITHUB_ENV
-
-      - name: Update CHANGELOG
-        id: changelog
-        uses: requarks/changelog-action@v1
-        with:
-          token: ${{ github.token }}
-          fromTag: ${{ github.ref_name }}
-          toTag: ${{ env.previousTag }}
-          writeToFile: false
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Read value from Properties-file
         id: read_property
@@ -62,7 +52,7 @@ jobs:
 
           name: RemoveReloadingScreen ${{ steps.read_property.outputs.mod_version }} Forge for Minecraft ${{ steps.read_property.minecraft_version.mod_version }}
 
-          changelog: ${{ steps.changelog.outputs.changes }}
+          changelog: ${{steps.build_changelog.outputs.changelog}}
 
           version-type: beta
 
@@ -91,7 +81,7 @@ jobs:
 
           name: RemoveReloadingScreen ${{ steps.read_property.outputs.mod_version }} Fabric for Minecraft ${{ steps.read_property.minecraft_version.mod_version }}
 
-          changelog: ${{ steps.changelog.outputs.changes }}
+          changelog: ${{steps.build_changelog.outputs.changelog}}
 
           version-type: beta
 
@@ -115,5 +105,5 @@ jobs:
           draft: true
           artifacts: "forge/build/libs/*.jar,fabric/build/libs/*.jar"
           name: ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.changes }}
+          body: ${{steps.build_changelog.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }}
