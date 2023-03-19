@@ -2,13 +2,13 @@
 	"schemaVersion": 1,
 	"id": "rrls",
 	"version": "${version}",
-	"name": "Remove Reload Screen",
-	"description": "Removes the resource reload screen, instead the text is now just above the middle of the screen!",
+	"name": "Remove Reloading Screen",
+	"description": "Removes the resources reload screen, and leaves the game available",
 	"authors": [
 		"dima_dencep"
 	],
 	"contact": {
-		"homepage": "https://github.com/dimadencep/RemoveReloadingScreen#readme",
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/rrls",
 		"sources": "https://github.com/dimadencep/RemoveReloadingScreen",
 		"issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
 	},

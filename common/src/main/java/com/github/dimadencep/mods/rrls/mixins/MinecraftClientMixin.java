@@ -2,60 +2,55 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.MainMod;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.resource.ResourceReloadLogger;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
-import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-    @Shadow @Final private static Logger LOGGER;
-
     @Shadow protected abstract CompletableFuture<Void> reloadResources(boolean force);
 
     @Shadow public abstract ToastManager getToastManager();
 
-    @Shadow @Final public GameOptions options;
+    @Inject(
+            method = "onResourceReloadFailure",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void onResourceReloadFailure(Throwable exception, Text resourceName, CallbackInfo ci) {
+        if (!MainMod.config.resetResources) {
+            this.reloadResources(true).thenRun(() -> {
+                ToastManager toastManager = this.getToastManager();
+                SystemToast.show(toastManager, SystemToast.Type.PACK_LOAD_FAILURE, Text.translatable("resourcePack.load_fail"), resourceName == null ? Text.translatable("gui.all") : resourceName);
+            });
 
-    @Shadow @Final private ResourceReloadLogger resourceReloadLogger;
-
-    @Shadow @Final private ResourcePackManager resourcePackManager;
-
-    /**
-     * @author dima_dencep
-     * @reason fix on failed load resources
-     */
-    @Overwrite
-    public void onResourceReloadFailure(Throwable exception, @Nullable Text resourceName) {
-        LOGGER.info("Caught error loading resourcepacks, removing all selected resourcepacks", exception);
-
-        if (MainMod.config.resetResources) {
-            this.resourceReloadLogger.recover(exception);
-            this.resourcePackManager.setEnabledProfiles(Collections.emptyList());
-            this.options.resourcePacks.clear();
-            this.options.incompatibleResourcePacks.clear();
-            this.options.write();
+            ci.cancel();
         }
+    }
 
-        this.reloadResources(true).thenRun(() -> {
-            ToastManager toastManager = this.getToastManager();
-
-            SystemToast.show(toastManager,
-                    SystemToast.Type.PACK_LOAD_FAILURE,
-                    new TranslatableText("resourcePack.load_fail"),
-                    resourceName == null ? new TranslatableText("gui.all") : resourceName);
-        });
+    @Inject(
+            method = "reloadResources(Z)Ljava/util/concurrent/CompletableFuture;",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void reloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) {
+        if (MainMod.reloadHandler.getReload() != null) {
+            cir.setReturnValue(CompletableFuture.runAsync(() -> {
+                ToastManager toastManager = this.getToastManager();
+                SystemToast.show(toastManager, SystemToast.Type.PACK_LOAD_FAILURE, Text.translatable("resourcePack.load_fail"), Text.translatable("rrls.alreadyReloading"));
+            }));
+        }
     }
 }
