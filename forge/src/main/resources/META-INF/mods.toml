@@ -6,10 +6,10 @@ license = "AGPL-3.0-or-later"
 [[mods]]
 modId = "rrls"
 version = "${version}"
-displayURL="https://github.com/dimadencep/RemoveReloadingScreen#readme"
-displayName = "Remove Reload Screen"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/rrls"
+displayName = "Remove Reloading Screen"
 authors = "dima_dencep"
-description = "Removes the resource reload screen, instead the text is now just above the middle of the screen!"
+description = "Removes the resources reload screen, and leaves the game available"
 logoFile = "icon.png"
 
 [[dependencies.rrls]]

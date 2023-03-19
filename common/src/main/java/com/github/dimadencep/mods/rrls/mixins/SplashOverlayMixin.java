@@ -24,7 +24,7 @@ public abstract class SplashOverlayMixin extends Overlay {
 
     @Inject(at = @At("TAIL"), method = "<init>")
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.isReloading = (reloading && MainMod.config.enabled) || MainMod.config.loadingScreenHide;
+        this.isReloading = (reloading && MainMod.config.enabled) || (!reloading && MainMod.config.loadingScreenHide);
     }
 
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
