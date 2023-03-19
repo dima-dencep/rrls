@@ -34,7 +34,7 @@ public abstract class MinecraftClientMixin {
         }
     }
 
-    @ModifyArg(method = "showResourceReloadFailureToast", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/toast/SystemToast;show(Lnet/minecraft/client/toast/ToastManager;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)V", remap = false), index = 3)
+    @ModifyArg(method = "showResourceReloadFailureToast", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/toast/SystemToast;show(Lnet/minecraft/client/toast/ToastManager;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)V"), index = 3)
     public Text createDisplay(Text resourceName) {
         return resourceName == null ? Text.translatable("gui.all") : resourceName;
     }
