@@ -2,6 +2,8 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.MainMod;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +21,8 @@ public abstract class MinecraftClientMixin {
     @Shadow protected abstract void showResourceReloadFailureToast(@Nullable Text description);
     @Shadow protected abstract CompletableFuture<Void> reloadResources(boolean force);
 
+    @Shadow public abstract void setScreen(@Nullable Screen screen);
+
     @Inject(
             method = "onResourceReloadFailure",
             at = @At(
@@ -34,9 +38,31 @@ public abstract class MinecraftClientMixin {
         }
     }
 
-    @ModifyArg(method = "showResourceReloadFailureToast", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/toast/SystemToast;show(Lnet/minecraft/client/toast/ToastManager;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)V"), index = 3)
+    @ModifyArg(
+            method = "showResourceReloadFailureToast",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/toast/SystemToast;show(Lnet/minecraft/client/toast/ToastManager;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)V"
+            ),
+            index = 3
+    )
     public Text createDisplay(Text resourceName) {
         return resourceName == null ? Text.translatable("gui.all") : resourceName;
+    }
+
+    @Inject(
+            method = "setScreen",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void setScreen(Screen screen, CallbackInfo ci) {
+        if (MainMod.config.worldLoadingHide && screen instanceof DownloadingTerrainScreen) {
+            setScreen(null);
+
+            ci.cancel();
+        }
     }
 
     @Inject(

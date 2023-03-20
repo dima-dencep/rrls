@@ -32,5 +32,8 @@
 		"fabric-api": "*",
 		"minecraft": ">=1.19.4",
 		"cloth-config": ">=10.0.96"
+	},
+	"breaks": {
+		"forcecloseloadingscreen": "*"
 	}
 }
