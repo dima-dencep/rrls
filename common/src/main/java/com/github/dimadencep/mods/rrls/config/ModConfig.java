@@ -10,6 +10,7 @@ public class ModConfig implements ConfigData {
     public boolean rgbText = false;
     @ConfigEntry.Gui.Tooltip
     public boolean loadingScreenHide = false;
+    public boolean worldLoadingHide = true;
     public boolean showInGui = true;
     public boolean showInGame = true;
     public boolean resetResources = false;
