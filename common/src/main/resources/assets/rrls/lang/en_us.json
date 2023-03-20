@@ -6,6 +6,7 @@
   "text.autoconfig.rrls.option.rgbText": "Colorful text on reload",
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
+  "text.autoconfig.rrls.option.worldLoadingHide": "Hide world loading screen",
   "text.autoconfig.rrls.option.showInGui": "Show reload text in Menu",
   "text.autoconfig.rrls.option.showInGame": "Show reload text in Game",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",

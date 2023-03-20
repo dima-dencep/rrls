@@ -2,9 +2,12 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.MainMod;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +23,8 @@ public abstract class MinecraftClientMixin {
 
     @Shadow public abstract ToastManager getToastManager();
 
+    @Shadow public abstract void setScreen(@Nullable Screen screen);
+
     @Inject(
             method = "onResourceReloadFailure",
             at = @At(
@@ -33,6 +38,21 @@ public abstract class MinecraftClientMixin {
                 ToastManager toastManager = this.getToastManager();
                 SystemToast.show(toastManager, SystemToast.Type.PACK_LOAD_FAILURE, Text.translatable("resourcePack.load_fail"), resourceName == null ? Text.translatable("gui.all") : resourceName);
             });
+
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "setScreen",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void setScreen(Screen screen, CallbackInfo ci) {
+        if (MainMod.config.worldLoadingHide && screen instanceof DownloadingTerrainScreen) {
+            setScreen(null);
 
             ci.cancel();
         }
