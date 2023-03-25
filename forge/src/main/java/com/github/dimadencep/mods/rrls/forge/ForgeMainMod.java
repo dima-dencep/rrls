@@ -29,7 +29,7 @@ public class ForgeMainMod extends MainMod {
     }
 
     @SubscribeEvent
-    public void onRenderGui(RenderGameOverlayEvent.Pre event) {
+    public void onRenderGui(RenderGameOverlayEvent.Post event) {
         if (reloadHandler.getReload() != null && config.showInGame)
             DrawableHelper.drawCenteredText(event.getMatrixStack(), this.client.textRenderer, I18n.translate(config.reloadText), event.getWindow().getScaledWidth() / 2, 70, config.rgbText ? getColor() : -1);
     }
