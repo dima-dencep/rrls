@@ -1,5 +1,5 @@
 {
-  "text.autoconfig.rrls.title": "Fuck Reloading Screen",
+  "text.autoconfig.rrls.title": "Remove Reloading Screen",
   "rrls.reloadresources": "Reloading resources...",
   "rrls.alreadyReloading": "The reloading has already started!",
   "text.autoconfig.rrls.option.enabled": "Hide reload screen",
