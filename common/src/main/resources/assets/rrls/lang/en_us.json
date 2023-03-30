@@ -4,6 +4,7 @@
   "rrls.alreadyReloading": "The reloading has already started!",
   "text.autoconfig.rrls.option.enabled": "Hide reload screen",
   "text.autoconfig.rrls.option.rgbText": "Colorful text on reload",
+  "text.autoconfig.rrls.option.rgbText.@Tooltip": "MAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
   "text.autoconfig.rrls.option.worldLoadingHide": "Hide world loading screen",
