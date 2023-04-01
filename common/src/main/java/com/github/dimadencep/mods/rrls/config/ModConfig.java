@@ -7,6 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = "rrls")
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
+    @ConfigEntry.Gui.Tooltip
     public boolean rgbText = false;
     @ConfigEntry.Gui.Tooltip
     public boolean loadingScreenHide = false;
