@@ -2,6 +2,8 @@ name: Publish Release
 
 on:
   push:
+    branches:
+      - '**/stable'
 
 jobs:
   build:
@@ -25,13 +27,18 @@ jobs:
       - name: Upload assets to releases
         run: ./gradlew build
 
-      #- name: Build Changelog
-      #  id: build_changelog
-      #  uses: mikepenz/release-changelog-builder-action@v3
-      #  with:
-      #    failOnError: false
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get previous tag
+        run: echo "previous_tag=$(git rev-parse $(git describe --tags --abbrev=0) 2>/dev/null || echo '')" >> $GITHUB_ENV
+
+      - name: Build Changelog
+        id: build_changelog
+        uses: metcalfc/changelog-generator@v4.1.0
+        if: env.previous_tag
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          head-ref: ${{ github.ref }}
+          base-ref: ${{ env.previous_tag }}
+          fetch: false
 
       - name: Read value from Properties-file
         id: read_property
@@ -54,7 +61,7 @@ jobs:
 
           name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} Forge ${{ steps.read_property.outputs.minecraft_version }}
 
-          #changelog: ${{steps.build_changelog.outputs.changelog}}
+          changelog: ${{steps.build_changelog.outputs.changelog}}
 
           version-type: release
 
@@ -83,7 +90,7 @@ jobs:
 
           name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} Fabric ${{ steps.read_property.outputs.minecraft_version }}
 
-          #changelog: ${{steps.build_changelog.outputs.changelog}}
+          changelog: ${{steps.build_changelog.outputs.changelog}}
 
           version-type: release
 
@@ -106,7 +113,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
           prerelease: false
-          title: "${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }}"
+          title: "${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }}"
           files: |
             fabric/build/libs/*
             forge/build/libs/*
