@@ -1,0 +1,39 @@
+name: Crash Report
+description: File a crash report
+labels: crash
+body:
+  - type: markdown
+    attributes:
+      value: "Are you using the latest version of the mod? If not, try updating to see if it resolves your issue. You can [find the latest versions here](https://github.com/dimadencep/RemoveReloadingScreen/releases)."
+  - type: input
+    id: version-mc
+    attributes:
+      label: Minecraft version.
+      placeholder: ex. 1.19.4
+    validations:
+      required: true
+  - type: input
+    id: version-rrls
+    attributes:
+      label: Remove Reloading Screen version.
+      placeholder: ex. 2.0.0-dev
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Relevant logs
+      description: Please upload your latest.log and crash report log (both files can be found inside theirs respective directories in your Minecraft root folder, like the mods one) to any pastebin service ex. gist.github.com, hastebin.com, pastebin.ubuntu.com, paste.ee or paste.gg
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional information
+      description: Provide a list of any other mods you are using, along with their respective versions. If you have any screenshots, videos, or other information that you feel is necessary to explain the issue, feel free to attach them here.
