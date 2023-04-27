@@ -1,39 +1,39 @@
 {
-	"schemaVersion": 1,
-	"id": "rrls",
-	"version": "${mod_version}",
-	"name": "Remove Reloading Screen",
-	"description": "Removes the resources reload screen, and leaves the game available",
-	"authors": [
-		"dima_dencep"
-	],
-	"contact": {
-		"homepage": "https://modrinth.com/mod/rrls",
-		"sources": "https://github.com/dimadencep/RemoveReloadingScreen",
-		"issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
-	},
-	"license": "AGPL-3.0-or-later",
-	"icon": "assets/rrls/icon.png",
-	"environment": "client",
-	"entrypoints": {
-		"client": [
-			"com.github.dimadencep.mods.rrls.fabric.RrlsFabric"
-		],
-		"modmenu": [
-			"com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"
-		]
-	},
-	"mixins": [
-		"rrls.mixins.json",
-		"rrls-common.mixins.json"
-	],
-	"depends": {
-		"fabric": "*",
-		"fabric-api": "*",
-		"minecraft": ">=${minecraft_version}",
-		"cloth-config": ">=${cloth_config_version}"
-	},
-	"recommends": {
-		"modmenu": ">=${modmenu_version}"
-	}
+  "schemaVersion": 1,
+  "id": "rrls",
+  "version": "${mod_version}",
+  "name": "Remove Reloading Screen",
+  "description": "Removes the resources reload screen, and leaves the game available",
+  "authors": [
+    "dima_dencep"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/rrls",
+    "sources": "https://github.com/dimadencep/RemoveReloadingScreen",
+    "issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
+  },
+  "license": "AGPL-3.0-or-later",
+  "icon": "assets/rrls/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.github.dimadencep.mods.rrls.fabric.RrlsFabric"
+    ],
+    "modmenu": [
+      "com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "rrls.mixins.json",
+    "rrls-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "fabric-api": "*",
+    "minecraft": ">=${minecraft_version}",
+    "cloth-config": ">=${cloth_config_version}"
+  },
+  "recommends": {
+    "modmenu": ">=${modmenu_version}"
+  }
 }

@@ -16,8 +16,11 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-    @Shadow protected abstract void showResourceReloadFailureToast(@Nullable Text description);
-    @Shadow protected abstract CompletableFuture<Void> reloadResources(boolean force);
+    @Shadow
+    protected abstract void showResourceReloadFailureToast(@Nullable Text description);
+
+    @Shadow
+    protected abstract CompletableFuture<Void> reloadResources(boolean force);
 
     @Inject(
             method = "onResourceReloadFailure",

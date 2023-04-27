@@ -20,9 +20,11 @@ import java.util.function.Consumer;
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
 
-    @Shadow private float progress;
-
-    @Shadow @Final public ResourceReload reload;
+    @Shadow
+    @Final
+    public ResourceReload reload;
+    @Shadow
+    private float progress;
 
     @Inject(at = @At("TAIL"), method = "<init>")
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) { // TODO rewrite

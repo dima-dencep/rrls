@@ -72,10 +72,10 @@ jobs:
           
           dependencies: |
             cloth-config | depends | *
-            
+
           java: |
             17
-            
+
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.2
         with:
@@ -103,7 +103,7 @@ jobs:
             fabric-api | depends | *
             cloth-config | depends | *
             modmenu | recommends | *
-            
+
           java: |
             17
 
