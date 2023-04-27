@@ -16,7 +16,6 @@ public class ModConfig implements ConfigData {
     public boolean resetResources = false;
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
-    public boolean renderProgressBar = true;
     @ConfigEntry.Gui.Tooltip
     public String reloadText = "rrls.reloadresources";
 

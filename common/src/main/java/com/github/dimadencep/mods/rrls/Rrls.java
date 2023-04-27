@@ -50,15 +50,12 @@ public class Rrls {
         if (Rrls.attachedOverlay != null && Rrls.config.showIn.canShow(isGame)) {
             DrawableHelper.drawCenteredTextWithShadow(stack, minecraft.textRenderer, I18n.translate(config.reloadText), minecraft.getWindow().getScaledWidth() / 2, 70, config.rgbText ? getColor() : -1);
 
-            if (Rrls.config.renderProgressBar) {
+            int i = this.client.getWindow().getScaledWidth();
+            int s = (int) ((double) this.client.getWindow().getScaledHeight() * 0.8325);
 
-                int i = this.client.getWindow().getScaledWidth();
-                int s = (int) ((double) this.client.getWindow().getScaledHeight() * 0.8325);
+            int r = (int) (Math.min(i * 0.75, this.client.getWindow().getScaledHeight()) * 0.5);
 
-                int r = (int) (Math.min(i * 0.75, this.client.getWindow().getScaledHeight()) * 0.5);
-
-                Rrls.attachedOverlay.renderProgressBar(stack, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
-            }
+            Rrls.attachedOverlay.renderProgressBar(stack, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
         }
     }
 }

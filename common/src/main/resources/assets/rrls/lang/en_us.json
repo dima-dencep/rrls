@@ -7,10 +7,10 @@
   "text.autoconfig.rrls.option.rgbText.@Tooltip": "MAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
-  "text.autoconfig.rrls.option.worldLoadingHide": "Hide world loading screen",
-  "text.autoconfig.rrls.option.showInGui": "Show reload text in Menu",
-  "text.autoconfig.rrls.option.showInGame": "Show reload text in Game",
+  "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",
+  "text.autoconfig.rrls.option.reInitScreen": "Reinitializing the current screen after a reload",
+  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete",
   "text.autoconfig.rrls.option.reloadText": "Reload text",
   "text.autoconfig.rrls.option.reloadText.@Tooltip": "Supports localization"
 }
