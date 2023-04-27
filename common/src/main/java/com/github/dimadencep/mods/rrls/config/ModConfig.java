@@ -11,10 +11,31 @@ public class ModConfig implements ConfigData {
     public boolean rgbText = false;
     @ConfigEntry.Gui.Tooltip
     public boolean loadingScreenHide = false;
-    public boolean worldLoadingHide = true;
-    public boolean showInGui = true;
-    public boolean showInGame = true;
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    public ShowIn showIn = ShowIn.ALL;
     public boolean resetResources = false;
     @ConfigEntry.Gui.Tooltip
+    public boolean reInitScreen = true;
+    public boolean renderProgressBar = true;
+    @ConfigEntry.Gui.Tooltip
     public String reloadText = "rrls.reloadresources";
+
+    public enum ShowIn {
+        DISABLED,
+        ONLY_GAME,
+        ONLY_GUI,
+        ALL;
+
+        public boolean canShow(boolean isGame) {
+            if (this == DISABLED) return false;
+
+            if (this == ALL) return true;
+
+            if (isGame) {
+                return this == ONLY_GAME;
+            } else {
+                return this == ONLY_GUI;
+            }
+        }
+    }
 }

@@ -1,9 +1,7 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
-import com.github.dimadencep.mods.rrls.MainMod;
+import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,8 +19,6 @@ public abstract class MinecraftClientMixin {
     @Shadow protected abstract void showResourceReloadFailureToast(@Nullable Text description);
     @Shadow protected abstract CompletableFuture<Void> reloadResources(boolean force);
 
-    @Shadow public abstract void setScreen(@Nullable Screen screen);
-
     @Inject(
             method = "onResourceReloadFailure",
             at = @At(
@@ -31,7 +27,7 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void onResourceReloadFailure(Throwable exception, Text resourceName, CallbackInfo ci) {
-        if (!MainMod.config.resetResources) {
+        if (!Rrls.config.resetResources) {
             this.reloadResources(true).thenRun(() -> this.showResourceReloadFailureToast(resourceName));
 
             ci.cancel();
@@ -51,21 +47,6 @@ public abstract class MinecraftClientMixin {
     }
 
     @Inject(
-            method = "setScreen",
-            at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
-    )
-    public void setScreen(Screen screen, CallbackInfo ci) {
-        if (MainMod.config.worldLoadingHide && screen instanceof DownloadingTerrainScreen) {
-            setScreen(null);
-
-            ci.cancel();
-        }
-    }
-
-    @Inject(
             method = "reloadResources(Z)Ljava/util/concurrent/CompletableFuture;",
             at = @At(
                     value = "HEAD"
@@ -73,8 +54,7 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void reloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) {
-        if (MainMod.reloadHandler.getReload() != null) {
+        if (Rrls.attachedOverlay != null)
             cir.setReturnValue(CompletableFuture.runAsync(() -> this.showResourceReloadFailureToast(Text.translatable("rrls.alreadyReloading"))));
-        }
     }
 }

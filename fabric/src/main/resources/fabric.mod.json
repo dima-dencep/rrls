@@ -17,7 +17,7 @@
 	"environment": "client",
 	"entrypoints": {
 		"client": [
-			"com.github.dimadencep.mods.rrls.fabric.FabricMainMod"
+			"com.github.dimadencep.mods.rrls.fabric.RrlsFabric"
 		],
 		"modmenu": [
 			"com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"

@@ -1,11 +1,12 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
-import com.github.dimadencep.mods.rrls.MainMod;
+import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceReload;
+import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,22 +19,31 @@ import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
-    @Shadow @Final private ResourceReload reload;
-    @Shadow @Final private Consumer<Optional<Throwable>> exceptionHandler;
-    public boolean isReloading;
+
+    @Shadow private float progress;
+
+    @Shadow @Final public ResourceReload reload;
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.isReloading = (reloading && MainMod.config.enabled) || (!reloading && MainMod.config.loadingScreenHide);
+    private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) { // TODO rewrite
+        if (Rrls.attachedOverlay != null && Rrls.attachedOverlay != (Object) this) {
+            throw new IllegalStateException("The reloading has already started!");
+        }
+
+        if ((reloading && Rrls.config.enabled) || (!reloading && Rrls.config.loadingScreenHide))
+            Rrls.attachedOverlay = (SplashOverlay) (Object) this;
     }
 
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (isReloading) {
-            MainMod.reloadHandler.setExceptionHandler(this.exceptionHandler);
-            MainMod.reloadHandler.setReload(this.reload);
-
+        if (Rrls.attachedOverlay == (Object) this)
             ci.cancel();
+    }
+
+    @Inject(at = @At("HEAD"), method = "renderProgressBar")
+    public void fixProgress(MatrixStack matrices, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+        if (Rrls.attachedOverlay == (Object) this) {
+            this.progress = MathHelper.clamp(this.progress * 0.95F + this.reload.getProgress() * 0.052000012F, 0.0F, 1.0F);
         }
     }
 }
