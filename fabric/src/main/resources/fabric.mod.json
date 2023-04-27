@@ -1,14 +1,14 @@
 {
 	"schemaVersion": 1,
 	"id": "rrls",
-	"version": "${version}",
+	"version": "${mod_version}",
 	"name": "Remove Reloading Screen",
 	"description": "Removes the resources reload screen, and leaves the game available",
 	"authors": [
 		"dima_dencep"
 	],
 	"contact": {
-		"homepage": "https://www.curseforge.com/minecraft/mc-mods/rrls",
+		"homepage": "https://modrinth.com/mod/rrls",
 		"sources": "https://github.com/dimadencep/RemoveReloadingScreen",
 		"issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
 	},
@@ -30,10 +30,10 @@
 	"depends": {
 		"fabric": "*",
 		"fabric-api": "*",
-		"minecraft": ">=1.19.4",
-		"cloth-config": ">=10.0.96"
+		"minecraft": ">=${minecraft_version}",
+		"cloth-config": ">=${cloth_config_version}"
 	},
-	"breaks": {
-		"forcecloseloadingscreen": "*"
+	"recommends": {
+		"modmenu": ">=${modmenu_version}"
 	}
 }

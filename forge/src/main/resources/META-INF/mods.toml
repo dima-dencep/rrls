@@ -1,34 +1,35 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "*"
 issueTrackerURL = "https://github.com/dimadencep/RemoveReloadingScreen/issues"
 license = "AGPL-3.0-or-later"
 
 [[mods]]
 modId = "rrls"
-version = "${version}"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/rrls"
+version = "${mod_version}"
+displayURL = "https://modrinth.com/mod/rrls"
 displayName = "Remove Reloading Screen"
 authors = "dima_dencep"
 description = "Removes the resources reload screen, and leaves the game available"
 logoFile = "icon.png"
+displayTest = "IGNORE_SERVER_VERSION"
 
 [[dependencies.rrls]]
 modId = "forge"
 mandatory = true
-versionRange = "[45,)"
+versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.rrls]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,)"
+versionRange = "[${minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.rrls]]
 modId = "cloth_config"
 mandatory = true
-versionRange = "[10.0.96,)"
+versionRange = "[${cloth_config_version},)"
 ordering = "NONE"
 side = "CLIENT"
