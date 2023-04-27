@@ -4,6 +4,7 @@
   "rrls.alreadyReloading": "Перезагрузка уже началась!",
   "text.autoconfig.rrls.option.enabled": "Прятать зкран перезагрузки",
   "text.autoconfig.rrls.option.rgbText": "Разноцветный текст при перезагрузке",
+  "text.autoconfig.rrls.option.rgbText.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
   "text.autoconfig.rrls.option.loadingScreenHide": "Прятать загрузочный экран",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
   "text.autoconfig.rrls.option.worldLoadingHide": "Скрывать экран загрузки мира",
