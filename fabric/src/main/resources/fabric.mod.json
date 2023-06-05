@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "rrls",
-  "version": "${mod_version}",
+  "version": "${version}",
   "name": "Remove Reloading Screen",
   "description": "Removes the resources reload screen, and leaves the game available",
   "authors": [
@@ -12,8 +12,8 @@
     "sources": "https://github.com/dimadencep/RemoveReloadingScreen",
     "issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
   },
-  "license": "AGPL-3.0-or-later",
-  "icon": "assets/rrls/icon.png",
+  "license": "AGPL-3.0-only",
+  "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -30,10 +30,10 @@
   "depends": {
     "fabric": "*",
     "fabric-api": "*",
-    "minecraft": ">=${minecraft_version}",
-    "cloth-config": ">=${cloth_config_version}"
+    "minecraft": "~1.19",
+    "cloth-config": "*"
   },
   "recommends": {
-    "modmenu": ">=${modmenu_version}"
+    "modmenu": "*"
   }
 }

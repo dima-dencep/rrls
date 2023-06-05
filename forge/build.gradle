@@ -1,8 +1,8 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow"
 }
 
-version = rootProject.version + "-forge"
+version = version + "-forge"
 
 architectury {
     platformSetupLoomIde()
@@ -39,14 +39,10 @@ dependencies {
 }
 
 processResources {
-    inputs.property "mod_version", project.version
-    inputs.property "minecraft_version", rootProject.minecraft_version
-    inputs.property "cloth_config_version", rootProject.cloth_config_version
+    inputs.property "version", project.version
 
     filesMatching("META-INF/mods.toml") {
-        expand "mod_version": project.version,
-                "minecraft_version": rootProject.minecraft_version,
-                "cloth_config_version": rootProject.cloth_config_version
+        expand "version": project.version
     }
 }
 
@@ -54,17 +50,17 @@ shadowJar {
     exclude "fabric.mod.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier.set "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier.set null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier.set "dev"
 }
 
 sourcesJar {
@@ -85,8 +81,5 @@ publishing {
             artifactId = rootProject.archives_base_name + "-" + project.name
             from components.java
         }
-    }
-
-    repositories {
     }
 }
