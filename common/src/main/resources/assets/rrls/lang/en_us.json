@@ -1,6 +1,5 @@
 {
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "rrls.alreadyReloading": "The reloading has already started!",
   "text.autoconfig.rrls.option.enabled": "Hide reload screen",
   "text.autoconfig.rrls.option.rgbProgress": "Colorful progressbar",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "MAY CAUSE EPILEPSY",

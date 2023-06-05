@@ -32,7 +32,7 @@ public abstract class SplashOverlayMixin extends Overlay {
     @Inject(at = @At("TAIL"), method = "<init>")
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) { // TODO rewrite
         if (Rrls.attachedOverlay != null && Rrls.attachedOverlay != (Object) this) {
-            throw new IllegalStateException("The reloading has already started!");
+            Rrls.attachedOverlay.reload.whenComplete().cancel(true);
         }
 
         if ((reloading && Rrls.config.enabled) || (!reloading && Rrls.config.loadingScreenHide))

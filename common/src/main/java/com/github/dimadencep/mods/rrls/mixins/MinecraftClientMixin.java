@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -34,17 +33,5 @@ public abstract class MinecraftClientMixin {
 
             ci.cancel();
         }
-    }
-
-    @Inject(
-            method = "reloadResources(Z)Ljava/util/concurrent/CompletableFuture;",
-            at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
-    )
-    public void reloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) {
-        if (Rrls.attachedOverlay != null)
-            cir.setReturnValue(CompletableFuture.runAsync(() -> this.showResourceReloadFailureToast(Text.translatable("rrls.alreadyReloading"))));
     }
 }

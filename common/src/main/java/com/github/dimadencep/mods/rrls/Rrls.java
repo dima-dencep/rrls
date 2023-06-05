@@ -10,9 +10,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.util.Optional;
 
 public class Rrls {
+    protected final MinecraftClient client = MinecraftClient.getInstance();
     public static SplashOverlay attachedOverlay;
     public static ModConfig config;
-    protected final MinecraftClient client = MinecraftClient.getInstance();
 
     public void init() {
         config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
