@@ -1,16 +1,13 @@
 {
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "rrls.reloadresources": "Reloading resources...",
   "rrls.alreadyReloading": "The reloading has already started!",
   "text.autoconfig.rrls.option.enabled": "Hide reload screen",
-  "text.autoconfig.rrls.option.rgbText": "Colorful text on reload",
-  "text.autoconfig.rrls.option.rgbText.@Tooltip": "MAY CAUSE EPILEPSY",
+  "text.autoconfig.rrls.option.rgbProgress": "Colorful progressbar",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "MAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
   "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",
   "text.autoconfig.rrls.option.reInitScreen": "Reinitializing the current screen after a reload",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete",
-  "text.autoconfig.rrls.option.reloadText": "Reload text",
-  "text.autoconfig.rrls.option.reloadText.@Tooltip": "Supports localization"
+  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete"
 }

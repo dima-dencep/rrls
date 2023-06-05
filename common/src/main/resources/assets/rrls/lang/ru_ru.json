@@ -1,16 +1,13 @@
 {
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "rrls.reloadresources": "Перезагрузка ресурсов...",
   "rrls.alreadyReloading": "Перезагрузка уже началась!",
   "text.autoconfig.rrls.option.enabled": "Прятать зкран перезагрузки",
-  "text.autoconfig.rrls.option.rgbText": "Разноцветный текст при перезагрузке",
-  "text.autoconfig.rrls.option.rgbText.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
+  "text.autoconfig.rrls.option.rgbProgress": "Разноцветный прогрессбар",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
   "text.autoconfig.rrls.option.loadingScreenHide": "Прятать загрузочный экран",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
   "text.autoconfig.rrls.option.showIn": "Отображение процесса перезагрузки ресурсов",
   "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",
   "text.autoconfig.rrls.option.reInitScreen": "Повторная инициализация текущего экрана после перезагрузки",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки",
-  "text.autoconfig.rrls.option.reloadText": "Текст перезагрузки",
-  "text.autoconfig.rrls.option.reloadText.@Tooltip": "Поддерживает локализацию"
+  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки"
 }

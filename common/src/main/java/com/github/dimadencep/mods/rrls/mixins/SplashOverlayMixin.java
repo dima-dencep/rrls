@@ -6,15 +6,18 @@ import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceReload;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
@@ -45,7 +48,25 @@ public abstract class SplashOverlayMixin extends Overlay {
     @Inject(at = @At("HEAD"), method = "renderProgressBar")
     public void fixProgress(MatrixStack matrices, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
         if (Rrls.attachedOverlay == (Object) this) {
-            this.progress = MathHelper.clamp(this.progress * 0.95F + this.reload.getProgress() * 0.052000012F, 0.0F, 1.0F);
+            float t = this.reload.getProgress();
+            this.progress = MathHelper.clamp(this.progress * 0.95f + t * 0.050000012f, 0.0f, 1.0f);
         }
+    }
+
+    @Redirect(
+            method = "renderProgressBar",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/math/ColorHelper$Argb;getArgb(IIII)I"
+            )
+    )
+    public int rainbowProgress(int alpha, int red, int green, int blue) {
+        if (Rrls.config.rgbProgress && Rrls.attachedOverlay == (Object) this) {
+            int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
+
+            return ColorHelper.Argb.getArgb(alpha, ColorHelper.Argb.getRed(baseColor), ColorHelper.Argb.getGreen(baseColor), ColorHelper.Argb.getBlue(baseColor));
+        }
+
+        return ColorHelper.Argb.getArgb(alpha, red, green, blue);
     }
 }

@@ -8,7 +8,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
     @ConfigEntry.Gui.Tooltip
-    public boolean rgbText = false;
+    public boolean rgbProgress = false;
     @ConfigEntry.Gui.Tooltip
     public boolean loadingScreenHide = false;
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
@@ -16,8 +16,6 @@ public class ModConfig implements ConfigData {
     public boolean resetResources = false;
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
-    @ConfigEntry.Gui.Tooltip
-    public String reloadText = "rrls.reloadresources";
 
     public enum ShowIn {
         DISABLED,

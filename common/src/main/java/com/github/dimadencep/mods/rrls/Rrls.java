@@ -4,22 +4,15 @@ import com.github.dimadencep.mods.rrls.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Rrls {
     public static SplashOverlay attachedOverlay;
     public static ModConfig config;
     protected final MinecraftClient client = MinecraftClient.getInstance();
-
-    public static int getColor() {
-        return ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
-    }
 
     public void init() {
         config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
@@ -46,10 +39,8 @@ public class Rrls {
         }
     }
 
-    public void renderText(MatrixStack stack, MinecraftClient minecraft, boolean isGame) { // TODO rewrite
+    public void renderText(MatrixStack stack, boolean isGame) {
         if (Rrls.attachedOverlay != null && Rrls.config.showIn.canShow(isGame)) {
-            DrawableHelper.drawCenteredTextWithShadow(stack, minecraft.textRenderer, I18n.translate(config.reloadText), minecraft.getWindow().getScaledWidth() / 2, 70, config.rgbText ? getColor() : -1);
-
             int i = this.client.getWindow().getScaledWidth();
             int s = (int) ((double) this.client.getWindow().getScaledHeight() * 0.8325);
 
