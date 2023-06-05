@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -35,18 +34,6 @@ public abstract class MinecraftClientMixin {
 
             ci.cancel();
         }
-    }
-
-    @ModifyArg(
-            method = "showResourceReloadFailureToast",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/toast/SystemToast;show(Lnet/minecraft/client/toast/ToastManager;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)V"
-            ),
-            index = 3
-    )
-    public Text createDisplay(Text resourceName) {
-        return resourceName == null ? Text.translatable("gui.all") : resourceName;
     }
 
     @Inject(
