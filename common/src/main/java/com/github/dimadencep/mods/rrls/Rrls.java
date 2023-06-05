@@ -8,10 +8,11 @@ import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Rrls {
+    public static AtomicReference<SplashOverlay> attachedOverlay = new AtomicReference<>();
     protected final MinecraftClient client = MinecraftClient.getInstance();
-    public static SplashOverlay attachedOverlay;
     public static ModConfig config;
 
     public void init() {
@@ -19,18 +20,20 @@ public class Rrls {
     }
 
     public void tickReload(MinecraftClient minecraft) {
-        if (Rrls.attachedOverlay != null) {
+        SplashOverlay overlay = Rrls.attachedOverlay.get();
+
+        if (overlay != null) {
             minecraft.setOverlay(null);
 
-            if (Rrls.attachedOverlay.reload.isComplete()) {
+            if (overlay.reload.isComplete()) {
                 try {
-                    Rrls.attachedOverlay.reload.throwException();
-                    Rrls.attachedOverlay.exceptionHandler.accept(Optional.empty());
+                    overlay.reload.throwException();
+                    overlay.exceptionHandler.accept(Optional.empty());
                 } catch (Throwable var23) {
-                    Rrls.attachedOverlay.exceptionHandler.accept(Optional.of(var23));
+                    overlay.exceptionHandler.accept(Optional.of(var23));
                 }
 
-                Rrls.attachedOverlay = null;
+                Rrls.attachedOverlay.set(null);
 
                 if (Rrls.config.reInitScreen && minecraft.currentScreen != null) {
                     minecraft.currentScreen.init(minecraft, minecraft.getWindow().getScaledWidth(), minecraft.getWindow().getScaledHeight());
@@ -40,13 +43,17 @@ public class Rrls {
     }
 
     public void renderText(MatrixStack stack, boolean isGame) {
-        if (Rrls.attachedOverlay != null && Rrls.config.showIn.canShow(isGame)) {
+        if (!Rrls.config.showIn.canShow(isGame)) return;
+
+        SplashOverlay overlay = Rrls.attachedOverlay.get();
+
+        if (overlay != null) {
             int i = this.client.getWindow().getScaledWidth();
             int s = (int) ((double) this.client.getWindow().getScaledHeight() * 0.8325);
 
             int r = (int) (Math.min(i * 0.75, this.client.getWindow().getScaledHeight()) * 0.5);
 
-            Rrls.attachedOverlay.renderProgressBar(stack, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+            overlay.renderProgressBar(stack, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
         }
     }
 }
