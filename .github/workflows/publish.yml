@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - '**/stable'
+      - '**/backport'
 
 jobs:
   build:
@@ -48,18 +49,19 @@ jobs:
           properties: 'archives_base_name mod_version minecraft_version'
 
       - name: Publish Forge to Modrinth & CurseForge
-        uses: Kir-Antipov/mc-publish@v3.2
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ZP7xHXtw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          
-          files-primary: forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-          files-secondary: forge/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} Forge ${{ steps.read_property.outputs.minecraft_version }}
+          files: |
+            forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+            forge/build/libs/*-@(dev|sources|javadoc).jar
+
+          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }} (Forge)
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
@@ -71,13 +73,13 @@ jobs:
             ${{ steps.read_property.outputs.minecraft_version }}
           
           dependencies: |
-            cloth-config | depends | *
+            cloth-config
 
           java: |
             17
 
       - name: Publish Fabric to Modrinth & CurseForge
-        uses: Kir-Antipov/mc-publish@v3.2
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ZP7xHXtw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -85,24 +87,27 @@ jobs:
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
-          files-primary: fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-          files-secondary: fabric/build/libs/*-@(dev|sources|javadoc).jar
+          files: |
+            fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+            fabric/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} Fabric ${{ steps.read_property.outputs.minecraft_version }}
+          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }} (Fabric/Quilt)
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
           version-type: release
 
-          loaders: fabric
+          loaders: |
+            fabric
+            quilt
 
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
           
           dependencies: |
-            fabric-api | depends | *
-            cloth-config | depends | *
-            modmenu | recommends | *
+            fabric-api
+            cloth-config
+            modmenu(recommended)
 
           java: |
             17
