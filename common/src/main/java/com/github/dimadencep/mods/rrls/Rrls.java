@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -42,7 +42,7 @@ public class Rrls {
         }
     }
 
-    public void renderText(MatrixStack stack, boolean isGame) {
+    public void renderText(DrawContext drawContext, boolean isGame) {
         if (!Rrls.config.showIn.canShow(isGame)) return;
 
         SplashOverlay overlay = Rrls.attachedOverlay.get();
@@ -53,7 +53,7 @@ public class Rrls {
 
             int r = (int) (Math.min(i * 0.75, this.client.getWindow().getScaledHeight()) * 0.5);
 
-            overlay.renderProgressBar(stack, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+            overlay.renderProgressBar(drawContext, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
         }
     }
 }

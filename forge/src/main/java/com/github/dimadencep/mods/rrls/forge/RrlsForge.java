@@ -39,12 +39,12 @@ public class RrlsForge extends Rrls {
 
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
-        this.renderText(event.getPoseStack(), true);
+        this.renderText(event.getGuiGraphics(), true);
     }
 
     @SubscribeEvent
     public void onScreenRender(ScreenEvent.Render event) {
-        this.renderText(event.getPoseStack(), false);
+        this.renderText(event.getGuiGraphics(), false);
     }
 
     @SubscribeEvent

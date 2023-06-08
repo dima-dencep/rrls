@@ -4,7 +4,7 @@ import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.resource.ResourceReload;
 import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Final;
@@ -43,13 +43,13 @@ public abstract class SplashOverlayMixin extends Overlay {
     }
 
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.rrls_attach)
             ci.cancel();
     }
 
     @Inject(at = @At("HEAD"), method = "renderProgressBar")
-    public void fixProgress(MatrixStack matrices, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+    public void fixProgress(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
         if (this.rrls_attach) {
             this.progress = this.reload.getProgress();
         }
