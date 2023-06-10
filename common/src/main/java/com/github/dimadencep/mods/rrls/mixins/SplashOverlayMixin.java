@@ -1,58 +1,128 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.resource.ResourceReload;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.ColorHelper;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import net.minecraft.util.math.MathHelper;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
-public abstract class SplashOverlayMixin extends Overlay {
-
+public abstract class SplashOverlayMixin extends Overlay implements SplashAccessor {
     @Shadow
     @Final
-    public ResourceReload reload;
+    private ResourceReload reload;
     @Shadow
     private float progress;
+    @Shadow private long reloadCompleteTime;
+    @Shadow
+    @Final
+    private Consumer<Optional<Throwable>> exceptionHandler;
+    @Shadow
+    @Final private MinecraftClient client;
+
+    @Shadow
+    protected abstract void renderProgressBar(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity);
+
+    @Shadow @Final private boolean reloading;
+    @Shadow private long reloadStartTime;
     public boolean rrls_attach;
 
-    @Inject(at = @At("TAIL"), method = "<init>")
+    @Inject(
+            method = "<init>",
+            at = @At(
+                    value = "TAIL"
+            )
+    )
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        if ((reloading && Rrls.config.enabled) || (!reloading && Rrls.config.loadingScreenHide)) {
-            SplashOverlay oldSplash = Rrls.attachedOverlay.getAndSet((SplashOverlay) (Object) this);
+        this.rrls_attach = (reloading && Rrls.config.enabled) || (!reloading && Rrls.config.loadingScreenHide);
+    }
 
-            this.rrls_attach = true;
+    @Override
+    public boolean isAttached() {
+        return this.rrls_attach;
+    }
 
-            if (oldSplash != null && oldSplash != (Object) this) {
-                oldSplash.reload.whenComplete().cancel(true);
+
+    @Inject(
+            method = "pausesGame",
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    public void pauses(CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(!this.rrls_attach);
+    }
+
+    @Override
+    public void render(DrawContext context, boolean isGame) {
+        if (!Rrls.config.showIn.canShow(isGame)) return;
+
+        int i = context.getScaledWindowWidth();
+        int j = context.getScaledWindowHeight();
+
+        int s = (int) ((double) j * 0.8325);
+        int r = (int) (Math.min(i * 0.75, j) * 0.5);
+
+        this.renderProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+    }
+
+    @Override
+    public void reload() {
+        long l = Util.getMeasuringTimeMs();
+        if (this.reloading && this.reloadStartTime == -1L) {
+            this.reloadStartTime = l;
+        }
+        float f = this.reloadCompleteTime > -1L ? (float)(l - this.reloadCompleteTime) / 1000.0f : -1.0f;
+
+        float t = this.reload.getProgress();
+        this.progress = MathHelper.clamp(this.progress * 0.95f + t * 0.050000012f, 0.0f, 1.0f);
+
+        if (f >= 2.0f) {
+            this.client.setOverlay(null);
+        }
+
+        if (this.reloadCompleteTime == -1L && this.reload.isComplete()) {
+            try {
+                this.reload.throwException();
+                this.exceptionHandler.accept(Optional.empty());
+            } catch (Throwable throwable) {
+                this.exceptionHandler.accept(Optional.of(throwable));
+            }
+
+            this.reloadCompleteTime = Util.getMeasuringTimeMs();
+
+            if (Rrls.config.reInitScreen && this.client.currentScreen != null) {
+                this.client.currentScreen.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());
             }
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "render", cancellable = true)
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.rrls_attach)
             ci.cancel();
-    }
-
-    @Inject(at = @At("HEAD"), method = "renderProgressBar")
-    public void fixProgress(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
-        if (this.rrls_attach) {
-            this.progress = this.reload.getProgress();
-        }
     }
 
     @Redirect(

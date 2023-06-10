@@ -1,4 +1,2 @@
 accessWidener   v2  named
-accessible field net/minecraft/client/gui/screen/SplashOverlay reload Lnet/minecraft/resource/ResourceReload;
-accessible field net/minecraft/client/gui/screen/SplashOverlay exceptionHandler Ljava/util/function/Consumer;
-accessible method net/minecraft/client/gui/screen/SplashOverlay renderProgressBar (Lnet/minecraft/client/gui/DrawContext;IIIIF)V
+accessible field net/minecraft/client/MinecraftClient overlay Lnet/minecraft/client/gui/screen/Overlay;

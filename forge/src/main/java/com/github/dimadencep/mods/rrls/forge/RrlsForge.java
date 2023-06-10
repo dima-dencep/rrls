@@ -1,6 +1,7 @@
 package com.github.dimadencep.mods.rrls.forge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import com.github.dimadencep.mods.rrls.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -39,17 +40,19 @@ public class RrlsForge extends Rrls {
 
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
-        this.renderText(event.getGuiGraphics(), true);
+        if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
+            accessor.render(event.getGuiGraphics(), true);
     }
 
     @SubscribeEvent
     public void onScreenRender(ScreenEvent.Render event) {
-        this.renderText(event.getGuiGraphics(), false);
+        if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
+            accessor.render(event.getGuiGraphics(), false);
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START)
-            this.tickReload(this.client);
+    public void onTick(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
+            accessor.reload();
     }
 }
