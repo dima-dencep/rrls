@@ -8,5 +8,7 @@
   "text.autoconfig.rrls.option.showIn": "Отображение процесса перезагрузки ресурсов",
   "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",
   "text.autoconfig.rrls.option.reInitScreen": "Повторная инициализация текущего экрана после перезагрузки",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки"
+  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки",
+  "text.autoconfig.rrls.option.splashFade": "Заставка не исчезает",
+  "text.autoconfig.rrls.option.splashFade.@Tooltip": "Удаляет затухание с заставки титульного экрана."
 }

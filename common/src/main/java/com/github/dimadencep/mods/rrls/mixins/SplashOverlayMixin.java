@@ -113,6 +113,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
         }
     }
 
+
     @Inject(
             method = "render",
             at = @At(
@@ -140,5 +141,11 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
         }
 
         return ColorHelper.Argb.getArgb(alpha, red, green, blue);
+    }
+    @Inject(method = "render", at = @At("HEAD"))
+    private void onRender(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        if (Rrls.config.splashFade && this.reloadCompleteTime > 1) {
+            this.client.setOverlay(null);
+        }
     }
 }

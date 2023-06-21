@@ -5,8 +5,9 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "MinecraftClientMixin",
-    "compat.SplashUseFix",
-    "SplashOverlayMixin"
+    "SplashOverlayMixin",
+    "TitleScreenMixin",
+    "compat.SplashUseFix"
   ],
   "injectors": {
     "defaultRequire": 1

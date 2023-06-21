@@ -8,5 +8,7 @@
   "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",
   "text.autoconfig.rrls.option.reInitScreen": "Reinitializing the current screen after a reload",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete"
+  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete",
+  "text.autoconfig.rrls.option.splashFade": "No Splash Screen Fade",
+  "text.autoconfig.rrls.option.splashFade.@Tooltip": "Removes the fade from the title screen splash."
 }
