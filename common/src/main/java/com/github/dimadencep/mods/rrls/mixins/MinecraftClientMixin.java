@@ -5,6 +5,7 @@ import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +37,7 @@ public abstract class MinecraftClientMixin {
         if (!Rrls.config.resetResources) {
             Rrls.logger.error("Caught error loading resourcepacks!", exception);
 
-            this.reloadResources(true).thenRun(() -> SystemToast.show(getToastManager(), SystemToast.Type.PACK_LOAD_FAILURE, Text.translatable("resourcePack.load_fail"), resourceName));
+            this.reloadResources(true).thenRun(() -> SystemToast.show(getToastManager(), SystemToast.Type.PACK_LOAD_FAILURE, new TranslatableText("resourcePack.load_fail"), resourceName));
 
             ci.cancel();
         }
