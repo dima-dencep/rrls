@@ -3,14 +3,16 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.resource.ResourceReload;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -23,24 +25,28 @@ import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay implements SplashAccessor {
+    public boolean rrls_attach;
     @Shadow
     @Final
     private ResourceReload reload;
     @Shadow
     private float progress;
-    @Shadow private long reloadCompleteTime;
+    @Shadow
+    private long reloadCompleteTime;
     @Shadow
     @Final
     private Consumer<Optional<Throwable>> exceptionHandler;
     @Shadow
-    @Final private MinecraftClient client;
+    @Final
+    private MinecraftClient client;
+    @Shadow
+    @Final
+    private boolean reloading;
+    @Shadow
+    private long reloadStartTime;
 
     @Shadow
     protected abstract void renderProgressBar(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity);
-
-    @Shadow @Final private boolean reloading;
-    @Shadow private long reloadStartTime;
-    public boolean rrls_attach;
 
     @Inject(
             method = "<init>",
@@ -88,7 +94,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
         if (this.reloading && this.reloadStartTime == -1L) {
             this.reloadStartTime = l;
         }
-        float f = this.reloadCompleteTime > -1L ? (float)(l - this.reloadCompleteTime) / 1000.0f : -1.0f;
+        float f = this.reloadCompleteTime > -1L ? (float) (l - this.reloadCompleteTime) / 1000.0f : -1.0f;
 
         float t = this.reload.getProgress();
         this.progress = MathHelper.clamp(this.progress * 0.95f + t * 0.050000012f, 0.0f, 1.0f);
