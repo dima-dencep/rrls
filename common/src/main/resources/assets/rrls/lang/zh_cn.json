@@ -2,7 +2,7 @@
   "text.autoconfig.rrls.title": "移除重新加载屏幕(RemoveReloadingScreen)",
   "text.autoconfig.rrls.option.enabled": "隐藏重新加载屏幕",
   "text.autoconfig.rrls.option.rgbProgress": "彩色进度条",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能引起癫痫！",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能引起癫痫",
   "text.autoconfig.rrls.option.loadingScreenHide": "隐藏加载屏幕",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "可能会引起问题",
   "text.autoconfig.rrls.option.showIn": "资源包重新加载过程显示",
