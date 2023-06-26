@@ -13,13 +13,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class Rrls {
     public static final StackWalker classWalker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
-    protected final MinecraftClient client = MinecraftClient.getInstance();
+    public static final ModConfig config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
     public static final Logger logger = LogManager.getLogger("RRLS");
-    public static ModConfig config;
 
-    public void init() {
-        config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
-    }
+    protected final MinecraftClient client = MinecraftClient.getInstance();
 
     @Nullable
     public static Overlay tryGetOverlay(Overlay original) {

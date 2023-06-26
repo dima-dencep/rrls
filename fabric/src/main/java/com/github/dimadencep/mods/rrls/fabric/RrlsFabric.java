@@ -10,8 +10,6 @@ public class RrlsFabric extends Rrls implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        super.init();
-
         ScreenEvents.AFTER_INIT.register((client1, screen, scaledWidth, scaledHeight) -> ScreenEvents.afterRender(screen).register((screen1, drawContext, mouseX, mouseY, tickDelta) -> {
             if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
                 accessor.render(drawContext, false);
