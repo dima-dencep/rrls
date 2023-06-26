@@ -4,8 +4,8 @@ import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import com.github.dimadencep.mods.rrls.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.client.ConfigGuiHandler;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -29,21 +29,21 @@ public class RrlsForge extends Rrls {
         MinecraftForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerExtensionPoint(
-                ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory(
+                ConfigGuiHandler.ConfigGuiFactory.class,
+                () -> new ConfigGuiHandler.ConfigGuiFactory(
                         (mc, screen) -> AutoConfig.getConfigScreen(ModConfig.class, screen).get()
                 )
         );
     }
 
     @SubscribeEvent
-    public void onRenderGui(RenderGuiEvent.Pre event) {
+    public void onRenderGui(RenderGameOverlayEvent.Pre event) {
         if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.render(event.getPoseStack(), true);
+            accessor.render(event.getMatrixStack(), true);
     }
 
     @SubscribeEvent
-    public void onScreenRender(ScreenEvent.Render event) {
+    public void onScreenRender(ScreenEvent.DrawScreenEvent event) {
         if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
             accessor.render(event.getPoseStack(), false);
     }
