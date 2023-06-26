@@ -26,8 +26,6 @@ public class RrlsForge extends Rrls {
                 )
         );
 
-        super.init();
-
         MinecraftForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerExtensionPoint(

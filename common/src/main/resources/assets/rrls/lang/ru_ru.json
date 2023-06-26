@@ -1,8 +1,8 @@
 {
-  "text.autoconfig.rrls.title": "Remove Reloading Screen",
+  "text.autoconfig.rrls.title": "Удалить экран перезагрузки (Remove Reloading Screen)",
   "text.autoconfig.rrls.option.enabled": "Прятать зкран перезагрузки",
   "text.autoconfig.rrls.option.rgbProgress": "Разноцветный прогрессбар",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
   "text.autoconfig.rrls.option.loadingScreenHide": "Прятать загрузочный экран",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
   "text.autoconfig.rrls.option.showIn": "Отображение процесса перезагрузки ресурсов",

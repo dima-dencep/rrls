@@ -2,7 +2,7 @@
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
   "text.autoconfig.rrls.option.enabled": "Hide reload screen",
   "text.autoconfig.rrls.option.rgbProgress": "Colorful progressbar",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "MAY CAUSE EPILEPSY",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cMAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
   "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
