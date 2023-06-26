@@ -39,13 +39,13 @@ public class RrlsForge extends Rrls {
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
         if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.render(event.getGuiGraphics(), true);
+            accessor.render(event.getPoseStack(), true);
     }
 
     @SubscribeEvent
     public void onScreenRender(ScreenEvent.Render event) {
         if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.render(event.getGuiGraphics(), false);
+            accessor.render(event.getPoseStack(), false);
     }
 
     @SubscribeEvent

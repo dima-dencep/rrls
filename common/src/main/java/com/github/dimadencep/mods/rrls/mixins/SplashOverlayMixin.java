@@ -3,7 +3,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
@@ -46,7 +46,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
     private long reloadStartTime;
 
     @Shadow
-    protected abstract void renderProgressBar(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity);
+    protected abstract void renderProgressBar(MatrixStack drawContext, int minX, int minY, int maxX, int maxY, float opacity);
 
     @Inject(
             method = "<init>",
@@ -76,11 +76,11 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
     }
 
     @Override
-    public void render(DrawContext context, boolean isGame) {
+    public void render(MatrixStack context, boolean isGame) {
         if (!Rrls.config.showIn.canShow(isGame)) return;
 
-        int i = context.getScaledWindowWidth();
-        int j = context.getScaledWindowHeight();
+        int i = this.client.getWindow().getScaledWidth();
+        int j = this.client.getWindow().getScaledHeight();
 
         int s = (int) ((double) j * 0.8325);
         int r = (int) (Math.min(i * 0.75, j) * 0.5);
@@ -126,7 +126,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             ),
             cancellable = true
     )
-    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void render(MatrixStack context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.rrls_attach)
             ci.cancel();
     }
