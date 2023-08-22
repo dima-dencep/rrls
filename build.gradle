@@ -42,9 +42,9 @@ allprojects {
         maven { url "https://maven.terraformersmc.com/releases/" }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release.set(17)
     }
 
     java {

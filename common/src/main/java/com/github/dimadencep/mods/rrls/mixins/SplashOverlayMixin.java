@@ -55,11 +55,11 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls_attach = (reloading && Rrls.config.enabled) || (!reloading && Rrls.config.loadingScreenHide);
+        this.rrls_attach = (reloading && Rrls.MOD_CONFIG.enabled) || (!reloading && Rrls.MOD_CONFIG.loadingScreenHide);
     }
 
     @Override
-    public boolean isAttached() {
+    public boolean rrls$isAttached() {
         return this.rrls_attach;
     }
 
@@ -76,8 +76,8 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
     }
 
     @Override
-    public void render(DrawContext context, boolean isGame) {
-        if (!Rrls.config.showIn.canShow(isGame)) return;
+    public void rrls$render(DrawContext context, boolean isGame) {
+        if (!Rrls.MOD_CONFIG.showIn.canShow(isGame)) return;
 
         int i = context.getScaledWindowWidth();
         int j = context.getScaledWindowHeight();
@@ -89,7 +89,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
     }
 
     @Override
-    public void reload() {
+    public void rrls$reload() {
         long l = Util.getMeasuringTimeMs();
         if (this.reloading && this.reloadStartTime == -1L) {
             this.reloadStartTime = l;
@@ -113,7 +113,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
 
             this.reloadCompleteTime = Util.getMeasuringTimeMs();
 
-            if (Rrls.config.reInitScreen && this.client.currentScreen != null) {
+            if (Rrls.MOD_CONFIG.reInitScreen && this.client.currentScreen != null) {
                 this.client.currentScreen.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());
             }
         }
@@ -139,7 +139,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     public int rainbowProgress(int alpha, int red, int green, int blue) {
-        if (Rrls.config.rgbProgress && this.rrls_attach) {
+        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls_attach) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(alpha, ColorHelper.Argb.getRed(baseColor), ColorHelper.Argb.getGreen(baseColor), ColorHelper.Argb.getBlue(baseColor));

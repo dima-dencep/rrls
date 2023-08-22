@@ -3,14 +3,14 @@
   "id": "rrls",
   "version": "${version}",
   "name": "Remove Reloading Screen",
-  "description": "Removes the resources reload screen, and leaves the game available",
+  "description": "Makes resource packs load in the background, allowing you to do other things while waiting!",
   "authors": [
     "dima_dencep"
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/rrls",
-    "sources": "https://github.com/dimadencep/RemoveReloadingScreen",
-    "issues": "https://github.com/dimadencep/RemoveReloadingScreen/issues"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/rrls",
+    "sources": "https://github.com/dima-dencep/rrls",
+    "issues": "https://github.com/dima-dencep/rrls/issues"
   },
   "license": "AGPL-3.0-only",
   "icon": "icon.png",
@@ -32,8 +32,5 @@
     "fabric-api": "*",
     "minecraft": "~1.20",
     "cloth-config": "*"
-  },
-  "recommends": {
-    "modmenu": "*"
   }
 }

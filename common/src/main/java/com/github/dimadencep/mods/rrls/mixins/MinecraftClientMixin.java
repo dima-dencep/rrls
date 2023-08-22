@@ -1,7 +1,6 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.text.Text;
@@ -12,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -32,8 +30,8 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void onResourceReloadFailure(Throwable exception, Text resourceName, CallbackInfo ci) {
-        if (!Rrls.config.resetResources) {
-            Rrls.logger.error("Caught error loading resourcepacks!", exception);
+        if (!Rrls.MOD_CONFIG.resetResources) {
+            Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
             this.reloadResources(true).thenRun(() -> this.showResourceReloadFailureToast(resourceName));
 
@@ -53,19 +51,5 @@ public abstract class MinecraftClientMixin {
     )
     public Overlay fixOverlayUsage(MinecraftClient instance) {
         return Rrls.tryGetOverlay(instance.overlay);
-    }
-
-    @Inject(
-            method = "getOverlay",
-            at = @At(
-                    value = "HEAD"
-            )
-    )
-    public void getOverlay(CallbackInfoReturnable<Overlay> cir) { // TODO rewrite
-        if (cir.getReturnValue() instanceof SplashAccessor accessor && accessor.isAttached()) {
-            Class<?> callerClass = Rrls.classWalker.getCallerClass();
-
-            Rrls.logger.warn("Illegal getOverlay access: {}", callerClass.getName());
-        }
     }
 }

@@ -1,16 +1,16 @@
 modLoader = "javafml"
 loaderVersion = "*"
-issueTrackerURL = "https://github.com/dimadencep/RemoveReloadingScreen/issues"
+issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
 license = "AGPL-3.0-only"
 
 [[mods]]
 modId = "rrls"
 version = "${version}"
-displayURL = "https://modrinth.com/mod/rrls"
+displayURL = "https://curseforge.com/minecraft/mc-mods/rrls"
 displayName = "Remove Reloading Screen"
 updateJSONURL = "https://api.modrinth.com/updates/rrls/forge_updates.json"
 authors = "dima_dencep"
-description = "Removes the resources reload screen, and leaves the game available"
+description = "Makes resource packs load in the background, allowing you to do other things while waiting!"
 logoFile = "icon.png"
 
 [[dependencies.rrls]]
