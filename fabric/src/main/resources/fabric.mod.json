@@ -32,5 +32,16 @@
     "fabric-api": "*",
     "minecraft": "~1.20",
     "cloth-config": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://curseforge.com/minecraft/mc-mods/rrls",
+        "modmenu.discord": "https://discord.gg/jdB5JYX7W7",
+        "modmenu.donate": "https://www.donationalerts.com/c/dima_dencep",
+        "modmenu.github_releases": "https://github.com/dima-dencep/rrls/releases",
+        "modmenu.modrinth": "https://modrinth.com/mod/rrls"
+      }
+    }
   }
 }
