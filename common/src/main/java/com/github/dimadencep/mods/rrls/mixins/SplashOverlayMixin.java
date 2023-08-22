@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -25,7 +26,8 @@ import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay implements SplashAccessor {
-    public boolean rrls_attach;
+    @Unique
+    public boolean rrls$attach;
     @Shadow
     @Final
     private ResourceReload reload;
@@ -55,24 +57,25 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls_attach = (reloading && Rrls.MOD_CONFIG.enabled) || (!reloading && Rrls.MOD_CONFIG.loadingScreenHide);
+        this.rrls$attach = (reloading && Rrls.MOD_CONFIG.enabled) || (!reloading && Rrls.MOD_CONFIG.loadingScreenHide);
     }
 
     @Override
     public boolean rrls$isAttached() {
-        return this.rrls_attach;
+        return this.rrls$attach;
     }
 
 
     @Inject(
             method = "pausesGame",
             at = @At(
-                    value = "TAIL"
+                    value = "HEAD"
             ),
             cancellable = true
     )
     public void pauses(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!this.rrls_attach);
+        if (this.rrls$attach)
+            cir.setReturnValue(false);
     }
 
     @Override
@@ -82,10 +85,19 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
         int i = context.getScaledWindowWidth();
         int j = context.getScaledWindowHeight();
 
-        int s = (int) ((double) j * 0.8325);
-        int r = (int) (Math.min(i * 0.75, j) * 0.5);
+        switch (Rrls.MOD_CONFIG.type) {
+            case PROGRESS -> {
+                int s = (int) ((double) j * 0.8325);
+                int r = (int) (Math.min(i * 0.75, j) * 0.5);
 
-        this.renderProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+                this.renderProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+            }
+
+            case TEXT -> context.drawCenteredTextWithShadow(
+                    client.textRenderer, Rrls.MOD_CONFIG.reloadText, i / 2, 70,
+                    Rrls.MOD_CONFIG.rgbProgress ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
+            );
+        }
     }
 
     @Override
@@ -127,7 +139,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             cancellable = true
     )
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.rrls_attach)
+        if (this.rrls$attach)
             ci.cancel();
     }
 
@@ -139,7 +151,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     public int rainbowProgress(int alpha, int red, int green, int blue) {
-        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls_attach) {
+        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(alpha, ColorHelper.Argb.getRed(baseColor), ColorHelper.Argb.getGreen(baseColor), ColorHelper.Argb.getBlue(baseColor));

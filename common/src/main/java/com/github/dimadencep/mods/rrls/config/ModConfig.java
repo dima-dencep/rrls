@@ -7,13 +7,23 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = "rrls")
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
+
     @ConfigEntry.Gui.Tooltip
     public boolean rgbProgress = false;
+
     @ConfigEntry.Gui.Tooltip
     public boolean loadingScreenHide = false;
+
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public ShowIn showIn = ShowIn.ALL;
+
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    public Type type = Type.PROGRESS;
+
+    public String reloadText = "";
+
     public boolean resetResources = false;
+
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
 
@@ -34,5 +44,10 @@ public class ModConfig implements ConfigData {
                 return this == ONLY_GUI;
             }
         }
+    }
+
+    public enum Type {
+        PROGRESS,
+        TEXT
     }
 }

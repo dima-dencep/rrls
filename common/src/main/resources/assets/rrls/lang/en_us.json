@@ -6,6 +6,8 @@
   "text.autoconfig.rrls.option.loadingScreenHide": "Hide loading screen",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "MAY CAUSE PROBLEMS",
   "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
+  "text.autoconfig.rrls.option.type": "What will be displayed on reloading",
+  "text.autoconfig.rrls.option.reloadText": "The text that will be displayed if TEXT is selected above",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",
   "text.autoconfig.rrls.option.reInitScreen": "Reinitializing the current screen after a reload",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete"
