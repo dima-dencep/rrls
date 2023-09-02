@@ -38,19 +38,17 @@ public class RrlsForge extends Rrls {
 
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
-        if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.render(event.getGuiGraphics(), true);
+        getAccessor().ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), true));
     }
 
     @SubscribeEvent
     public void onScreenRender(ScreenEvent.Render event) {
-        if (this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.render(event.getGuiGraphics(), false);
+        getAccessor().ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), false));
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && this.client.overlay instanceof SplashAccessor accessor && accessor.isAttached())
-            accessor.reload();
+        if (event.phase == TickEvent.Phase.START)
+            getAccessor().ifPresent(SplashAccessor::rrls$reload);
     }
 }

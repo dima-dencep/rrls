@@ -10,20 +10,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 
 public class Rrls {
-    public static final StackWalker classWalker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
-    public static final ModConfig config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
-    public static final Logger logger = LogManager.getLogger("RRLS");
-
-    protected final MinecraftClient client = MinecraftClient.getInstance();
+    public static final ModConfig MOD_CONFIG = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).get();
+    public static final Logger LOGGER = LogManager.getLogger("rrls");
 
     @Nullable
     public static Overlay tryGetOverlay(Overlay original) {
-        if (original instanceof SplashAccessor accessor && accessor.isAttached()) {
+        if (original instanceof SplashAccessor accessor && accessor.rrls$isAttached()) {
             return null;
         }
 
         return original;
+    }
+
+    public static Optional<SplashAccessor> getAccessor() {
+        return Optional.ofNullable(MinecraftClient.getInstance().overlay instanceof SplashAccessor accessor && accessor.rrls$isAttached() ? accessor : null);
     }
 }

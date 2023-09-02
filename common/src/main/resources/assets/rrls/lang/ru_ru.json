@@ -6,6 +6,8 @@
   "text.autoconfig.rrls.option.loadingScreenHide": "Прятать загрузочный экран",
   "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
   "text.autoconfig.rrls.option.showIn": "Отображение процесса перезагрузки ресурсов",
+  "text.autoconfig.rrls.option.type": "Что будет отображаться при перезагрузке",
+  "text.autoconfig.rrls.option.reloadText": "Текст, который будет отображаться, если выше выбран пункт TEXT",
   "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",
   "text.autoconfig.rrls.option.reInitScreen": "Повторная инициализация текущего экрана после перезагрузки",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки"
