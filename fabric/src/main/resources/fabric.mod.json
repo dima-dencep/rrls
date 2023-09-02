@@ -34,6 +34,9 @@
     "cloth-config": "*"
   },
   "custom": {
+    "dynamic_fps": {
+      "optimized_overlay": false
+    },
     "modmenu": {
       "links": {
         "modmenu.curseforge": "https://curseforge.com/minecraft/mc-mods/rrls",
