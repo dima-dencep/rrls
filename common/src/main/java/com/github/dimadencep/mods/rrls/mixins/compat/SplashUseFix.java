@@ -10,7 +10,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = {GameRenderer.class, Keyboard.class, Mouse.class})
+@Mixin(value = {
+        GameRenderer.class,
+        Keyboard.class,
+        Mouse.class
+})
 public class SplashUseFix {
     @Redirect(
             method = "*",

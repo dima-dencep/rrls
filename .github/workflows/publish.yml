@@ -50,9 +50,10 @@ jobs:
 
       - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
+        if: false
         with:
-          modrinth-id: ZP7xHXtw
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          #modrinth-id: ZP7xHXtw
+          #modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -65,13 +66,14 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
-          version-type: release
+          version-type: beta
 
-          loaders: forge
+          loaders: |
+            forge
+            neoforge
 
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-            1.20
           
           dependencies: |
             cloth-config
@@ -82,8 +84,8 @@ jobs:
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: ZP7xHXtw
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          #modrinth-id: ZP7xHXtw
+          #modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -96,7 +98,7 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
-          version-type: release
+          version-type: beta
 
           loaders: |
             fabric
@@ -104,12 +106,11 @@ jobs:
 
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-            1.20
           
           dependencies: |
             fabric-api
             cloth-config
-            modmenu(recommended)
+            modmenu(optional)
 
           java: |
             17

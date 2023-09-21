@@ -20,7 +20,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public Type type = Type.PROGRESS;
 
-    public String reloadText = "";
+    public String reloadText = "Edit in config!";
 
     public boolean resetResources = false;
 

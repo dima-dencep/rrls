@@ -20,7 +20,7 @@ public abstract class MinecraftClientMixin {
     protected abstract void showResourceReloadFailureToast(@Nullable Text description);
 
     @Shadow
-    protected abstract CompletableFuture<Void> reloadResources(boolean force);
+    protected abstract CompletableFuture<Void> reloadResources(boolean force, @Nullable MinecraftClient.LoadingContext loadingContext);
 
     @Inject(
             method = "onResourceReloadFailure",
@@ -29,11 +29,11 @@ public abstract class MinecraftClientMixin {
             ),
             cancellable = true
     )
-    public void onResourceReloadFailure(Throwable exception, Text resourceName, CallbackInfo ci) {
+    public void onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
         if (!Rrls.MOD_CONFIG.resetResources) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
-            this.reloadResources(true).thenRun(() -> this.showResourceReloadFailureToast(resourceName));
+            this.reloadResources(true, loadingContext).thenRun(() -> this.showResourceReloadFailureToast(resourceName));
 
             ci.cancel();
         }
