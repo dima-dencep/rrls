@@ -1,10 +1,10 @@
 {
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "text.autoconfig.rrls.option.enabled": "Схаваць экраны перазагрузкі",
+  "text.autoconfig.rrls.option.hideType": "Схаваць экраны перазагрузкі",
   "text.autoconfig.rrls.option.rgbProgress": "Каляровы радок прагрэсу",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖА ВЫКЛІКАЦЬ ЭПІЛЕПСІЮ",
-  "text.autoconfig.rrls.option.loadingScreenHide": "Схаваць экраны загрузкі",
-  "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "МОГУЦЬ УЗНІКНУЦЬ ПРАБЛЕМЫ",
+  "text.autoconfig.rrls.option.ignoreScreen": "Схаваць экраны загрузкі",
+  "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "МОГУЦЬ УЗНІКНУЦЬ ПРАБЛЕМЫ",
   "text.autoconfig.rrls.option.showIn": "Адлюстраванне прагрэссу перазагрузкі пакетаў рэсурсаў",
   "text.autoconfig.rrls.option.resetResources": "Скідваць пакеты рэсурсаў, калі не атрымалася загрузіць",
   "text.autoconfig.rrls.option.reInitScreen": "Рэініцыялізацыя бягучага экрана пасля перазагрузкі",

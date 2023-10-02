@@ -1,16 +1,13 @@
 {
   "text.autoconfig.rrls.title": "Remover tela de recarga",
-  "rrls.reloadresources": "Recarregando recursos...",
-  "rrls.alreadyReloading": "O recarregamento já começou!",
-  "text.autoconfig.rrls.option.enabled": "Ocultar tela de recarga",
-  "text.autoconfig.rrls.option.rgbText": "Texto colorido ao recarregar",
-  "text.autoconfig.rrls.option.rgbText.@Tooltip": "PODE CAUSAR EPILEPSIA",
-  "text.autoconfig.rrls.option.loadingScreenHide": "Ocultar tela de carregamento",
-  "text.autoconfig.rrls.option.loadingScreenHide.@Tooltip": "PODE CAUSAR PROBLEMAS",
+  "text.autoconfig.rrls.option.hideType": "Ocultar tela de recarga",
+  "text.autoconfig.rrls.option.rgbProgress": "Texto colorido ao recarregar",
+  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "PODE CAUSAR EPILEPSIA",
+  "text.autoconfig.rrls.option.ignoreScreen": "Ocultar tela de carregamento",
+  "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "PODE CAUSAR PROBLEMAS",
   "text.autoconfig.rrls.option.showIn": "Exibição do processo de recarga de recursos",
   "text.autoconfig.rrls.option.resetResources": "Redefinir recursos quando falha no carregamento",
   "text.autoconfig.rrls.option.reInitScreen": "Reiniciando a tela atual após uma recarga",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Desativar esse recurso pode eliminar o desligamento após a conclusão do recarregamento",
-  "text.autoconfig.rrls.option.reloadText": "Recarregar texto",
-  "text.autoconfig.rrls.option.reloadText.@Tooltip": "Suporta localização"
+  "text.autoconfig.rrls.option.reloadText": "Recarregar texto"
 }
