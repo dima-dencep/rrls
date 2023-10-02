@@ -60,7 +60,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             if (reloading) {
                 this.rrls$attach = AttachType.HIDE;
             } else {
-                this.rrls$attach = Rrls.MOD_CONFIG.ignoreScreen ? AttachType.HIDE : AttachType.WAIT;
+                this.rrls$attach = client.currentScreen != null ? AttachType.HIDE : AttachType.WAIT;
             }
         }
     }

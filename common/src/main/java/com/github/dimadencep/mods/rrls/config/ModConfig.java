@@ -12,9 +12,6 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean rgbProgress = false;
 
-    @ConfigEntry.Gui.Tooltip
-    public boolean ignoreScreen = false;
-
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public ShowIn showIn = ShowIn.ALL;
 
