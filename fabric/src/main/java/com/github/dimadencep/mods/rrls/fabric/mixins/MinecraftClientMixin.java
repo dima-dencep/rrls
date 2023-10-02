@@ -18,6 +18,6 @@ public class MinecraftClientMixin {
             )
     )
     public void handleReload(boolean tick, CallbackInfo ci) {
-        RrlsFabric.getAccessor().ifPresent(SplashAccessor::rrls$reload);
+        RrlsFabric.getAccessor(SplashAccessor.AttachType.HIDE).ifPresent(SplashAccessor::rrls$reload);
     }
 }

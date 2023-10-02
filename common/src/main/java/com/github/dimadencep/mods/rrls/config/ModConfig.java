@@ -6,13 +6,14 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "rrls")
 public class ModConfig implements ConfigData {
-    public boolean enabled = true;
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    public HideType hideType = HideType.RELOADING;
 
     @ConfigEntry.Gui.Tooltip
     public boolean rgbProgress = false;
 
     @ConfigEntry.Gui.Tooltip
-    public boolean loadingScreenHide = false;
+    public boolean ignoreScreen = false;
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public ShowIn showIn = ShowIn.ALL;
@@ -42,6 +43,25 @@ public class ModConfig implements ConfigData {
                 return this == ONLY_GAME;
             } else {
                 return this == ONLY_GUI;
+            }
+        }
+    }
+
+    public enum HideType {
+        ALL,
+        LOADING,
+        RELOADING,
+        NONE;
+
+        public boolean canHide(boolean reloading) {
+            if (this == NONE) return false;
+
+            if (this == ALL) return true;
+
+            if (reloading) {
+                return this == RELOADING;
+            } else {
+                return this == LOADING;
             }
         }
     }

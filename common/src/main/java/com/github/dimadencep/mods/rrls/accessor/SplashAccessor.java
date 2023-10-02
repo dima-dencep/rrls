@@ -4,9 +4,19 @@ import net.minecraft.client.gui.DrawContext;
 
 public interface SplashAccessor {
 
-    boolean rrls$isAttached();
+    default AttachType rrls$getAttachType() {
+        return AttachType.DEFAULT;
+    }
 
-    void rrls$render(DrawContext context, boolean isGame);
+    default void rrls$render(DrawContext context, boolean isGame) {
+    }
 
-    void rrls$reload();
+    default void rrls$reload() {
+    }
+
+    enum AttachType {
+        DEFAULT,
+        HIDE,
+        WAIT
+    }
 }

@@ -1,7 +1,6 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Overlay;
@@ -25,9 +24,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
-public abstract class SplashOverlayMixin extends Overlay implements SplashAccessor {
+public abstract class SplashOverlayMixin extends Overlay {
     @Unique
-    public boolean rrls$attach;
+    public AttachType rrls$attach = AttachType.DEFAULT;
     @Shadow
     @Final
     private ResourceReload reload;
@@ -57,14 +56,19 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls$attach = (reloading && Rrls.MOD_CONFIG.enabled) || (!reloading && Rrls.MOD_CONFIG.loadingScreenHide);
+        if (Rrls.MOD_CONFIG.hideType.canHide(reloading)) {
+            if (reloading) {
+                this.rrls$attach = AttachType.HIDE;
+            } else {
+                this.rrls$attach = Rrls.MOD_CONFIG.ignoreScreen ? AttachType.HIDE : AttachType.WAIT;
+            }
+        }
     }
 
     @Override
-    public boolean rrls$isAttached() {
+    public AttachType rrls$getAttachType() {
         return this.rrls$attach;
     }
-
 
     @Inject(
             method = "pausesGame",
@@ -74,7 +78,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             cancellable = true
     )
     public void pauses(CallbackInfoReturnable<Boolean> cir) {
-        if (this.rrls$attach)
+        if (this.rrls$attach == AttachType.HIDE)
             cir.setReturnValue(false);
     }
 
@@ -139,8 +143,13 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             cancellable = true
     )
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.rrls$attach)
+        if (this.client.currentScreen != null && this.rrls$attach == AttachType.WAIT) {
+            this.rrls$attach = AttachType.HIDE;
+        }
+
+        if (this.rrls$attach == AttachType.HIDE) {
             ci.cancel();
+        }
     }
 
     @Redirect(
@@ -151,7 +160,7 @@ public abstract class SplashOverlayMixin extends Overlay implements SplashAccess
             )
     )
     public int rainbowProgress(int alpha, int red, int green, int blue) {
-        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach) {
+        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach != AttachType.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(alpha, ColorHelper.Argb.getRed(baseColor), ColorHelper.Argb.getGreen(baseColor), ColorHelper.Argb.getBlue(baseColor));

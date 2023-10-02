@@ -50,6 +50,6 @@ public abstract class MinecraftClientMixin {
             )
     )
     public Overlay fixOverlayUsage(MinecraftClient instance) {
-        return Rrls.tryGetOverlay(instance.overlay);
+        return Rrls.tryGetOverlay();
     }
 }

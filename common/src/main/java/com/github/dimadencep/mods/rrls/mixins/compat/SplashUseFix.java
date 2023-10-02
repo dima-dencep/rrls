@@ -24,6 +24,6 @@ public class SplashUseFix {
             )
     )
     public Overlay fix(MinecraftClient instance) {
-        return Rrls.tryGetOverlay(instance.overlay);
+        return Rrls.tryGetOverlay();
     }
 }

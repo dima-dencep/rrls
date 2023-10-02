@@ -17,15 +17,12 @@ public class Rrls {
     public static final Logger LOGGER = LogManager.getLogger("rrls");
 
     @Nullable
-    public static Overlay tryGetOverlay(Overlay original) {
-        if (original instanceof SplashAccessor accessor && accessor.rrls$isAttached()) {
-            return null;
-        }
-
-        return original;
+    public static Overlay tryGetOverlay() {
+        return Rrls.getAccessor(SplashAccessor.AttachType.DEFAULT).orElse(Rrls.getAccessor(SplashAccessor.AttachType.WAIT).orElse(null));
     }
 
-    public static Optional<SplashAccessor> getAccessor() {
-        return Optional.ofNullable(MinecraftClient.getInstance().overlay instanceof SplashAccessor accessor && accessor.rrls$isAttached() ? accessor : null);
+    public static Optional<Overlay> getAccessor(SplashAccessor.AttachType type) {
+        return Optional.ofNullable(MinecraftClient.getInstance().overlay)
+                .filter(accessor -> accessor.rrls$getAttachType() == type);
     }
 }
