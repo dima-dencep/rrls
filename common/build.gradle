@@ -12,6 +12,10 @@ dependencies {
     modImplementation "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
 }
 
+jar {
+    from rootProject.file("LICENSE")
+}
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {

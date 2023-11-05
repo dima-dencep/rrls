@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "*"
 issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
-license = "AGPL-3.0-only"
+license = "OSL-3.0"
 
 [[mods]]
 modId = "rrls"

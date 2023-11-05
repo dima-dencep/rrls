@@ -12,7 +12,7 @@
     "sources": "https://github.com/dima-dencep/rrls",
     "issues": "https://github.com/dima-dencep/rrls/issues"
   },
-  "license": "AGPL-3.0-only",
+  "license": "OSL-3.0",
   "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
