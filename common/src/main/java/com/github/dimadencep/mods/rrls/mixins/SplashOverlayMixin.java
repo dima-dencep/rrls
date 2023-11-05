@@ -80,6 +80,11 @@ public abstract class SplashOverlayMixin extends Overlay {
         return this.rrls$attach;
     }
 
+    @Override
+    public void rrls$setAttachType(AttachType type) {
+        rrls$attach = type;
+    }
+
     @Inject(
             method = "pausesGame",
             at = @At(

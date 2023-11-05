@@ -18,6 +18,9 @@ public interface SplashAccessor {
         return AttachType.DEFAULT;
     }
 
+    default void rrls$setAttachType(AttachType type) {
+    }
+
     default void rrls$render(DrawContext context, boolean isGame) {
     }
 

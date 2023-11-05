@@ -28,7 +28,9 @@ public class Rrls {
 
     @Nullable
     public static Overlay tryGetOverlay() {
-        return Rrls.getAccessor(SplashAccessor.AttachType.DEFAULT).orElse(Rrls.getAccessor(SplashAccessor.AttachType.WAIT).orElse(null));
+        return Rrls.getAccessor(SplashAccessor.AttachType.DEFAULT)
+                .orElse(Rrls.getAccessor(SplashAccessor.AttachType.WAIT)
+                        .orElse(null));
     }
 
     public static Optional<Overlay> getAccessor(SplashAccessor.AttachType type) {
