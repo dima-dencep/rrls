@@ -1,7 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "8.1.1" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.3-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.2" apply false
     id "io.github.p03w.machete" version "2.+" apply false
 }
