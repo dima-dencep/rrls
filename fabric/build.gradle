@@ -2,8 +2,6 @@ plugins {
     id "com.github.johnrengelman.shadow"
 }
 
-version = version + "-fabric"
-
 architectury {
     platformSetupLoomIde()
     fabric()
@@ -52,9 +50,10 @@ shadowJar {
 
 remapJar {
     injectAccessWidener = true
-    input.set shadowJar.archiveFile
+
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier.set null
+    archiveClassifier.set project.name
 }
 
 jar {
