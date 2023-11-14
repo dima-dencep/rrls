@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.accessor;
 
 import net.minecraft.client.gui.DrawContext;
 
+@SuppressWarnings("unused")
 public interface SplashAccessor {
 
     default AttachType rrls$getAttachType() {
