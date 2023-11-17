@@ -14,16 +14,16 @@ import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import com.github.dimadencep.mods.rrls.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RenderGuiEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkConstants;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.IExtensionPoint;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.network.NetworkConstants;
 
 @Mod("rrls")
 public class RrlsForge extends Rrls {
@@ -36,7 +36,7 @@ public class RrlsForge extends Rrls {
                 )
         );
 
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerExtensionPoint(
                 ConfigScreenHandler.ConfigScreenFactory.class,
@@ -48,17 +48,20 @@ public class RrlsForge extends Rrls {
 
     @SubscribeEvent
     public void onRenderGui(RenderGuiEvent.Pre event) {
-        getAccessor().ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), true));
+        getAccessor(SplashAccessor.AttachType.HIDE)
+                .ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), true));
     }
 
     @SubscribeEvent
-    public void onScreenRender(ScreenEvent.Render event) {
-        getAccessor().ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), false));
+    public void onScreenRender(ScreenEvent.Render.Post event) {
+        getAccessor(SplashAccessor.AttachType.HIDE)
+                .ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), false));
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.START)
-            getAccessor().ifPresent(SplashAccessor::rrls$reload);
+            getAccessor(SplashAccessor.AttachType.HIDE)
+                    .ifPresent(SplashAccessor::rrls$reload);
     }
 }

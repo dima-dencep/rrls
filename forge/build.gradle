@@ -4,19 +4,11 @@ plugins {
 
 architectury {
     platformSetupLoomIde()
-    forge()
+    neoForge()
 }
 
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-
-        mixinConfig "rrls-common.mixins.json"
-        mixinConfig "rrls.mixins.json"
-    }
 }
 
 configurations {
@@ -24,16 +16,16 @@ configurations {
     shadowCommon
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
+    developmentNeoForge.extendsFrom common
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    neoForge "net.neoforged:neoforge:${rootProject.forge_version}"
 
-    modApi("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+    modApi("me.shedaniel.cloth:cloth-config-neoforge:${rootProject.cloth_config_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
 processResources {
@@ -52,6 +44,8 @@ shadowJar {
 }
 
 remapJar {
+    atAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+
     inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
     archiveClassifier.set project.name
@@ -75,7 +69,7 @@ components.java {
 
 publishing {
     publications {
-        mavenForge(MavenPublication) {
+        mavenNeoForge(MavenPublication) {
             artifactId = rootProject.archives_base_name + "-" + project.name
             from components.java
         }

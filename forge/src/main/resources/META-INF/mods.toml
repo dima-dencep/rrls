@@ -13,8 +13,13 @@ authors = "dima_dencep"
 description = "Makes resource packs load in the background, allowing you to do other things while waiting!"
 logoFile = "icon.png"
 
+[[mixins]]
+config = "rrls.mixins.json"
+[[mixins]]
+config = "rrls-common.mixins.json"
+
 [[dependencies.rrls]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
 versionRange = "*"
 ordering = "NONE"
