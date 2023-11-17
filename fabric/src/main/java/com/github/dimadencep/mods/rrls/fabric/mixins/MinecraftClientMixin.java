@@ -27,7 +27,8 @@ public class MinecraftClientMixin {
                     target = "Lnet/minecraft/client/render/GameRenderer;render(FJZ)V"
             )
     )
-    public void handleReload(boolean tick, CallbackInfo ci) {
-        RrlsFabric.getAccessor(SplashAccessor.AttachType.HIDE).ifPresent(SplashAccessor::rrls$reload);
+    public void rrls$handleReload(boolean tick, CallbackInfo ci) {
+        RrlsFabric.getAccessor(SplashAccessor.AttachType.HIDE)
+                .ifPresent(SplashAccessor::rrls$reload);
     }
 }

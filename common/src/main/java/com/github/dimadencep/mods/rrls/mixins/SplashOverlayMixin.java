@@ -67,7 +67,7 @@ public abstract class SplashOverlayMixin extends Overlay {
                     value = "TAIL"
             )
     )
-    private void init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
+    private void rrls$init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
         if (Rrls.MOD_CONFIG.hideType.canHide(reloading)) {
             if (reloading) {
                 this.rrls$attach = AttachType.HIDE;
@@ -94,7 +94,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             ),
             cancellable = true
     )
-    public void pauses(CallbackInfoReturnable<Boolean> cir) {
+    public void rrls$pauses(CallbackInfoReturnable<Boolean> cir) {
         if (this.rrls$attach == AttachType.HIDE)
             cir.setReturnValue(false);
     }
@@ -159,7 +159,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             ),
             cancellable = true
     )
-    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.client.currentScreen != null && this.rrls$attach == AttachType.WAIT) {
             this.rrls$attach = AttachType.HIDE;
         }
@@ -176,7 +176,7 @@ public abstract class SplashOverlayMixin extends Overlay {
                     target = "Lnet/minecraft/util/math/ColorHelper$Argb;getArgb(IIII)I"
             )
     )
-    public int rainbowProgress(int alpha, int red, int green, int blue) {
+    public int rrls$rainbowProgress(int alpha, int red, int green, int blue) {
         if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach != AttachType.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
@@ -193,7 +193,7 @@ public abstract class SplashOverlayMixin extends Overlay {
                     ordinal = 0
             )
     )
-    public float setFadeTime(float instance) {
+    public float rrls$changeAnimationSpeed(float instance) {
         return Rrls.MOD_CONFIG.animationSpeed;
     }
 }

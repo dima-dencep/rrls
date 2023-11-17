@@ -39,7 +39,7 @@ public abstract class MinecraftClientMixin {
             ),
             cancellable = true
     )
-    public void onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
+    public void rrls$onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
         if (!Rrls.MOD_CONFIG.resetResources) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
@@ -59,7 +59,7 @@ public abstract class MinecraftClientMixin {
                     target = "Lnet/minecraft/client/MinecraftClient;overlay:Lnet/minecraft/client/gui/screen/Overlay;"
             )
     )
-    public Overlay fixOverlayUsage(MinecraftClient instance) {
+    public Overlay rrls$safeOverlays(MinecraftClient instance) {
         return Rrls.tryGetOverlay();
     }
 }

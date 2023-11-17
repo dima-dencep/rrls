@@ -50,7 +50,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             ),
             cancellable = true
     )
-    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.minecraft.currentScreen != null && rrls$getAttachType() == SplashAccessor.AttachType.WAIT) {
             rrls$setAttachType(SplashAccessor.AttachType.HIDE);
         }
@@ -69,7 +69,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
                     ordinal = 0
             )
     )
-    public float setFadeTime(float instance) {
+    public float rrls$changeAnimationSpeed(float instance) {
         return Rrls.MOD_CONFIG.animationSpeed;
     }
 }

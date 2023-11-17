@@ -25,7 +25,7 @@ public class TitleScreenMixin {
                     ordinal = 0
             )
     )
-    public float setFadeTime(float instance) {
+    public float rrls$changeAnimationSpeed(float instance) {
         return Rrls.MOD_CONFIG.animationSpeed;
     }
 }

@@ -33,7 +33,7 @@ public class SplashUseFix {
                     target = "Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;"
             )
     )
-    public Overlay fix(MinecraftClient instance) {
+    public Overlay rrls$removeStuckOverlay(MinecraftClient instance) {
         return Rrls.tryGetOverlay();
     }
 }
