@@ -50,10 +50,9 @@ jobs:
 
       - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
-        if: false
         with:
-          #modrinth-id: ZP7xHXtw
-          #modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-id: ZP7xHXtw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -83,8 +82,8 @@ jobs:
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          #modrinth-id: ZP7xHXtw
-          #modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-id: ZP7xHXtw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
