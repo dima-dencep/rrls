@@ -6,6 +6,7 @@
   "client": [
     "MinecraftClientMixin",
     "SplashOverlayMixin",
+    "TitleScreenMixin",
     "compat.OverlayMixin",
     "compat.SplashUseFix"
   ],

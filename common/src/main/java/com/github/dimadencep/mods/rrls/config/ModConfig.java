@@ -35,6 +35,9 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
 
+    @ConfigEntry.Gui.Tooltip
+    public float animationSpeed = 1000.0F;
+
     public enum ShowIn {
         DISABLED,
         ONLY_GAME,

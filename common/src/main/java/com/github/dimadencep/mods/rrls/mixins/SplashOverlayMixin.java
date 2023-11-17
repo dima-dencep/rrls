@@ -24,7 +24,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -182,5 +184,16 @@ public abstract class SplashOverlayMixin extends Overlay {
         }
 
         return ColorHelper.Argb.getArgb(alpha, red, green, blue);
+    }
+
+    @ModifyConstant(
+            method = "render",
+            constant = @Constant(
+                    floatValue = 1000.0F,
+                    ordinal = 0
+            )
+    )
+    public float setFadeTime(float instance) {
+        return Rrls.MOD_CONFIG.animationSpeed;
     }
 }
