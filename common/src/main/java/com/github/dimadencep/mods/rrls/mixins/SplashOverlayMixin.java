@@ -191,7 +191,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             constant = @Constant(
                     floatValue = 1000.0F,
                     ordinal = 0
-            )
+            ),
+            require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
         return Rrls.MOD_CONFIG.animationSpeed;
