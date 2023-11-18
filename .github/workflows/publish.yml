@@ -61,7 +61,7 @@ jobs:
             forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             forge/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: [NeoForge ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
+          name: "[NeoForge ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
@@ -92,7 +92,7 @@ jobs:
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             fabric/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: [Fabric ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
+          name: "[Fabric ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
@@ -123,7 +123,7 @@ jobs:
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             fabric/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: [${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
+          name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
