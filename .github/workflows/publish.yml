@@ -46,7 +46,7 @@ jobs:
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: './gradle.properties'
-          properties: 'archives_base_name mod_version minecraft_version'
+          properties: 'mod_version minecraft_version'
 
       - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3
@@ -61,7 +61,7 @@ jobs:
             forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             forge/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }} (Forge)
+          name: [NeoForge ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
@@ -92,7 +92,7 @@ jobs:
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             fabric/build/libs/*-@(dev|sources|javadoc).jar
 
-          name: ${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }} (Fabric/Quilt)
+          name: [Fabric ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
@@ -112,13 +112,19 @@ jobs:
           java: |
             17
 
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Publish Fabric & Forge to Github
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
-          prerelease: false
-          title: "${{ steps.read_property.outputs.archives_base_name }} ${{ steps.read_property.outputs.mod_version }} for ${{ steps.read_property.outputs.minecraft_version }}"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
           files: |
-            fabric/build/libs/*
-            forge/build/libs/*
+            forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+            forge/build/libs/*-@(dev|sources|javadoc).jar
+            fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+            fabric/build/libs/*-@(dev|sources|javadoc).jar
+
+          name: [${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}
+
+          changelog: ${{steps.build_changelog.outputs.changelog}}
+
+          version-type: release
