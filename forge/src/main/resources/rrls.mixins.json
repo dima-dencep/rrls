@@ -4,8 +4,7 @@
   "package": "com.github.dimadencep.mods.rrls.forge.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "ForgeLoadingOverlayMixin",
-    "compat.UtilsMixin"
+    "ForgeLoadingOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
