@@ -69,14 +69,6 @@ allprojects {
 
     publishing {
         repositories {
-            maven {
-                name = "ConstructLegacy"
-                url = "https://repo.constructlegacy.ru/public"
-                credentials {
-                    username = System.getenv("MAVEN_USERNAME")
-                    password = System.getenv("MAVEN_PASSWORD")
-                }
-            }
         }
     }
 }
