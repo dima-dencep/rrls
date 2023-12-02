@@ -4,6 +4,7 @@ issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
 license = "OSL-3.0"
 
 [[mods]]
+displayTest = "IGNORE_SERVER_VERSION"
 modId = "rrls"
 version = "${version}"
 displayURL = "https://curseforge.com/minecraft/mc-mods/rrls"

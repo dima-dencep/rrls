@@ -14,31 +14,21 @@ import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import com.github.dimadencep.mods.rrls.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.ConfigScreenHandler;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.IExtensionPoint;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.network.NetworkConstants;
 
 @Mod("rrls")
 public class RrlsForge extends Rrls {
-    public RrlsForge() {
-        ModLoadingContext.get().registerExtensionPoint(
-                IExtensionPoint.DisplayTest.class,
-                () -> new IExtensionPoint.DisplayTest(
-                        () -> NetworkConstants.IGNORESERVERONLY,
-                        (a, b) -> true
-                )
-        );
-
+    public RrlsForge(ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(this);
 
-        ModLoadingContext.get().registerExtensionPoint(
+        modContainer.registerExtensionPoint(
                 ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory(
                         (mc, screen) -> AutoConfig.getConfigScreen(ModConfig.class, screen).get()
