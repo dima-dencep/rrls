@@ -49,7 +49,7 @@ allprojects {
     apply plugin: "maven-publish"
 
     archivesBaseName = rootProject.archives_base_name
-    version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}"
+    version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-${project.name}"
     group = rootProject.maven_group
 
     repositories {
@@ -69,7 +69,14 @@ allprojects {
 
     publishing {
         repositories {
-            // Add repositories to publish to here.
+            maven {
+                name = "ConstructLegacy"
+                url = "https://repo.constructlegacy.ru/public"
+                credentials {
+                    username = System.getenv("MAVEN_USERNAME")
+                    password = System.getenv("MAVEN_PASSWORD")
+                }
+            }
         }
     }
 }

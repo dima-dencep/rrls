@@ -48,7 +48,7 @@ remapJar {
 
     inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier.set project.name
+    archiveClassifier.set null
 }
 
 jar {
@@ -70,7 +70,7 @@ components.java {
 publishing {
     publications {
         mavenNeoForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.archives_base_name
             from components.java
         }
     }
