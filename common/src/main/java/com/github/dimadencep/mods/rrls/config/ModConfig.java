@@ -35,7 +35,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
 
-    @ConfigEntry.Gui.Tooltip
+    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public PackStatus earlyPackStatus = PackStatus.SEND_DENY;
 
