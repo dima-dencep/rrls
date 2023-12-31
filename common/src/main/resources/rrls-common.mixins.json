@@ -7,6 +7,7 @@
     "MinecraftClientMixin",
     "SplashOverlayMixin",
     "TitleScreenMixin",
+    "compat.ClientCommonNetworkHandlerMixin",
     "compat.OverlayMixin",
     "compat.SplashUseFix"
   ],

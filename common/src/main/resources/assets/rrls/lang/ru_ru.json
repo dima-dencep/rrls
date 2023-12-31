@@ -11,6 +11,8 @@
   "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",
   "text.autoconfig.rrls.option.reInitScreen": "Повторная инициализация текущего экрана после перезагрузки",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Отключение этой функции может устранить зависание после завершения перезагрузки",
+  "text.autoconfig.rrls.option.earlyPackStatus": "Ранняя отправка статуса о состоянии ресурспака сервера",
+  "text.autoconfig.rrls.option.earlyPackStatus.@Tooltip": "Некоторые серверы специально ждут, пока игрок загрузит ресурсы, из-за этого игра может отображаться некорректно, например, вы оказались под землей во время перезагрузки ресурсов",
   "text.autoconfig.rrls.option.animationSpeed": "Скорость анимации сплеша",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "В милисекундах"
 }

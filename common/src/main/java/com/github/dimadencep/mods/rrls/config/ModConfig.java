@@ -36,6 +36,9 @@ public class ModConfig implements ConfigData {
     public boolean reInitScreen = true;
 
     @ConfigEntry.Gui.Tooltip
+    public PackStatus earlyPackStatus = PackStatus.SEND_DENY;
+
+    @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
 
     public enum ShowIn {
@@ -79,5 +82,15 @@ public class ModConfig implements ConfigData {
     public enum Type {
         PROGRESS,
         TEXT
+    }
+
+    public enum PackStatus {
+        DISABLED,
+        SEND,
+        SEND_DENY;
+
+        public boolean earlySend() {
+            return this == SEND || this == SEND_DENY;
+        }
     }
 }
