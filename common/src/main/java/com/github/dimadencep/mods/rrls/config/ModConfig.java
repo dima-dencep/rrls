@@ -37,7 +37,7 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public PackStatus earlyPackStatus = PackStatus.SEND_DENY;
+    public PackStatus earlyPackStatus = PackStatus.SEND;
 
     @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
