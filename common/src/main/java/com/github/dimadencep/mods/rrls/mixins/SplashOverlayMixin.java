@@ -170,13 +170,15 @@ public abstract class SplashOverlayMixin extends Overlay {
     }
 
     @Unique
-    private float rrls$dvd$x = 0;
+    private static float rrls$dvd$x = 0;
     @Unique
-    private float rrls$dvd$y = 0;
+    private static float rrls$dvd$y = 0;
     @Unique
-    private int rrls$dvd$xdir = 1;
+    private static int rrls$dvd$xdir = 1;
     @Unique
-    private int rrls$dvd$ydir = 1;
+    private static int rrls$dvd$ydir = 1;
+    @Unique
+    private static int rrls$dvd$color = -1;
 
     @Inject(
             method = "renderProgressBar",
@@ -204,6 +206,9 @@ public abstract class SplashOverlayMixin extends Overlay {
         if (rrls$dvd$y > 0.5f) rrls$dvd$ydir = -1;
         if (rrls$dvd$x < 0f) rrls$dvd$xdir = 1;
         if (rrls$dvd$y < 0f) rrls$dvd$ydir = 1;
+
+        if (rrls$dvd$y < 0f || rrls$dvd$x < 0f || rrls$dvd$y > 0.5f || rrls$dvd$x > 0.5f)
+            rrls$dvd$color = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
     }
 
     @Inject(
@@ -225,10 +230,24 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue) {
+        if (Rrls.MOD_CONFIG.aprilFool.canUes() && rrls$dvd$color != -1) {
+            return ColorHelper.Argb.getArgb(
+                    alpha,
+                    ColorHelper.Argb.getRed(rrls$dvd$color),
+                    ColorHelper.Argb.getGreen(rrls$dvd$color),
+                    ColorHelper.Argb.getBlue(rrls$dvd$color)
+            );
+        }
+
         if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach != AttachType.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
-            return ColorHelper.Argb.getArgb(alpha, ColorHelper.Argb.getRed(baseColor), ColorHelper.Argb.getGreen(baseColor), ColorHelper.Argb.getBlue(baseColor));
+            return ColorHelper.Argb.getArgb(
+                    alpha,
+                    ColorHelper.Argb.getRed(baseColor),
+                    ColorHelper.Argb.getGreen(baseColor),
+                    ColorHelper.Argb.getBlue(baseColor)
+            );
         }
 
         return ColorHelper.Argb.getArgb(alpha, red, green, blue);
