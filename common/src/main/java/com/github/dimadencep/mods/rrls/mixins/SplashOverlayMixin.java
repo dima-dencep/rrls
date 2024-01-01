@@ -169,6 +169,54 @@ public abstract class SplashOverlayMixin extends Overlay {
         }
     }
 
+    @Unique
+    private float rrls$dvd$x = 0;
+    @Unique
+    private float rrls$dvd$y = 0;
+    @Unique
+    private int rrls$dvd$xdir = 1;
+    @Unique
+    private int rrls$dvd$ydir = 1;
+
+    @Inject(
+            method = "renderProgressBar",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
+    public void rrls$dvdStart(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+        if (!Rrls.MOD_CONFIG.aprilFool.canUes())
+            return;
+
+        int sx = (drawContext.getScaledWindowWidth() * 2) - (maxX - minX) * 2;
+        float mul = 1f / sx;
+
+        int sy = (drawContext.getScaledWindowHeight() * 2) - (maxY - minY) * 2;
+        float ymul = 1f / sy;
+
+        drawContext.getMatrices().push();
+        drawContext.getMatrices().translate(rrls$dvd$x * sx - minX, rrls$dvd$y * sy - minY, 0.0F);
+
+        rrls$dvd$x += mul * (progress * 5) * rrls$dvd$xdir;
+        rrls$dvd$y += ymul * (progress * 5) * rrls$dvd$ydir;
+
+        if (rrls$dvd$x > 0.5f) rrls$dvd$xdir = -1;
+        if (rrls$dvd$y > 0.5f) rrls$dvd$ydir = -1;
+        if (rrls$dvd$x < 0f) rrls$dvd$xdir = 1;
+        if (rrls$dvd$y < 0f) rrls$dvd$ydir = 1;
+    }
+
+    @Inject(
+            method = "renderProgressBar",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
+    public void rrls$dvdStop(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+        if (Rrls.MOD_CONFIG.aprilFool.canUes())
+            drawContext.getMatrices().pop();
+    }
+
     @Redirect(
             method = "renderProgressBar",
             at = @At(

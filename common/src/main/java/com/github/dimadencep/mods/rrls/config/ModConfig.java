@@ -14,6 +14,8 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
+import java.util.Calendar;
+
 @Config(name = "rrls")
 public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
@@ -41,6 +43,9 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
+
+    @ConfigEntry.Gui.Excluded
+    public AprilFool aprilFool = AprilFool.ON_APRIL;
 
     public enum ShowIn {
         DISABLED,
@@ -92,6 +97,33 @@ public class ModConfig implements ConfigData {
 
         public boolean earlySend() {
             return this == SEND || this == SEND_DENY;
+        }
+    }
+
+    public enum AprilFool {
+        ON_APRIL,
+        ALWAYS,
+        DISABLED;
+
+        private static Calendar calendar;
+
+        public boolean canUes() {
+            if (this == ALWAYS)
+                return true;
+
+            try {
+                if (this == ON_APRIL) {
+                    if (calendar == null) {
+                        calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+                    }
+
+                    return calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DAY_OF_MONTH) == 1;
+                }
+            } catch (Throwable ignored) {
+            }
+
+            return false;
         }
     }
 }
