@@ -28,6 +28,12 @@ public interface SplashAccessor {
     default void rrls$reload() {
     }
 
+    default void rrls$endhook() {
+    }
+
+    default void rrls$progress(float progress) {
+    }
+
     enum AttachType {
         DEFAULT,
         HIDE,

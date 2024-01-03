@@ -11,35 +11,34 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.config.ModConfig;
 import net.minecraft.client.network.ClientCommonNetworkHandler;
+import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
+import net.minecraft.network.packet.s2c.common.ResourcePackSendS2CPacket;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.concurrent.CompletableFuture;
-
 @Mixin(ClientCommonNetworkHandler.class)
 public abstract class ClientCommonNetworkHandlerMixin {
     @Shadow
-    protected abstract void sendResourcePackStatus(ResourcePackStatusC2SPacket.Status status);
+    @Final
+    protected ClientConnection connection;
 
     @Inject(
-            method = "sendResourcePackStatusAfter",
+            method = "onResourcePackSend",
             at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/network/packet/s2c/common/ResourcePackSendS2CPacket;required()Z",
+                    shift = At.Shift.AFTER
+            )
     )
-    public void earlyResourcePackStatusSend(CompletableFuture<?> future, CallbackInfo ci) {
-        if (Rrls.MOD_CONFIG.earlyPackStatus.earlySend()) {
-            sendResourcePackStatus(ResourcePackStatusC2SPacket.Status.SUCCESSFULLY_LOADED);
-        }
-        if (Rrls.MOD_CONFIG.earlyPackStatus == ModConfig.PackStatus.SEND_DENY) {
-            ci.cancel();
+    public void earlyResourcePackStatusSend(ResourcePackSendS2CPacket packet, CallbackInfo ci) {
+        if (Rrls.MOD_CONFIG.earlyPackStatusSend) {
+            this.connection.send(new ResourcePackStatusC2SPacket(packet.id(), ResourcePackStatusC2SPacket.Status.SUCCESSFULLY_LOADED));
         }
     }
 }

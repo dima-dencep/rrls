@@ -13,6 +13,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.MessageScreen;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
@@ -72,7 +73,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             if (reloading) {
                 this.rrls$attach = AttachType.HIDE;
             } else {
-                this.rrls$attach = client.currentScreen != null ? AttachType.HIDE : AttachType.WAIT;
+                this.rrls$attach = client.currentScreen != null && !(client.currentScreen instanceof MessageScreen /* FORGE COMPAT */) ? AttachType.HIDE : AttachType.WAIT;
             }
         }
     }
@@ -131,9 +132,12 @@ public abstract class SplashOverlayMixin extends Overlay {
 
         float t = this.reload.getProgress();
         this.progress = MathHelper.clamp(this.progress * 0.95f + t * 0.050000012f, 0.0f, 1.0f);
+        rrls$progress(this.progress);
 
         if (f >= 2.0f) {
             this.client.setOverlay(null);
+
+            rrls$endhook();
         }
 
         if (this.reloadCompleteTime == -1L && this.reload.isComplete()) {

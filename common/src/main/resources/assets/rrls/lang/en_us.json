@@ -11,9 +11,9 @@
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",
   "text.autoconfig.rrls.option.reInitScreen": "Reinitializing the current screen after a reload",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Disabling this feature may eliminate the hang-up after the reload is complete",
-  "text.autoconfig.rrls.option.earlyPackStatus": "Early sending of status about server resourcepack",
-  "text.autoconfig.rrls.option.earlyPackStatus.@Tooltip[0]": "Some servers specifically wait for the player to load resources, because of this the game may be displayed incorrectly",
-  "text.autoconfig.rrls.option.earlyPackStatus.@Tooltip[1]": "Example: You were underground while reloading resources",
+  "text.autoconfig.rrls.option.earlyPackStatusSend": "Early sending of status about server resourcepack",
+  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]": "Some servers specifically wait for the player to load resources, because of this the game may be displayed incorrectly",
+  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "Example: You were underground while reloading resources",
   "text.autoconfig.rrls.option.animationSpeed": "Splash animation speed",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "In milliseconds"
 }

@@ -15,7 +15,9 @@ import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.resource.ResourceReload;
+import net.neoforged.fml.earlydisplay.DisplayWindow;
 import net.neoforged.fml.loading.progress.ProgressMeter;
 import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
 import org.spongepowered.asm.mixin.Final;
@@ -37,10 +39,26 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
     private MinecraftClient minecraft;
     @Shadow
     @Final
-    private ProgressMeter progress;
+    private ProgressMeter progressMeter;
+    @Shadow
+    @Final
+    private DisplayWindow displayWindow;
+    @Shadow
+    private float currentProgress;
 
     public ForgeLoadingOverlayMixin(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
+    }
+
+    @Override
+    public void rrls$endhook() {
+        progressMeter.complete();
+        displayWindow.close();
+    }
+
+    @Override
+    public void rrls$progress(float progress) {
+        currentProgress = progress;
     }
 
     @Inject(
@@ -51,13 +69,11 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.minecraft.currentScreen != null && rrls$getAttachType() == SplashAccessor.AttachType.WAIT) {
+        if (this.minecraft.currentScreen instanceof TitleScreen && rrls$getAttachType() == SplashAccessor.AttachType.WAIT) {
             rrls$setAttachType(SplashAccessor.AttachType.HIDE);
         }
 
         if (rrls$getAttachType() == SplashAccessor.AttachType.HIDE) {
-            this.progress.complete();
-
             ci.cancel();
         }
     }
