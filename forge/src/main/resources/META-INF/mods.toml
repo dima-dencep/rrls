@@ -33,10 +33,3 @@ type = "required"
 versionRange = "[1.20,)"
 ordering = "NONE"
 side = "BOTH"
-
-[[dependencies.rrls]]
-modId = "cloth_config"
-type = "required"
-versionRange = "*"
-ordering = "NONE"
-side = "CLIENT"

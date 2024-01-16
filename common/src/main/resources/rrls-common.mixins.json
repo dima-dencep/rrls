@@ -7,9 +7,10 @@
     "MinecraftClientMixin",
     "SplashOverlayMixin",
     "TitleScreenMixin",
-    "compat.ServerResourcePackManagerMixin",
     "compat.OverlayMixin",
-    "compat.SplashUseFix"
+    "compat.ServerResourcePackManagerMixin",
+    "compat.SplashUseFix",
+    "workaround.DrawContentMixin"
   ],
   "injectors": {
     "defaultRequire": 1

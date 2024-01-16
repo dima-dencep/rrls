@@ -8,6 +8,8 @@ pluginManagement {
     }
 }
 
+rootProject.name = "rrls"
+
 include("common")
 include("fabric")
 include("forge")

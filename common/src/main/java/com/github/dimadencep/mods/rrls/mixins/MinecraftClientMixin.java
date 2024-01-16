@@ -12,7 +12,9 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -30,20 +31,20 @@ import java.util.concurrent.CompletableFuture;
 public abstract class MinecraftClientMixin {
     @Shadow
     protected abstract void showResourceReloadFailureToast(@Nullable Text description);
-
     @Shadow
     protected abstract CompletableFuture<Void> reloadResources(boolean force, @Nullable MinecraftClient.LoadingContext loadingContext);
+    @Shadow
+    protected abstract void onFinishedLoading(@Nullable MinecraftClient.LoadingContext loadingContext);
 
     @Inject(
-            method = "isFinishedLoading",
+            method = "<init>",
             at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
+                    value = "RETURN"
+            )
     )
-    public void rrls$forceClose(CallbackInfoReturnable<Boolean> cir) {
+    public void rrls$init(RunArgs args, CallbackInfo ci, @Local(ordinal = 0) MinecraftClient.LoadingContext loadingContext) {
         if (ConfigExpectPlatform.forceClose())
-            cir.setReturnValue(true);
+            onFinishedLoading(loadingContext);
     }
 
     @Inject(
