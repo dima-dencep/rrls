@@ -115,6 +115,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+          github-tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
+
           files: |
             forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
