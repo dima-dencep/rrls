@@ -52,7 +52,7 @@ jobs:
           properties: 'mod_version minecraft_version'
 
       - name: Publish Forge to Modrinth & CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           modrinth-id: ZP7xHXtw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
             17
 
       - name: Publish Fabric to Modrinth & CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           modrinth-id: ZP7xHXtw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -111,7 +111,7 @@ jobs:
             17
 
       - name: Publish Fabric & Forge to Github
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
