@@ -1,3 +1,13 @@
+/*
+ * Copyright 2023 dima_dencep.
+ *
+ * Licensed under the Open Software License, Version 3.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ *
+ * You may obtain a copy of the License at
+ *     https://github.com/dima-dencep/rrls/blob/HEAD/LICENSE
+ */
+
 package com.github.dimadencep.mods.rrls.neoforge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
@@ -5,8 +15,11 @@ import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.ShowIn;
 import com.github.dimadencep.mods.rrls.config.Type;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.config.ConfigFileTypeHandler;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -78,16 +91,13 @@ public class ConfigExpectPlatformImpl {
                 .defineEnum("aprilFool", AprilFool.ON_APRIL);
     }
 
-    static {
-        ModList.get().getModContainerById(Rrls.MOD_ID)
-                .ifPresent(
-                        activeContainer -> activeContainer.addConfig(new ModConfig(
-                                ModConfig.Type.CLIENT,
-                                ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue(),
-                                activeContainer,
-                                "rrls.toml")
-                        )
-                );
+    static { // Early loading for config
+        ModContainer activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID).orElseThrow();
+
+        ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue(), activeContainer, "rrls.toml");
+        modConfig.getSpec().acceptConfig(ConfigFileTypeHandler.TOML.reader(FMLPaths.CONFIGDIR.get()).apply(modConfig));
+
+        activeContainer.addConfig(modConfig);
     }
 
     public static HideType hideType() {
