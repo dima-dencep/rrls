@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
-import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import net.minecraft.client.resource.server.PackStateChangeCallback;
 import net.minecraft.client.resource.server.ServerResourcePackManager;
 import org.spongepowered.asm.mixin.Final;
@@ -36,7 +36,7 @@ public class ServerResourcePackManagerMixin {
             )
     )
     public void earlyResourcePackStatusSend(UUID id, ServerResourcePackManager.PackEntry pack, CallbackInfo ci) {
-        if (Rrls.MOD_CONFIG.earlyPackStatusSend) {
+        if (ConfigExpectPlatform.earlyPackStatusSend()) {
             this.stateChangeCallback.onFinish(pack.id, PackStateChangeCallback.FinishState.APPLIED);
         }
     }

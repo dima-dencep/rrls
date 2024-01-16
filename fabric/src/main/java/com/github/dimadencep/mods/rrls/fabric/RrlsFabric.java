@@ -12,11 +12,14 @@ package com.github.dimadencep.mods.rrls.fabric;
 
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 
 public class RrlsFabric extends Rrls implements ClientModInitializer {
+    public static final ConfigExpectPlatformImpl MOD_CONFIG = AutoConfig.register(ConfigExpectPlatformImpl.class, Toml4jConfigSerializer::new).get();
 
     @Override
     public void onInitializeClient() {

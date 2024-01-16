@@ -12,10 +12,7 @@ package com.github.dimadencep.mods.rrls.forge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
-import com.github.dimadencep.mods.rrls.config.ModConfig;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.neoforge.client.ConfigScreenHandler;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -27,13 +24,6 @@ import net.neoforged.fml.common.Mod;
 public class RrlsForge extends Rrls {
     public RrlsForge(ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(this);
-
-        modContainer.registerExtensionPoint(
-                ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory(
-                        (mc, screen) -> AutoConfig.getConfigScreen(ModConfig.class, screen).get()
-                )
-        );
     }
 
     @SubscribeEvent

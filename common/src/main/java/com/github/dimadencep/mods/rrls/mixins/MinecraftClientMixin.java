@@ -10,6 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.mixins;
 
+import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
@@ -41,7 +42,7 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void rrls$forceClose(CallbackInfoReturnable<Boolean> cir) {
-        if (Rrls.MOD_CONFIG.forceClose)
+        if (ConfigExpectPlatform.forceClose())
             cir.setReturnValue(true);
     }
 
@@ -53,7 +54,7 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void rrls$onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
-        if (!Rrls.MOD_CONFIG.resetResources) {
+        if (!ConfigExpectPlatform.resetResources()) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
             this.reloadResources(true, loadingContext).thenRun(() -> this.showResourceReloadFailureToast(resourceName));

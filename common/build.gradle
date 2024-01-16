@@ -8,8 +8,6 @@ loom {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-
-    modImplementation "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
 }
 
 jar {

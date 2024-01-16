@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.forge.mixins;
 
-import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -84,6 +84,6 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return Rrls.MOD_CONFIG.animationSpeed;
+        return ConfigExpectPlatform.animationSpeed();
     }
 }

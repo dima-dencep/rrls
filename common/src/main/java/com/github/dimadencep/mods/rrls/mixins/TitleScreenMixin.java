@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.mixins;
 
-import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import net.minecraft.client.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -27,6 +27,6 @@ public class TitleScreenMixin {
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return Rrls.MOD_CONFIG.animationSpeed;
+        return ConfigExpectPlatform.animationSpeed();
     }
 }

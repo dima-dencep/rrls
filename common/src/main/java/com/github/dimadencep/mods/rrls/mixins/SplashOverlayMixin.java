@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.mixins;
 
-import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Overlay;
@@ -95,12 +95,12 @@ public abstract class SplashOverlayMixin extends Overlay {
 
     @Override
     public void rrls$render(DrawContext context, boolean isGame) {
-        if (!Rrls.MOD_CONFIG.showIn.canShow(isGame)) return;
+        if (!ConfigExpectPlatform.showIn().canShow(isGame)) return;
 
         int i = context.getScaledWindowWidth();
         int j = context.getScaledWindowHeight();
 
-        switch (Rrls.MOD_CONFIG.type) {
+        switch (ConfigExpectPlatform.type()) {
             case PROGRESS -> {
                 int s = (int) ((double) j * 0.8325);
                 int r = (int) (Math.min(i * 0.75, j) * 0.5);
@@ -109,8 +109,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             }
 
             case TEXT -> context.drawCenteredTextWithShadow(
-                    client.textRenderer, Rrls.MOD_CONFIG.reloadText, i / 2, 70,
-                    Rrls.MOD_CONFIG.rgbProgress ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
+                    client.textRenderer, ConfigExpectPlatform.reloadText(), i / 2, 70,
+                    ConfigExpectPlatform.rgbProgress() ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
             );
         }
     }
@@ -143,7 +143,7 @@ public abstract class SplashOverlayMixin extends Overlay {
 
             this.reloadCompleteTime = Util.getMeasuringTimeMs();
 
-            if (Rrls.MOD_CONFIG.reInitScreen && this.client.currentScreen != null) {
+            if (ConfigExpectPlatform.reInitScreen() && this.client.currentScreen != null) {
                 this.client.currentScreen.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());
             }
         }
@@ -182,7 +182,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public void rrls$dvdStart(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
-        if (!Rrls.MOD_CONFIG.aprilFool.canUes())
+        if (!ConfigExpectPlatform.aprilFool().canUes())
             return;
 
         int sx = (drawContext.getScaledWindowWidth() * 2) - (maxX - minX) * 2;
@@ -213,7 +213,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public void rrls$dvdStop(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
-        if (Rrls.MOD_CONFIG.aprilFool.canUes())
+        if (ConfigExpectPlatform.aprilFool().canUes())
             drawContext.getMatrices().pop();
     }
 
@@ -225,7 +225,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue) {
-        if (Rrls.MOD_CONFIG.aprilFool.canUes() && rrls$dvd$color != -1) {
+        if (ConfigExpectPlatform.aprilFool().canUes() && rrls$dvd$color != -1) {
             return ColorHelper.Argb.getArgb(
                     alpha,
                     ColorHelper.Argb.getRed(rrls$dvd$color),
@@ -234,7 +234,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             );
         }
 
-        if (Rrls.MOD_CONFIG.rgbProgress && this.rrls$attach != AttachType.DEFAULT) {
+        if (ConfigExpectPlatform.rgbProgress() && this.rrls$attach != AttachType.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(
@@ -257,6 +257,6 @@ public abstract class SplashOverlayMixin extends Overlay {
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return Rrls.MOD_CONFIG.animationSpeed;
+        return ConfigExpectPlatform.animationSpeed();
     }
 }

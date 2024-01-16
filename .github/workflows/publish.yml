@@ -74,9 +74,6 @@ jobs:
 
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-          
-          dependencies: |
-            cloth-config
 
           java: |
             17
