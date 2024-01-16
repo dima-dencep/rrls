@@ -25,12 +25,6 @@ jobs:
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
-      - name: Upload assets to releases
-        run: ./gradlew build
-        env:
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-
       - name: Get previous tag
         run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
 
@@ -50,6 +44,12 @@ jobs:
         with:
           path: './gradle.properties'
           properties: 'mod_version minecraft_version'
+
+      - name: Upload assets to releases
+        run: ./gradlew build
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
 
       - name: Publish Forge to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3.0
