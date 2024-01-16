@@ -13,7 +13,6 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.MessageScreen;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
@@ -69,13 +68,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        if (Rrls.MOD_CONFIG.hideType.canHide(reloading)) {
-            if (reloading) {
-                this.rrls$attach = AttachType.HIDE;
-            } else {
-                this.rrls$attach = client.currentScreen != null && !(client.currentScreen instanceof MessageScreen /* FORGE COMPAT */) ? AttachType.HIDE : AttachType.WAIT;
-            }
-        }
+        this.rrls$attach = rrls$filterAttachType(client.currentScreen, reloading);
     }
 
     @Override
@@ -164,9 +157,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.client.currentScreen != null && this.rrls$attach == AttachType.WAIT) {
-            this.rrls$attach = AttachType.HIDE;
-        }
+        this.rrls$attach = rrls$filterAttachType(client.currentScreen, this.rrls$attach != AttachType.WAIT);
 
         if (this.rrls$attach == AttachType.HIDE) {
             ci.cancel();

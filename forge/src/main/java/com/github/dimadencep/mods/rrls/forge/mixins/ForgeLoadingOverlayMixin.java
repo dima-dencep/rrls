@@ -15,7 +15,6 @@ import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.resource.ResourceReload;
 import net.neoforged.fml.earlydisplay.DisplayWindow;
 import net.neoforged.fml.loading.progress.ProgressMeter;
@@ -69,9 +68,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.minecraft.currentScreen instanceof TitleScreen && rrls$getAttachType() == SplashAccessor.AttachType.WAIT) {
-            rrls$setAttachType(SplashAccessor.AttachType.HIDE);
-        }
+        rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, rrls$getAttachType() != AttachType.WAIT));
 
         if (rrls$getAttachType() == SplashAccessor.AttachType.HIDE) {
             ci.cancel();

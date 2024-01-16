@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -31,6 +32,18 @@ public abstract class MinecraftClientMixin {
 
     @Shadow
     protected abstract CompletableFuture<Void> reloadResources(boolean force, @Nullable MinecraftClient.LoadingContext loadingContext);
+
+    @Inject(
+            method = "isFinishedLoading",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void rrls$forceClose(CallbackInfoReturnable<Boolean> cir) {
+        if (Rrls.MOD_CONFIG.forceClose)
+            cir.setReturnValue(true);
+    }
 
     @Inject(
             method = "onResourceReloadFailure",

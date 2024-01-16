@@ -10,7 +10,10 @@
 
 package com.github.dimadencep.mods.rrls.accessor;
 
+import com.github.dimadencep.mods.rrls.Rrls;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.MessageScreen;
+import net.minecraft.client.gui.screen.Screen;
 
 @SuppressWarnings("unused")
 public interface SplashAccessor {
@@ -32,6 +35,19 @@ public interface SplashAccessor {
     }
 
     default void rrls$progress(float progress) {
+    }
+
+    default AttachType rrls$filterAttachType(Screen screen, boolean reloading) {
+        if (!Rrls.MOD_CONFIG.hideType.canHide(reloading))
+            return AttachType.DEFAULT;
+
+        if (reloading || Rrls.MOD_CONFIG.forceClose)
+            return AttachType.HIDE;
+
+        if (screen instanceof MessageScreen msg) // Loading Minecraft
+            return AttachType.WAIT;
+
+        return screen != null ? AttachType.HIDE : AttachType.WAIT;
     }
 
     enum AttachType {
