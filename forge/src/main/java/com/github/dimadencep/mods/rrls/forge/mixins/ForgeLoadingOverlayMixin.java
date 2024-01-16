@@ -68,7 +68,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, rrls$getAttachType() != AttachType.WAIT));
+        rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
 
         if (rrls$getAttachType() == SplashAccessor.AttachType.HIDE) {
             ci.cancel();

@@ -157,7 +157,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        this.rrls$attach = rrls$filterAttachType(client.currentScreen, this.rrls$attach != AttachType.WAIT);
+        if (rrls$attach != AttachType.DEFAULT)
+            this.rrls$attach = rrls$filterAttachType(client.currentScreen, this.rrls$attach != AttachType.WAIT);
 
         if (this.rrls$attach == AttachType.HIDE) {
             ci.cancel();

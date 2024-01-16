@@ -41,7 +41,7 @@ public interface SplashAccessor {
         if (!ConfigExpectPlatform.hideType().canHide(reloading))
             return AttachType.DEFAULT;
 
-        if (reloading ||ConfigExpectPlatform.forceClose())
+        if (reloading || ConfigExpectPlatform.forceClose())
             return AttachType.HIDE;
 
         if (screen instanceof MessageScreen msg) // Loading Minecraft

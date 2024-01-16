@@ -12,7 +12,6 @@ package com.github.dimadencep.mods.rrls.forge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -22,7 +21,7 @@ import net.neoforged.fml.common.Mod;
 
 @Mod("rrls")
 public class RrlsForge extends Rrls {
-    public RrlsForge(ModContainer modContainer) {
+    public RrlsForge() {
         NeoForge.EVENT_BUS.register(this);
     }
 

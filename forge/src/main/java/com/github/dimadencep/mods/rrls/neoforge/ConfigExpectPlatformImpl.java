@@ -93,11 +93,19 @@ public class ConfigExpectPlatformImpl {
 
     static { // Early loading for config
         ModContainer activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID).orElseThrow();
+        ModConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
 
-        ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue(), activeContainer, "rrls.toml");
-        modConfig.getSpec().acceptConfig(ConfigFileTypeHandler.TOML.reader(FMLPaths.CONFIGDIR.get()).apply(modConfig));
-
+        ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, configSpec, activeContainer, "rrls.toml");
         activeContainer.addConfig(modConfig);
+
+        if (!configSpec.isLoaded()) {
+            Rrls.LOGGER.warn("Config is not loaded?");
+
+            configSpec.acceptConfig(
+                    ConfigFileTypeHandler.TOML.reader(FMLPaths.CONFIGDIR.get())
+                            .apply(modConfig)
+            );
+        }
     }
 
     public static HideType hideType() {
