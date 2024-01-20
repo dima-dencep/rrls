@@ -28,15 +28,6 @@ public interface SplashAccessor {
     default void rrls$render(DrawContext context, boolean isGame) {
     }
 
-    default void rrls$reload() {
-    }
-
-    default void rrls$endhook() {
-    }
-
-    default void rrls$progress(float progress) {
-    }
-
     default AttachType rrls$filterAttachType(Screen screen, boolean reloading) {
         if (!ConfigExpectPlatform.hideType().canHide(reloading))
             return AttachType.DEFAULT;

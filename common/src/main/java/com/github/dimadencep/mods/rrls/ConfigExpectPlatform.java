@@ -71,4 +71,9 @@ public class ConfigExpectPlatform {
     public static AprilFool aprilFool() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static boolean skipForgeOverlay() {
+        throw new AssertionError();
+    }
 }

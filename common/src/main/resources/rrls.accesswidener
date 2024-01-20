@@ -1,5 +1,34 @@
 accessWidener   v2  named
+accessible method net/minecraft/client/gui/DrawContext tryDraw ()V
+extendable method net/minecraft/client/gui/DrawContext tryDraw ()V
+accessible method net/minecraft/client/gui/DrawContext drawIfRunning ()V
+extendable method net/minecraft/client/gui/DrawContext drawIfRunning ()V
+accessible method net/minecraft/client/gui/DrawContext setScissor (Lnet/minecraft/client/gui/ScreenRect;)V
+extendable method net/minecraft/client/gui/DrawContext setScissor (Lnet/minecraft/client/gui/ScreenRect;)V
+accessible method net/minecraft/client/gui/DrawContext drawTooltip (Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V
+extendable method net/minecraft/client/gui/DrawContext drawTooltip (Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V
+accessible method net/minecraft/client/gui/DrawContext drawItem (Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;IIII)V
+extendable method net/minecraft/client/gui/DrawContext drawItem (Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;IIII)V
+accessible method net/minecraft/client/gui/DrawContext drawItem (Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;III)V
+extendable method net/minecraft/client/gui/DrawContext drawItem (Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;III)V
+accessible method net/minecraft/client/gui/DrawContext drawSpriteTiled (Lnet/minecraft/client/texture/Sprite;IIIIIIIIIII)V
+extendable method net/minecraft/client/gui/DrawContext drawSpriteTiled (Lnet/minecraft/client/texture/Sprite;IIIIIIIIIII)V
+accessible method net/minecraft/client/gui/DrawContext drawTexturedQuad (Lnet/minecraft/util/Identifier;IIIIIFFFFFFFF)V
+extendable method net/minecraft/client/gui/DrawContext drawTexturedQuad (Lnet/minecraft/util/Identifier;IIIIIFFFFFFFF)V
+accessible method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;Lnet/minecraft/client/texture/Scaling$NineSlice;IIIII)V
+extendable method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;Lnet/minecraft/client/texture/Scaling$NineSlice;IIIII)V
+accessible method net/minecraft/client/gui/DrawContext drawTexture (Lnet/minecraft/util/Identifier;IIIIIIIFFII)V
+extendable method net/minecraft/client/gui/DrawContext drawTexture (Lnet/minecraft/util/Identifier;IIIIIIIFFII)V
+accessible method net/minecraft/client/gui/DrawContext drawTexturedQuad (Lnet/minecraft/util/Identifier;IIIIIFFFF)V
+extendable method net/minecraft/client/gui/DrawContext drawTexturedQuad (Lnet/minecraft/util/Identifier;IIIIIFFFF)V
+accessible method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;IIIII)V
+extendable method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;IIIII)V
+accessible method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;IIIIIIIII)V
+extendable method net/minecraft/client/gui/DrawContext drawSprite (Lnet/minecraft/client/texture/Sprite;IIIIIIIII)V
+accessible method net/minecraft/client/gui/DrawContext fillGradient (Lnet/minecraft/client/render/VertexConsumer;IIIIIII)V
+extendable method net/minecraft/client/gui/DrawContext fillGradient (Lnet/minecraft/client/render/VertexConsumer;IIIIIII)V
 accessible field net/minecraft/client/resource/server/ServerResourcePackManager$PackEntry id Ljava/util/UUID;
 accessible field net/minecraft/client/MinecraftClient overlay Lnet/minecraft/client/gui/screen/Overlay;
 accessible class net/minecraft/client/resource/server/ServerResourcePackManager$PackEntry
+accessible field net/minecraft/client/gui/screen/SplashOverlay progress F
 accessible class net/minecraft/client/MinecraftClient$LoadingContext

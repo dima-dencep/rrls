@@ -38,6 +38,7 @@ public class ConfigExpectPlatformImpl {
     public final ModConfigSpec.BooleanValue earlyPackStatusSend;
     public final ModConfigSpec.ConfigValue<Double> animationSpeed;
     public final ModConfigSpec.EnumValue<AprilFool> aprilFool;
+    public final ModConfigSpec.BooleanValue skipForgeOverlay;
 
     public ConfigExpectPlatformImpl(ModConfigSpec.Builder builder) {
         hideType = builder
@@ -89,6 +90,10 @@ public class ConfigExpectPlatformImpl {
         aprilFool = builder
                 .translation("text.autoconfig.rrls.option.aprilFool")
                 .defineEnum("aprilFool", AprilFool.ON_APRIL);
+
+        skipForgeOverlay = builder
+                .translation("text.autoconfig.rrls.option.skipForgeOverlay")
+                .define("skipForgeOverlay", false);
     }
 
     static { // Early loading for config
@@ -150,5 +155,9 @@ public class ConfigExpectPlatformImpl {
 
     public static AprilFool aprilFool() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().aprilFool.get();
+    }
+
+    public static boolean skipForgeOverlay() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().skipForgeOverlay.get();
     }
 }

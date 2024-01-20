@@ -3,9 +3,7 @@
   "minVersion": "0.8",
   "package": "com.github.dimadencep.mods.rrls.fabric.mixins",
   "compatibilityLevel": "JAVA_17",
-  "client": [
-    "MinecraftClientMixin"
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

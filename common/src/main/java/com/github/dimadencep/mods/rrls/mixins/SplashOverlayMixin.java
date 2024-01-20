@@ -11,14 +11,15 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
+import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Overlay;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -40,23 +41,10 @@ public abstract class SplashOverlayMixin extends Overlay {
     @Unique
     public AttachType rrls$attach = AttachType.DEFAULT;
     @Shadow
-    @Final
-    private ResourceReload reload;
-    @Shadow
-    private float progress;
-    @Shadow
-    private long reloadCompleteTime;
-    @Shadow
-    @Final
-    private Consumer<Optional<Throwable>> exceptionHandler;
+    public float progress;
     @Shadow
     @Final
     private MinecraftClient client;
-    @Shadow
-    @Final
-    private boolean reloading;
-    @Shadow
-    private long reloadStartTime;
 
     @Shadow
     protected abstract void renderProgressBar(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity);
@@ -115,54 +103,26 @@ public abstract class SplashOverlayMixin extends Overlay {
         }
     }
 
-    @Override
-    public void rrls$reload() {
-        long l = Util.getMeasuringTimeMs();
-        if (this.reloading && this.reloadStartTime == -1L) {
-            this.reloadStartTime = l;
-        }
-        float f = this.reloadCompleteTime > -1L ? (float) (l - this.reloadCompleteTime) / 1000.0f : -1.0f;
-
-        float t = this.reload.getProgress();
-        this.progress = MathHelper.clamp(this.progress * 0.95f + t * 0.050000012f, 0.0f, 1.0f);
-        rrls$progress(this.progress);
-
-        if (f >= 2.0f) {
-            this.client.setOverlay(null);
-
-            rrls$endhook();
-        }
-
-        if (this.reloadCompleteTime == -1L && this.reload.isComplete()) {
-            try {
-                this.reload.throwException();
-                this.exceptionHandler.accept(Optional.empty());
-            } catch (Throwable throwable) {
-                this.exceptionHandler.accept(Optional.of(throwable));
-            }
-
-            this.reloadCompleteTime = Util.getMeasuringTimeMs();
-
-            if (ConfigExpectPlatform.reInitScreen() && this.client.currentScreen != null) {
-                this.client.currentScreen.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());
-            }
-        }
-    }
-
     @Inject(
             method = "render",
             at = @At(
                     value = "HEAD"
-            ),
-            cancellable = true
+            )
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (rrls$attach != AttachType.DEFAULT)
+        if (rrls$attach != AttachType.DEFAULT) // Update attach (Optifine ❤️)
             this.rrls$attach = rrls$filterAttachType(client.currentScreen, this.rrls$attach != AttachType.WAIT);
+    }
 
-        if (this.rrls$attach == AttachType.HIDE) {
-            ci.cancel();
-        }
+    @WrapWithCondition(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screen/Screen;render(Lnet/minecraft/client/gui/DrawContext;IIF)V"
+            )
+    )
+    public boolean rrls$screenrender(Screen instance, DrawContext context, int mouseX, int mouseY, float delta) {
+        return !(context instanceof DummyDrawContext);
     }
 
     @Unique

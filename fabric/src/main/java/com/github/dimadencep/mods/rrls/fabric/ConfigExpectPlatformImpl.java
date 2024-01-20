@@ -96,4 +96,8 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public static AprilFool aprilFool() {
         return RrlsFabric.MOD_CONFIG.aprilFool;
     }
+
+    public static boolean skipForgeOverlay() {
+        return false; // Fabric is forge?
+    }
 }

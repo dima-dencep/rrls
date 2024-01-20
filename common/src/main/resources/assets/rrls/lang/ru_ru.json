@@ -17,5 +17,6 @@
   "text.autoconfig.rrls.option.animationSpeed": "Скорость анимации сплеша",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "В милисекундах",
   "text.autoconfig.rrls.option.forceClose": "Убирать загрузочный экран, даже если за ним ничего нет",
-  "text.autoconfig.rrls.option.forceClose.@Tooltip": "На самом деле теперь есть, я давно планировал обходной путь, но теперь он есть в minecraft :)"
+  "text.autoconfig.rrls.option.forceClose.@Tooltip": "На самом деле теперь есть, я давно планировал обходной путь, но теперь он есть в minecraft :)",
+  "text.autoconfig.rrls.option.skipForgeOverlay": "Заменяет оверлей загрузки (Neo)Forge на ванильный"
 }

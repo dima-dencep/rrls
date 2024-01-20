@@ -15,11 +15,10 @@ import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 
-@Mod("rrls")
+@Mod(Rrls.MOD_ID)
 public class RrlsForge extends Rrls {
     public RrlsForge() {
         NeoForge.EVENT_BUS.register(this);
@@ -35,12 +34,5 @@ public class RrlsForge extends Rrls {
     public void onScreenRender(ScreenEvent.Render.Post event) {
         getAccessor(SplashAccessor.AttachType.HIDE)
                 .ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), false));
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent.RenderTickEvent event) {
-        if (event.phase == TickEvent.Phase.START)
-            getAccessor(SplashAccessor.AttachType.HIDE)
-                    .ifPresent(SplashAccessor::rrls$reload);
     }
 }

@@ -7,9 +7,10 @@
     "MinecraftClientMixin",
     "SplashOverlayMixin",
     "TitleScreenMixin",
+    "compat.GameRendererMixin",
+    "compat.KeyboardMouseMixin",
     "compat.OverlayMixin",
     "compat.ServerResourcePackManagerMixin",
-    "compat.SplashUseFix",
     "workaround.DrawContentMixin"
   ],
   "injectors": {

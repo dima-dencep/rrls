@@ -15,17 +15,15 @@ import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.render.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = {
-        GameRenderer.class,
         Keyboard.class,
         Mouse.class
 })
-public class SplashUseFix {
+public class KeyboardMouseMixin {
     @Redirect(
             method = "*",
             at = @At(

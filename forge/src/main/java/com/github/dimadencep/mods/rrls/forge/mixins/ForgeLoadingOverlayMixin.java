@@ -11,7 +11,7 @@
 package com.github.dimadencep.mods.rrls.forge.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
+import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
@@ -22,6 +22,7 @@ import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,20 +45,11 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
     private DisplayWindow displayWindow;
     @Shadow
     private float currentProgress;
+    @Unique
+    private boolean rrls$completed;
 
     public ForgeLoadingOverlayMixin(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
-    }
-
-    @Override
-    public void rrls$endhook() {
-        progressMeter.complete();
-        displayWindow.close();
-    }
-
-    @Override
-    public void rrls$progress(float progress) {
-        currentProgress = progress;
     }
 
     @Inject(
@@ -68,10 +60,23 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
+        if (context instanceof DummyDrawContext || ConfigExpectPlatform.skipForgeOverlay()) {
+            if (!rrls$completed) { // Stop forge's early loading screen
+                progressMeter.complete();
+                displayWindow.close();
 
-        if (rrls$getAttachType() == SplashAccessor.AttachType.HIDE) {
+                this.progress = currentProgress;
+
+                rrls$completed = true;
+            } else {
+                currentProgress = this.progress; // Sync progress (For mod compat?)
+            }
+
+            super.render(context, mouseX, mouseY, delta);
+
             ci.cancel();
+        } else {
+            rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
         }
     }
 
