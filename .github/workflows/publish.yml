@@ -35,7 +35,6 @@ jobs:
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           base-ref: ${{ env.previous_tag }}
-          fetch: false
 
       - name: Read value from Properties-file
         id: read_property
