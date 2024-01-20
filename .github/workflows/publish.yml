@@ -34,7 +34,6 @@ jobs:
         if: env.previous_tag
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          head-ref: 'origin/HEAD'
           base-ref: ${{ env.previous_tag }}
           fetch: false
 
