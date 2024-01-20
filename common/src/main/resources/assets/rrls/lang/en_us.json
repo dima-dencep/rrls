@@ -16,6 +16,6 @@
   "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "Example: You were underground while reloading resources",
   "text.autoconfig.rrls.option.animationSpeed": "Splash animation speed",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "In milliseconds",
-  "text.autoconfig.rrls.option.forceClose": "Remove the boot screen, even if there is nothing behind it",
+  "text.autoconfig.rrls.option.forceClose": "Hide the loading overlay, even if there is nothing behind it",
   "text.autoconfig.rrls.option.forceClose.@Tooltip": "Actually now there is, I've been planning a workaround for a long time, but now there is one in minecraft :)"
 }
