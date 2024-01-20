@@ -67,7 +67,7 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
-          version-type: release
+          version-type: beta
 
           loaders: |
             neoforge
@@ -94,7 +94,7 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
-          version-type: release
+          version-type: beta
 
           loaders: |
             fabric
