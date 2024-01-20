@@ -82,9 +82,7 @@ public abstract class SplashOverlayMixin extends Overlay {
     }
 
     @Override
-    public void rrls$render(DrawContext context, boolean isGame) {
-        if (!ConfigExpectPlatform.showIn().canShow(isGame)) return;
-
+    public void rrls$miniRender(DrawContext context) {
         int i = context.getScaledWindowWidth();
         int j = context.getScaledWindowHeight();
 

@@ -5,7 +5,7 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cMAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.ignoreScreen": "Ignoring uninitialized screen on loading",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "MAY CAUSE PROBLEMS",
-  "text.autoconfig.rrls.option.showIn": "Resource reloading process display",
+  "text.autoconfig.rrls.option.miniRender": "Resource (re)loading process display",
   "text.autoconfig.rrls.option.type": "What will be displayed on reloading",
   "text.autoconfig.rrls.option.reloadText": "The text that will be displayed if TEXT is selected above",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",

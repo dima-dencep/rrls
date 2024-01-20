@@ -5,7 +5,7 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能會引起癲癇",
   "text.autoconfig.rrls.option.ignoreScreen": "隱藏載入畫面",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "可能會引起問題",
-  "text.autoconfig.rrls.option.showIn": "資源包重新載入進度顯示",
+  "text.autoconfig.rrls.option.miniRender": "資源包重新載入進度顯示",
   "text.autoconfig.rrls.option.type": "在重新載入時會顯示什麼",
   "text.autoconfig.rrls.option.reloadText": "如果上方選擇為 TEXT，將顯示下列文字。",
   "text.autoconfig.rrls.option.resetResources": "當載入失敗時重設資源",

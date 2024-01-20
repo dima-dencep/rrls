@@ -8,31 +8,14 @@
  *     https://github.com/dima-dencep/rrls/blob/HEAD/LICENSE
  */
 
-package com.github.dimadencep.mods.rrls.forge;
+/*package com.github.dimadencep.mods.rrls.forge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
-import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 
 @Mod(Rrls.MOD_ID)
 public class RrlsForge extends Rrls {
     public RrlsForge() {
-        NeoForge.EVENT_BUS.register(this);
+        // no-op
     }
-
-    @SubscribeEvent
-    public void onRenderGui(RenderGuiEvent.Pre event) {
-        getAccessor(SplashAccessor.AttachType.HIDE)
-                .ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), true));
-    }
-
-    @SubscribeEvent
-    public void onScreenRender(ScreenEvent.Render.Post event) {
-        getAccessor(SplashAccessor.AttachType.HIDE)
-                .ifPresent(splashAccessor -> splashAccessor.rrls$render(event.getGuiGraphics(), false));
-    }
-}
+}*/

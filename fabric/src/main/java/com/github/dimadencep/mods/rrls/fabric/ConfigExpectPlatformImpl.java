@@ -13,7 +13,6 @@ package com.github.dimadencep.mods.rrls.fabric;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.HideType;
-import com.github.dimadencep.mods.rrls.config.ShowIn;
 import com.github.dimadencep.mods.rrls.config.Type;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -31,8 +30,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean forceClose = false;
 
-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public ShowIn showIn = ShowIn.ALL;
+    public boolean miniRender = true;
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public Type type = Type.PROGRESS;
@@ -65,8 +63,8 @@ public class ConfigExpectPlatformImpl implements ConfigData {
         return RrlsFabric.MOD_CONFIG.forceClose;
     }
 
-    public static ShowIn showIn() {
-        return RrlsFabric.MOD_CONFIG.showIn;
+    public static boolean miniRender() {
+        return RrlsFabric.MOD_CONFIG.miniRender;
     }
 
     public static Type type() {

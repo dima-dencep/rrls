@@ -13,7 +13,6 @@ package com.github.dimadencep.mods.rrls.neoforge;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.HideType;
-import com.github.dimadencep.mods.rrls.config.ShowIn;
 import com.github.dimadencep.mods.rrls.config.Type;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -30,7 +29,7 @@ public class ConfigExpectPlatformImpl {
     public final ModConfigSpec.EnumValue<HideType> hideType;
     public final ModConfigSpec.BooleanValue rgbProgress;
     public final ModConfigSpec.BooleanValue forceClose;
-    public final ModConfigSpec.EnumValue<ShowIn> showIn;
+    public final ModConfigSpec.BooleanValue miniRender;
     public final ModConfigSpec.EnumValue<Type> type;
     public final ModConfigSpec.ConfigValue<String> reloadText;
     public final ModConfigSpec.BooleanValue resetResources;
@@ -55,9 +54,9 @@ public class ConfigExpectPlatformImpl {
                 .comment("text.autoconfig.rrls.option.forceClose.@Tooltip")
                 .define("forceClose", false);
 
-        showIn = builder
-                .translation("text.autoconfig.rrls.option.showIn")
-                .defineEnum("showIn", ShowIn.ALL);
+        miniRender = builder
+                .translation("text.autoconfig.rrls.option.miniRender")
+                .define("miniRender", true);
 
         type = builder
                 .translation("text.autoconfig.rrls.option.type")
@@ -125,8 +124,8 @@ public class ConfigExpectPlatformImpl {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().forceClose.get();
     }
 
-    public static ShowIn showIn() {
-        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().showIn.get();
+    public static boolean miniRender() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().miniRender.get();
     }
 
     public static Type type() {

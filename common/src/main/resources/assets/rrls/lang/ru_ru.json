@@ -5,7 +5,7 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
   "text.autoconfig.rrls.option.ignoreScreen": "Игнорирование неинициализированного экрана при загрузке",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
-  "text.autoconfig.rrls.option.showIn": "Отображение процесса перезагрузки ресурсов",
+  "text.autoconfig.rrls.option.miniRender": "Отображение процесса (пере)загрузки ресурсов",
   "text.autoconfig.rrls.option.type": "Что будет отображаться при перезагрузке",
   "text.autoconfig.rrls.option.reloadText": "Текст, который будет отображаться, если выше выбран пункт TEXT",
   "text.autoconfig.rrls.option.resetResources": "Сброс ресурсов при неудачной загрузке",

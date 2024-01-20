@@ -25,7 +25,7 @@ public interface SplashAccessor {
     default void rrls$setAttachType(AttachType type) {
     }
 
-    default void rrls$render(DrawContext context, boolean isGame) {
+    default void rrls$miniRender(DrawContext context) {
     }
 
     default AttachType rrls$filterAttachType(Screen screen, boolean reloading) {

@@ -5,7 +5,7 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能引起癫痫",
   "text.autoconfig.rrls.option.ignoreScreen": "隐藏加载屏幕",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "可能会引起问题",
-  "text.autoconfig.rrls.option.showIn": "资源包重新加载过程显示",
+  "text.autoconfig.rrls.option.miniRender": "资源包重新加载过程显示",
   "text.autoconfig.rrls.option.resetResources": "加载失败时重置资源包",
   "text.autoconfig.rrls.option.reInitScreen": "重新加载后重新初始化当前屏幕",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "禁用此功能可能会消除重新加载完成后的挂起"

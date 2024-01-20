@@ -6,7 +6,7 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cЭПИЛЕПСИЯНЕ ЧАКЫРА АЛА",
   "text.autoconfig.rrls.option.ignoreScreen": "Йөкләү экранын яшерү",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "ПРОБЛЕМАЛАРНЫ ЧАКЫРА АЛА",
-  "text.autoconfig.rrls.option.showIn": "Ресурслар яңадан йөкләү процессын күрсәтү",
+  "text.autoconfig.rrls.option.miniRender": "Ресурслар яңадан йөкләү процессын күрсәтү",
   "text.autoconfig.rrls.option.type": "Яңадан йөкләгәндә күрсәтелүче",
   "text.autoconfig.rrls.option.reloadText": "Күрсәтеләчәҡ текст, әгәр TEXT өстә сайланса",
   "text.autoconfig.rrls.option.resetResources": "Йөкләп булмаганда ресурсларын ташлату",

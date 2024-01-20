@@ -1,4 +1,4 @@
-modLoader = "javafml"
+modLoader = "lowcodefml"
 loaderVersion = "*"
 issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
 license = "OSL-3.0"

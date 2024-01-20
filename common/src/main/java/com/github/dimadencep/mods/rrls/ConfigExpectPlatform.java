@@ -12,7 +12,6 @@ package com.github.dimadencep.mods.rrls;
 
 import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.HideType;
-import com.github.dimadencep.mods.rrls.config.ShowIn;
 import com.github.dimadencep.mods.rrls.config.Type;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 
@@ -33,7 +32,7 @@ public class ConfigExpectPlatform {
     }
 
     @ExpectPlatform
-    public static ShowIn showIn() {
+    public static boolean miniRender() {
         throw new AssertionError();
     }
 
