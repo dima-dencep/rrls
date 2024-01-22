@@ -5,12 +5,18 @@
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能會引起癲癇",
   "text.autoconfig.rrls.option.ignoreScreen": "隱藏載入畫面",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "可能會引起問題",
-  "text.autoconfig.rrls.option.miniRender": "資源包重新載入進度顯示",
+  "text.autoconfig.rrls.option.miniRender": "資源包（重新）載入進度顯示",
   "text.autoconfig.rrls.option.type": "在重新載入時會顯示什麼",
   "text.autoconfig.rrls.option.reloadText": "如果上方選擇為 TEXT，將顯示下列文字。",
   "text.autoconfig.rrls.option.resetResources": "當載入失敗時重設資源",
   "text.autoconfig.rrls.option.reInitScreen": "在重新載入後重新初始化目前畫面。",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "停用此功能可能會在重新載入完成後解決卡住的問題。",
+  "text.autoconfig.rrls.option.earlyPackStatusSend": "提早傳送伺服器資源包狀態",
+  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]": "有些伺服器特別等待玩家載入資源，因此遊戲可能顯示不正確",
+  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "例如：重新載入資源時你正在地下，這可能導致顯示異常",
   "text.autoconfig.rrls.option.animationSpeed": "載入動畫速度",
-  "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "以毫秒為單位"
+  "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "以毫秒為單位",
+  "text.autoconfig.rrls.option.forceClose": "隱藏載入覆蓋，即使背後沒有東西",
+  "text.autoconfig.rrls.option.forceClose.@Tooltip": "實際上現在是有的，我已經計畫了很長一段時間的解決方案，但現在在 Minecraft 中已經有一個 :)",
+  "text.autoconfig.rrls.option.skipForgeOverlay": "用原版替代 (Neo)Forge 載入覆蓋"
 }
