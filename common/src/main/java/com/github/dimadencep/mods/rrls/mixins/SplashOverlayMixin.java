@@ -14,6 +14,8 @@ import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Overlay;
@@ -29,7 +31,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
@@ -164,14 +165,14 @@ public abstract class SplashOverlayMixin extends Overlay {
             drawContext.getMatrices().pop();
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "renderProgressBar",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/util/math/ColorHelper$Argb;getArgb(IIII)I"
             )
     )
-    public int rrls$rainbowProgress(int alpha, int red, int green, int blue) {
+    public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original) {
         if (ConfigExpectPlatform.aprilFool().canUes() && rrls$dvd$color != -1) {
             return ColorHelper.Argb.getArgb(
                     alpha,
@@ -192,7 +193,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             );
         }
 
-        return ColorHelper.Argb.getArgb(alpha, red, green, blue);
+        return original.call(alpha, red, green, blue);
     }
 
     @ModifyConstant(
