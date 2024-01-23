@@ -10,45 +10,18 @@
 
 package com.github.dimadencep.mods.rrls.accessor;
 
-import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
+import com.github.dimadencep.mods.rrls.utils.SplashHelper;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.MessageScreen;
-import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.gui.screen.Screen;
 
 @SuppressWarnings("unused")
 public interface SplashAccessor {
-
-    default AttachType rrls$getAttachType() {
-        return AttachType.DEFAULT;
+    default SplashHelper.State rrls$getState() {
+        return SplashHelper.State.DEFAULT;
     }
 
-    default void rrls$setAttachType(AttachType type) {
+    default void rrls$setState(SplashHelper.State state) {
     }
 
     default void rrls$miniRender(DrawContext context) {
-    }
-
-    default AttachType rrls$filterAttachType(Screen screen, boolean reloading) {
-        if (!ConfigExpectPlatform.hideType().canHide(reloading))
-            return AttachType.DEFAULT;
-
-        if (reloading || ConfigExpectPlatform.forceClose())
-            return AttachType.HIDE;
-
-        if (screen instanceof MessageScreen msg) // Loading Minecraft
-            return AttachType.WAIT;
-
-        return screen != null ? AttachType.HIDE : AttachType.WAIT;
-    }
-
-    enum AttachType {
-        DEFAULT,
-        HIDE,
-        WAIT
-    }
-
-    static boolean canMiniRender(Overlay overlay) {
-        return overlay != null && overlay.rrls$getAttachType() == AttachType.HIDE;
     }
 }

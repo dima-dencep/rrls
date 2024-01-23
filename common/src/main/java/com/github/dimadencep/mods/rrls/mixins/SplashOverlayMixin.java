@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.SplashHelper;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -39,7 +40,7 @@ import java.util.function.Consumer;
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
     @Unique
-    public AttachType rrls$attach = AttachType.DEFAULT;
+    public SplashHelper.State rrls$state = SplashHelper.State.DEFAULT;
     @Shadow
     public float progress;
     @Shadow
@@ -56,17 +57,17 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls$attach = rrls$filterAttachType(client.currentScreen, reloading);
+        this.rrls$state = SplashHelper.lookupState(client.currentScreen, reloading);
     }
 
     @Override
-    public AttachType rrls$getAttachType() {
-        return this.rrls$attach;
+    public SplashHelper.State rrls$getState() {
+        return this.rrls$state;
     }
 
     @Override
-    public void rrls$setAttachType(AttachType type) {
-        rrls$attach = type;
+    public void rrls$setState(SplashHelper.State state) {
+        rrls$state = state;
     }
 
     @Inject(
@@ -77,7 +78,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             cancellable = true
     )
     public void rrls$pauses(CallbackInfoReturnable<Boolean> cir) {
-        if (this.rrls$attach == AttachType.HIDE)
+        if (this.rrls$state.isRendering())
             cir.setReturnValue(false);
     }
 
@@ -108,8 +109,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (rrls$attach != AttachType.DEFAULT) // Update attach (Optifine ❤️)
-            this.rrls$attach = rrls$filterAttachType(client.currentScreen, this.rrls$attach != AttachType.WAIT);
+        if (rrls$state != SplashHelper.State.DEFAULT) // Update attach (Optifine ❤️)
+            this.rrls$state = SplashHelper.lookupState(client.currentScreen, this.rrls$state != SplashHelper.State.WAIT);
     }
 
     @WrapWithCondition(
@@ -193,7 +194,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             );
         }
 
-        if (ConfigExpectPlatform.rgbProgress() && this.rrls$attach != AttachType.DEFAULT) {
+        if (ConfigExpectPlatform.rgbProgress() && this.rrls$state != SplashHelper.State.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(

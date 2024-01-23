@@ -10,28 +10,10 @@
 
 package com.github.dimadencep.mods.rrls;
 
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Overlay;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class Rrls {
     public static final String MOD_ID = "rrls";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-
-    @Nullable
-    public static Overlay tryGetOverlay() {
-        return Rrls.getAccessor(SplashAccessor.AttachType.DEFAULT)
-                .orElse(Rrls.getAccessor(SplashAccessor.AttachType.WAIT)
-                        .orElse(null));
-    }
-
-    public static Optional<Overlay> getAccessor(SplashAccessor.AttachType type) {
-        return Optional.ofNullable(MinecraftClient.getInstance().overlay)
-                .filter(accessor -> accessor.rrls$getAttachType() == type);
-    }
 }

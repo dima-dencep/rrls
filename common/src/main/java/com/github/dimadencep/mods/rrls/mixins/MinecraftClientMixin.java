@@ -12,6 +12,9 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.utils.SplashHelper;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
@@ -22,7 +25,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.CompletableFuture;
@@ -64,7 +66,7 @@ public abstract class MinecraftClientMixin {
         }
     }
 
-    @Redirect(
+    @WrapOperation(
             method = {
                     "tick",
                     "handleInputEvents"
@@ -74,7 +76,12 @@ public abstract class MinecraftClientMixin {
                     target = "Lnet/minecraft/client/MinecraftClient;overlay:Lnet/minecraft/client/gui/screen/Overlay;"
             )
     )
-    public Overlay rrls$safeOverlays(MinecraftClient instance) {
-        return Rrls.tryGetOverlay();
+    public Overlay rrls$miniRender(MinecraftClient instance, Operation<Overlay> original) {
+        Overlay overlay = original.call(instance);
+
+        if (SplashHelper.isRenderingState(overlay))
+            return null;
+
+        return overlay;
     }
 }

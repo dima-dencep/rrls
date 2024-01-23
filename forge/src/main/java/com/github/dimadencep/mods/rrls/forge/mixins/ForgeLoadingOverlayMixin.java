@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.forge.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.SplashHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
@@ -76,7 +77,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
 
             ci.cancel();
         } else {
-            rrls$setAttachType(rrls$filterAttachType(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
+            rrls$setState(SplashHelper.lookupState(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
         }
     }
 

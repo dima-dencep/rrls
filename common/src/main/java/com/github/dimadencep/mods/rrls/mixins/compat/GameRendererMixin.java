@@ -11,8 +11,8 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.SplashHelper;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
@@ -42,7 +42,7 @@ public class GameRendererMixin {
             )
     )
     public Overlay rrls$fixOverlayRendering(Overlay original, @Local(ordinal = 0) DrawContext drawContext) { // TODO @Local(name = "i", ordinal = 0, index = 7) int mouseX, @Local(name = "j", ordinal = 1, index = 8) int mouseY
-        if (!SplashAccessor.canMiniRender(original))
+        if (!SplashHelper.isRenderingState(original))
             return original;
 
         original.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
@@ -60,7 +60,7 @@ public class GameRendererMixin {
     public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) DrawContext drawContext) {
         Overlay overlay = this.client.getOverlay();
 
-        if (ConfigExpectPlatform.miniRender() && SplashAccessor.canMiniRender(overlay))
+        if (ConfigExpectPlatform.miniRender() && SplashHelper.isRenderingState(overlay))
             overlay.rrls$miniRender(drawContext);
     }
 }
