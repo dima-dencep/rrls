@@ -11,9 +11,20 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.duck.OverlayExtender;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.gui.screen.Overlay;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Overlay.class)
 public class OverlayMixin implements OverlayExtender {
+    @ModifyReturnValue(
+            method = "pausesGame",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
+    public boolean rrls$pausesGame(boolean original) {
+        return !rrls$getState().isRendering() && original;
+    }
 }

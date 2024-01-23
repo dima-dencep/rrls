@@ -1,7 +1,8 @@
 {
   "injected_interfaces": {
     "net/minecraft/class_4071": [
-      "com/github/dimadencep/mods/rrls/accessor/SplashAccessor"
+      "com/github/dimadencep/mods/rrls/duck/OverlayExtender"
     ]
-  }
+  },
+  "accessWidener": "rrls.accesswidener"
 }

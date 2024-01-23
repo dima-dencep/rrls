@@ -31,7 +31,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -68,18 +67,6 @@ public abstract class SplashOverlayMixin extends Overlay {
     @Override
     public void rrls$setState(OverlayHelper.State state) {
         rrls$state = state;
-    }
-
-    @Inject(
-            method = "pausesGame",
-            at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
-    )
-    public void rrls$pauses(CallbackInfoReturnable<Boolean> cir) {
-        if (this.rrls$state.isRendering())
-            cir.setReturnValue(false);
     }
 
     @Override
@@ -218,5 +205,10 @@ public abstract class SplashOverlayMixin extends Overlay {
     )
     public float rrls$changeAnimationSpeed(float instance) {
         return ConfigExpectPlatform.animationSpeed();
+    }
+
+    @Override // YAY Conflicts!!!
+    public boolean pausesGame() {
+        return super.pausesGame();
     }
 }
