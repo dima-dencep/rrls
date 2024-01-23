@@ -39,8 +39,6 @@ import java.util.function.Consumer;
 
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
-    @Unique
-    public OverlayHelper.State rrls$state = OverlayHelper.State.DEFAULT;
     @Shadow
     public float progress;
     @Shadow
@@ -57,17 +55,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls$state = OverlayHelper.lookupState(client.currentScreen, reloading);
-    }
-
-    @Override
-    public OverlayHelper.State rrls$getState() {
-        return this.rrls$state;
-    }
-
-    @Override
-    public void rrls$setState(OverlayHelper.State state) {
-        rrls$state = state;
+        rrls$setState(OverlayHelper.lookupState(client.currentScreen, reloading));
     }
 
     @Override
@@ -97,8 +85,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (rrls$state != OverlayHelper.State.DEFAULT) // Update attach (Optifine ❤️)
-            this.rrls$state = OverlayHelper.lookupState(client.currentScreen, this.rrls$state != OverlayHelper.State.WAIT);
+        if (rrls$getState() != OverlayHelper.State.DEFAULT) // Update attach (Optifine ❤️)
+            rrls$setState(OverlayHelper.lookupState(client.currentScreen, rrls$getState() != OverlayHelper.State.WAIT));
     }
 
     @WrapWithCondition(
@@ -182,7 +170,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             );
         }
 
-        if (ConfigExpectPlatform.rgbProgress() && this.rrls$state != OverlayHelper.State.DEFAULT) {
+        if (ConfigExpectPlatform.rgbProgress() && rrls$getState() != OverlayHelper.State.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(

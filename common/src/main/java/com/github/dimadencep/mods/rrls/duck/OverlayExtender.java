@@ -15,13 +15,10 @@ import net.minecraft.client.gui.DrawContext;
 
 @SuppressWarnings("unused")
 public interface OverlayExtender {
-    default OverlayHelper.State rrls$getState() {
-        return OverlayHelper.State.DEFAULT;
-    }
-
-    default void rrls$setState(OverlayHelper.State state) {
-    }
+    OverlayHelper.State rrls$getState();
+    void rrls$setState(OverlayHelper.State state);
 
     default void rrls$miniRender(DrawContext context) {
+        throw new UnsupportedOperationException("The '" + getClass().getCanonicalName() + "' overlay doesn't have a mini-render!");
     }
 }

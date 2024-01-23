@@ -11,13 +11,28 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.duck.OverlayExtender;
+import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.gui.screen.Overlay;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Overlay.class)
 public class OverlayMixin implements OverlayExtender {
+    @Unique
+    public OverlayHelper.State rrls$state = OverlayHelper.State.DEFAULT;
+
+    @Override
+    public OverlayHelper.State rrls$getState() {
+        return rrls$state;
+    }
+
+    @Override
+    public void rrls$setState(OverlayHelper.State state) {
+        this.rrls$state = state;
+    }
+
     @ModifyReturnValue(
             method = "pausesGame",
             at = @At(

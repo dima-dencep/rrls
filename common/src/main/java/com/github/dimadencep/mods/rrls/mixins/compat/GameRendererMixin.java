@@ -11,6 +11,7 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
+import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -58,9 +59,14 @@ public class GameRendererMixin {
             )
     )
     public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) DrawContext drawContext) {
-        Overlay overlay = this.client.getOverlay();
+        try {
+            Overlay overlay = this.client.getOverlay();
 
-        if (ConfigExpectPlatform.miniRender() && OverlayHelper.isRenderingState(overlay))
-            overlay.rrls$miniRender(drawContext);
+            if (ConfigExpectPlatform.miniRender() && OverlayHelper.isRenderingState(overlay))
+                overlay.rrls$miniRender(drawContext);
+
+        } catch (RuntimeException ex) {
+            Rrls.LOGGER.error(ex);
+        }
     }
 }
