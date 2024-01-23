@@ -12,7 +12,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.utils.SplashHelper;
+import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -79,7 +79,7 @@ public abstract class MinecraftClientMixin {
     public Overlay rrls$miniRender(MinecraftClient instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
-        if (SplashHelper.isRenderingState(overlay))
+        if (OverlayHelper.isRenderingState(overlay))
             return null;
 
         return overlay;

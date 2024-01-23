@@ -12,7 +12,7 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
-import com.github.dimadencep.mods.rrls.utils.SplashHelper;
+import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -40,7 +40,7 @@ import java.util.function.Consumer;
 @Mixin(SplashOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
     @Unique
-    public SplashHelper.State rrls$state = SplashHelper.State.DEFAULT;
+    public OverlayHelper.State rrls$state = OverlayHelper.State.DEFAULT;
     @Shadow
     public float progress;
     @Shadow
@@ -57,16 +57,16 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        this.rrls$state = SplashHelper.lookupState(client.currentScreen, reloading);
+        this.rrls$state = OverlayHelper.lookupState(client.currentScreen, reloading);
     }
 
     @Override
-    public SplashHelper.State rrls$getState() {
+    public OverlayHelper.State rrls$getState() {
         return this.rrls$state;
     }
 
     @Override
-    public void rrls$setState(SplashHelper.State state) {
+    public void rrls$setState(OverlayHelper.State state) {
         rrls$state = state;
     }
 
@@ -109,8 +109,8 @@ public abstract class SplashOverlayMixin extends Overlay {
             )
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (rrls$state != SplashHelper.State.DEFAULT) // Update attach (Optifine ❤️)
-            this.rrls$state = SplashHelper.lookupState(client.currentScreen, this.rrls$state != SplashHelper.State.WAIT);
+        if (rrls$state != OverlayHelper.State.DEFAULT) // Update attach (Optifine ❤️)
+            this.rrls$state = OverlayHelper.lookupState(client.currentScreen, this.rrls$state != OverlayHelper.State.WAIT);
     }
 
     @WrapWithCondition(
@@ -194,7 +194,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             );
         }
 
-        if (ConfigExpectPlatform.rgbProgress() && this.rrls$state != SplashHelper.State.DEFAULT) {
+        if (ConfigExpectPlatform.rgbProgress() && this.rrls$state != OverlayHelper.State.DEFAULT) {
             int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
 
             return ColorHelper.Argb.getArgb(

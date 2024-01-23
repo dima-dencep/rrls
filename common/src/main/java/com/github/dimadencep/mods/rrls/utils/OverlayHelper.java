@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screen.MessageScreen;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.Screen;
 
-public class SplashHelper {
+public class OverlayHelper {
     public static State lookupState(Screen screen, boolean reloading) {
         if (!ConfigExpectPlatform.hideType().canHide(reloading))
             return State.DEFAULT;

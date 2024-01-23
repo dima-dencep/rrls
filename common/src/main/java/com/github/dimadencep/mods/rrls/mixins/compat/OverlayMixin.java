@@ -10,10 +10,10 @@
 
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
-import com.github.dimadencep.mods.rrls.accessor.SplashAccessor;
+import com.github.dimadencep.mods.rrls.duck.OverlayExtender;
 import net.minecraft.client.gui.screen.Overlay;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(Overlay.class)
-public class OverlayMixin implements SplashAccessor {
+public class OverlayMixin implements OverlayExtender {
 }

@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
-import com.github.dimadencep.mods.rrls.utils.SplashHelper;
+import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Keyboard;
@@ -35,7 +35,7 @@ public class KeyboardMouseMixin {
     public Overlay rrls$miniRender(MinecraftClient instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
-        if (SplashHelper.isRenderingState(overlay))
+        if (OverlayHelper.isRenderingState(overlay))
             return null;
 
         return overlay;

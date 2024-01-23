@@ -8,18 +8,18 @@
  *     https://github.com/dima-dencep/rrls/blob/HEAD/LICENSE
  */
 
-package com.github.dimadencep.mods.rrls.accessor;
+package com.github.dimadencep.mods.rrls.duck;
 
-import com.github.dimadencep.mods.rrls.utils.SplashHelper;
+import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import net.minecraft.client.gui.DrawContext;
 
 @SuppressWarnings("unused")
-public interface SplashAccessor {
-    default SplashHelper.State rrls$getState() {
-        return SplashHelper.State.DEFAULT;
+public interface OverlayExtender {
+    default OverlayHelper.State rrls$getState() {
+        return OverlayHelper.State.DEFAULT;
     }
 
-    default void rrls$setState(SplashHelper.State state) {
+    default void rrls$setState(OverlayHelper.State state) {
     }
 
     default void rrls$miniRender(DrawContext context) {
