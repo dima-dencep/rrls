@@ -23,6 +23,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
@@ -40,14 +42,25 @@ public class GameRendererMixin {
             )
     )
     public Overlay rrls$fixOverlayRendering(Overlay original, @Local(ordinal = 0) DrawContext drawContext) { // TODO @Local(name = "i", ordinal = 0, index = 7) int mouseX, @Local(name = "j", ordinal = 1, index = 8) int mouseY
-        if (original == null || original.rrls$getAttachType() != SplashAccessor.AttachType.HIDE)
+        if (!SplashAccessor.canMiniRender(original))
             return original;
 
         original.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
 
-        if (ConfigExpectPlatform.miniRender())
-            original.rrls$miniRender(drawContext);
-
         return null;
+    }
+
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/DrawContext;draw()V"
+            )
+    )
+    public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) DrawContext drawContext) {
+        Overlay overlay = this.client.getOverlay();
+
+        if (ConfigExpectPlatform.miniRender() && SplashAccessor.canMiniRender(overlay))
+            overlay.rrls$miniRender(drawContext);
     }
 }

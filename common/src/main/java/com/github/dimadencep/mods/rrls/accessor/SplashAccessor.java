@@ -13,6 +13,7 @@ package com.github.dimadencep.mods.rrls.accessor;
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.MessageScreen;
+import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.Screen;
 
 @SuppressWarnings("unused")
@@ -45,5 +46,9 @@ public interface SplashAccessor {
         DEFAULT,
         HIDE,
         WAIT
+    }
+
+    static boolean canMiniRender(Overlay overlay) {
+        return overlay != null && overlay.rrls$getAttachType() == AttachType.HIDE;
     }
 }
