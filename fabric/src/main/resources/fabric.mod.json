@@ -40,7 +40,6 @@
     "rrls-common.mixins.json"
   ],
   "depends": {
-    "fabric-api": "*",
     "minecraft": "~1.20",
     "cloth-config": "*"
   },

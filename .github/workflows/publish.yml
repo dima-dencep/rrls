@@ -104,7 +104,6 @@ jobs:
             ${{ steps.read_property.outputs.minecraft_version }}
           
           dependencies: |
-            fabric-api
             cloth-config
             modmenu(optional)
 
