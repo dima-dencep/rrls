@@ -19,11 +19,11 @@ import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
 import net.neoforged.fml.earlydisplay.DisplayWindow;
 import net.neoforged.fml.loading.progress.ProgressMeter;
+import net.neoforged.fml.loading.progress.StartupNotificationManager;
 import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -46,8 +46,6 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
     private DisplayWindow displayWindow;
     @Shadow
     private float currentProgress;
-    @Unique
-    private boolean rrls$completed;
 
     public ForgeLoadingOverlayMixin(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
@@ -61,14 +59,15 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             cancellable = true
     )
     public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (context instanceof DummyDrawContext || ConfigExpectPlatform.skipForgeOverlay()) {
-            if (!rrls$completed) { // Stop forge's early loading screen
+        boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
+
+        if (context instanceof DummyDrawContext || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
+            if (!earlyLoadingScreenClosed) { // Stop forge's early loading screen
                 progressMeter.complete();
                 displayWindow.close();
 
                 this.progress = currentProgress;
 
-                rrls$completed = true;
             } else {
                 currentProgress = this.progress; // Sync progress (For mod compat?)
             }

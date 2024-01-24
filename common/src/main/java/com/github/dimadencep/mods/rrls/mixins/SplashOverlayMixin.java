@@ -100,6 +100,17 @@ public abstract class SplashOverlayMixin extends Overlay {
         return !(context instanceof DummyDrawContext);
     }
 
+    @WrapWithCondition(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"
+            )
+    )
+    public boolean rrls$infinityLoading(MinecraftClient instance, Overlay overlay) {
+        return ConfigExpectPlatform.removeOverlayAtEnd();
+    }
+
     @Unique
     private static float rrls$dvd$x = 0;
     @Unique

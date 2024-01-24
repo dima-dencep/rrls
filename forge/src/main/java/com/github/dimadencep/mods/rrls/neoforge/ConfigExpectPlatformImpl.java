@@ -34,6 +34,7 @@ public class ConfigExpectPlatformImpl {
     public final ModConfigSpec.ConfigValue<String> reloadText;
     public final ModConfigSpec.BooleanValue resetResources;
     public final ModConfigSpec.BooleanValue reInitScreen;
+    public final ModConfigSpec.BooleanValue removeOverlayAtEnd;
     public final ModConfigSpec.BooleanValue earlyPackStatusSend;
     public final ModConfigSpec.ConfigValue<Double> animationSpeed;
     public final ModConfigSpec.EnumValue<AprilFool> aprilFool;
@@ -74,6 +75,11 @@ public class ConfigExpectPlatformImpl {
                 .translation("text.autoconfig.rrls.option.reInitScreen")
                 .comment("text.autoconfig.rrls.option.reInitScreen.@Tooltip")
                 .define("reInitScreen", true);
+
+        removeOverlayAtEnd = builder
+                .translation("text.autoconfig.rrls.option.removeOverlayAtEnd")
+                .comment("text.autoconfig.rrls.option.removeOverlayAtEnd.@Tooltip")
+                .define("removeOverlayAtEnd", true);
 
         earlyPackStatusSend = builder
                 .translation("text.autoconfig.rrls.option.earlyPackStatusSend")
@@ -142,6 +148,10 @@ public class ConfigExpectPlatformImpl {
 
     public static boolean reInitScreen() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().reInitScreen.get();
+    }
+
+    public static boolean removeOverlayAtEnd() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().removeOverlayAtEnd.get();
     }
 
     public static boolean earlyPackStatusSend() {

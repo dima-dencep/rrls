@@ -57,6 +57,11 @@ public class ConfigExpectPlatform {
     }
 
     @ExpectPlatform
+    public static boolean removeOverlayAtEnd() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static boolean earlyPackStatusSend() {
         throw new AssertionError();
     }

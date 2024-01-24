@@ -42,6 +42,9 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
 
+    @ConfigEntry.Gui.Tooltip
+    public boolean removeOverlayAtEnd = true;
+
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean earlyPackStatusSend = true;
 
@@ -81,6 +84,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean reInitScreen() {
         return RrlsFabric.MOD_CONFIG.reInitScreen;
+    }
+
+    public static boolean removeOverlayAtEnd() {
+        return RrlsFabric.MOD_CONFIG.removeOverlayAtEnd;
     }
 
     public static boolean earlyPackStatusSend() {
