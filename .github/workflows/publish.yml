@@ -73,6 +73,9 @@ jobs:
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
 
+          dependencies: |
+            recs(optional){modrinth:VbyJLvvb}{curseforge:962031}
+
           java: |
             17
 

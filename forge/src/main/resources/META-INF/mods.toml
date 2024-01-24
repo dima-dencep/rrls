@@ -4,7 +4,7 @@ issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
 license = "OSL-3.0"
 
 [[mods]]
-displayTest = "IGNORE_SERVER_VERSION"
+displayTest = "IGNORE_ALL_VERSION"
 modId = "rrls"
 version = "${version}"
 displayURL = "https://curseforge.com/minecraft/mc-mods/rrls"
@@ -26,6 +26,13 @@ type = "required"
 versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.rrls]]
+modId = "roughlyenoughconfigscreens"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "CLIENT"
 
 [[dependencies.rrls]]
 modId = "minecraft"

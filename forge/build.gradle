@@ -22,6 +22,9 @@ configurations {
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.forge_version}"
 
+    modLocalRuntime "maven.modrinth:recs:ERtqRcuX" // AKA cloth config bridge
+    modLocalRuntime "me.shedaniel.cloth:cloth-config-neoforge:${rootProject.cloth_config_version}"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
