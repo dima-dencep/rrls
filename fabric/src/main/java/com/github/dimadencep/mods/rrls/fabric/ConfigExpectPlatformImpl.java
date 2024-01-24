@@ -21,36 +21,48 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @SuppressWarnings("unused")
 @Config(name = Rrls.MOD_ID)
 public class ConfigExpectPlatformImpl implements ConfigData {
+    @ConfigEntry.Category("global")
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public HideType hideType = HideType.RELOADING;
 
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
     public boolean rgbProgress = false;
 
+    @ConfigEntry.Category("global")
     @ConfigEntry.Gui.Tooltip
     public boolean forceClose = false;
 
+    @ConfigEntry.Category("global")
     public boolean miniRender = true;
 
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public Type type = Type.PROGRESS;
 
+    @ConfigEntry.Category("splash")
     public String reloadText = "Edit in config!";
 
+    @ConfigEntry.Category("other")
     public boolean resetResources = false;
 
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
     public boolean reInitScreen = true;
 
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
     public boolean removeOverlayAtEnd = true;
 
+    @ConfigEntry.Category("other")
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean earlyPackStatusSend = true;
 
+    @ConfigEntry.Category("other")
     @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
 
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Excluded
     public AprilFool aprilFool = AprilFool.ON_APRIL;
 

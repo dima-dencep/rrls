@@ -10,7 +10,7 @@
 
 package com.github.dimadencep.mods.rrls.config;
 
-public enum HideType {
+public enum HideType { // TODO dehardcode
     ALL,
     LOADING,
     RELOADING,

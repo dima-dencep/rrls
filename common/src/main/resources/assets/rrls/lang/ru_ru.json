@@ -1,5 +1,8 @@
 {
   "text.autoconfig.rrls.title": "Удалить экран перезагрузки (Remove Reloading Screen)",
+  "text.autoconfig.rrls.category.global": "Глобальные",
+  "text.autoconfig.rrls.category.splash": "Экран (пере)загрузки",
+  "text.autoconfig.rrls.category.other": "Прочее",
   "text.autoconfig.rrls.option.hideType": "Оверлеи, которые будут скрыты",
   "text.autoconfig.rrls.option.rgbProgress": "Разноцветность",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
@@ -18,7 +21,7 @@
   "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "Например: Вы оказались под землей во время перезагрузки ресурсов",
   "text.autoconfig.rrls.option.animationSpeed": "Скорость анимации сплеша",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "В милисекундах",
-  "text.autoconfig.rrls.option.forceClose": "Убирать загрузочный экран, даже если за ним ничего нет",
+  "text.autoconfig.rrls.option.forceClose": "Убирать оверлей, даже если за ним ничего нет",
   "text.autoconfig.rrls.option.forceClose.@Tooltip": "На самом деле теперь есть, я давно планировал обходной путь, но теперь он есть в minecraft :)",
   "text.autoconfig.rrls.option.skipForgeOverlay": "Заменяет оверлей загрузки (Neo)Forge на ванильный"
 }

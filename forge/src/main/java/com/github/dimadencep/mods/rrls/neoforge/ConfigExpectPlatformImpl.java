@@ -23,7 +23,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 @SuppressWarnings("unused")
-public class ConfigExpectPlatformImpl {
+public class ConfigExpectPlatformImpl { // TODO categorize
     public static final Pair<ConfigExpectPlatformImpl, ModConfigSpec> CONFIG_SPEC_PAIR = new ModConfigSpec.Builder()
             .configure(ConfigExpectPlatformImpl::new);
     public final ModConfigSpec.EnumValue<HideType> hideType;
