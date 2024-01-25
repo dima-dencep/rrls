@@ -14,7 +14,6 @@ import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -71,15 +70,18 @@ public abstract class MinecraftClientMixin {
         }
     }
 
-    @WrapWithCondition(
+    @Inject(
             method = "onResourceReloadFailure",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;"
-            )
+                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    shift = At.Shift.BEFORE
+            ),
+            cancellable = true
     )
-    public boolean rrls$doubleLoad(MinecraftClient instance, boolean force, MinecraftClient.LoadingContext loadingContext) {
-        return ConfigExpectPlatform.doubleLoad().isLoad();
+    public void rrls$doubleLoad(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
+        if (!ConfigExpectPlatform.doubleLoad().isLoad())
+            ci.cancel();
     }
 
     @ModifyArg(
