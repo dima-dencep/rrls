@@ -57,7 +57,7 @@ public abstract class MinecraftClientMixin {
                     value = "HEAD"
             ),
             cancellable = true
-    )
+    ) // TODO refactor when @WrapMethod
     public void rrls$onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
         if (!ConfigExpectPlatform.resetResources()) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);

@@ -60,6 +60,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public boolean earlyPackStatusSend = true;
 
     @ConfigEntry.Category("other")
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public DoubleLoad doubleLoad = DoubleLoad.FORCE_LOAD;
 
     @ConfigEntry.Category("splash")
