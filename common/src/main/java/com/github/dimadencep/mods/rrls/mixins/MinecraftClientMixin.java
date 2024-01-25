@@ -12,7 +12,9 @@ package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
+import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
+import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -25,6 +27,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.CompletableFuture;
@@ -60,10 +63,36 @@ public abstract class MinecraftClientMixin {
         if (!ConfigExpectPlatform.resetResources()) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
-            this.reloadResources(true, loadingContext).thenRun(() -> this.showResourceReloadFailureToast(resourceName));
+            if (ConfigExpectPlatform.doubleLoad().isLoad())
+                reloadResources(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
+                        .thenRun(() -> showResourceReloadFailureToast(resourceName));
 
             ci.cancel();
         }
+    }
+
+    @WrapWithCondition(
+            method = "onResourceReloadFailure",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;"
+            )
+    )
+    public boolean rrls$doubleLoad(MinecraftClient instance, boolean force, MinecraftClient.LoadingContext loadingContext) {
+        return ConfigExpectPlatform.doubleLoad().isLoad();
+    }
+
+    @ModifyArg(
+            method = "onResourceReloadFailure",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    ordinal = 0
+            ),
+            require = 0
+    )
+    public boolean rrls$doubleLoad(boolean force) {
+        return ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD;
     }
 
     @WrapOperation(

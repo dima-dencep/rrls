@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.fabric;
 
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.AprilFool;
+import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
 import me.shedaniel.autoconfig.ConfigData;
@@ -59,6 +60,9 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public boolean earlyPackStatusSend = true;
 
     @ConfigEntry.Category("other")
+    public DoubleLoad doubleLoad = DoubleLoad.FORCE_LOAD;
+
+    @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
 
@@ -104,6 +108,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean earlyPackStatusSend() {
         return RrlsFabric.MOD_CONFIG.earlyPackStatusSend;
+    }
+
+    public static DoubleLoad doubleLoad() {
+        return RrlsFabric.MOD_CONFIG.doubleLoad;
     }
 
     public static float animationSpeed() {

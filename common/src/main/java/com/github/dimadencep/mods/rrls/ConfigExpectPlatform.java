@@ -11,6 +11,7 @@
 package com.github.dimadencep.mods.rrls;
 
 import com.github.dimadencep.mods.rrls.config.AprilFool;
+import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -63,6 +64,11 @@ public class ConfigExpectPlatform {
 
     @ExpectPlatform
     public static boolean earlyPackStatusSend() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static DoubleLoad doubleLoad() {
         throw new AssertionError();
     }
 

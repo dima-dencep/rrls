@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.neoforge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.AprilFool;
+import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
 import net.neoforged.fml.ModContainer;
@@ -36,6 +37,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     public final ModConfigSpec.BooleanValue reInitScreen;
     public final ModConfigSpec.BooleanValue removeOverlayAtEnd;
     public final ModConfigSpec.BooleanValue earlyPackStatusSend;
+    public final ModConfigSpec.EnumValue<DoubleLoad> doubleLoad;
     public final ModConfigSpec.ConfigValue<Double> animationSpeed;
     public final ModConfigSpec.EnumValue<AprilFool> aprilFool;
     public final ModConfigSpec.BooleanValue skipForgeOverlay;
@@ -86,6 +88,10 @@ public class ConfigExpectPlatformImpl { // TODO categorize
                 .comment("text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]")
                 .comment("text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]")
                 .define("earlyPackStatusSend", true);
+
+        doubleLoad = builder
+                .translation("text.autoconfig.rrls.option.doubleLoad")
+                .defineEnum("doubleLoad", DoubleLoad.FORCE_LOAD);
 
         animationSpeed = builder
                 .translation("text.autoconfig.rrls.option.animationSpeed")
@@ -156,6 +162,10 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static boolean earlyPackStatusSend() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().earlyPackStatusSend.get();
+    }
+
+    public static DoubleLoad doubleLoad() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().doubleLoad.get();
     }
 
     public static float animationSpeed() {
