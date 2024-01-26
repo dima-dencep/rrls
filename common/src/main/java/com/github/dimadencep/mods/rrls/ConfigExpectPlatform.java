@@ -33,6 +33,11 @@ public class ConfigExpectPlatform {
     }
 
     @ExpectPlatform
+    public static boolean blockOverlay() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static boolean miniRender() {
         throw new AssertionError();
     }

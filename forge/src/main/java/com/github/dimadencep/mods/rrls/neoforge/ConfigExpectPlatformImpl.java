@@ -30,6 +30,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     public final ModConfigSpec.EnumValue<HideType> hideType;
     public final ModConfigSpec.BooleanValue rgbProgress;
     public final ModConfigSpec.BooleanValue forceClose;
+    public final ModConfigSpec.BooleanValue blockOverlay;
     public final ModConfigSpec.BooleanValue miniRender;
     public final ModConfigSpec.EnumValue<Type> type;
     public final ModConfigSpec.ConfigValue<String> reloadText;
@@ -56,6 +57,11 @@ public class ConfigExpectPlatformImpl { // TODO categorize
                 .translation("text.autoconfig.rrls.option.forceClose")
                 .comment("text.autoconfig.rrls.option.forceClose.@Tooltip")
                 .define("forceClose", false);
+
+        blockOverlay = builder
+                .translation("text.autoconfig.rrls.option.blockOverlay")
+                .comment("text.autoconfig.rrls.option.blockOverlay.@Tooltip")
+                .define("blockOverlay", false);
 
         miniRender = builder
                 .translation("text.autoconfig.rrls.option.miniRender")
@@ -134,6 +140,10 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static boolean forceClose() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().forceClose.get();
+    }
+
+    public static boolean blockOverlay() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().blockOverlay.get();
     }
 
     public static boolean miniRender() {

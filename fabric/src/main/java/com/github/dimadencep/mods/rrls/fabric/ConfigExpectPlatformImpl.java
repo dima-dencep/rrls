@@ -35,6 +35,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public boolean forceClose = false;
 
     @ConfigEntry.Category("global")
+    @ConfigEntry.Gui.Tooltip
+    public boolean blockOverlay = false;
+
+    @ConfigEntry.Category("global")
     public boolean miniRender = true;
 
     @ConfigEntry.Category("splash")
@@ -81,6 +85,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean forceClose() {
         return RrlsFabric.MOD_CONFIG.forceClose;
+    }
+
+    public static boolean blockOverlay() {
+        return RrlsFabric.MOD_CONFIG.blockOverlay;
     }
 
     public static boolean miniRender() {

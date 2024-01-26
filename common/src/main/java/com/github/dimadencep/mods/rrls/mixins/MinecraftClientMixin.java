@@ -14,6 +14,7 @@ import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -114,5 +115,18 @@ public abstract class MinecraftClientMixin {
             return null;
 
         return overlay;
+    }
+
+    @ModifyReturnValue(
+            method = "getOverlay",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
+    public Overlay rrls$blockOverlay(Overlay original) {
+        if (ConfigExpectPlatform.blockOverlay() && OverlayHelper.isRenderingState(original))
+            return null;
+
+        return original;
     }
 }

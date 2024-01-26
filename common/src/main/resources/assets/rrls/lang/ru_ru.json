@@ -24,5 +24,7 @@
   "text.autoconfig.rrls.option.doubleLoad": "Повторная загрузка ресурсов при возникновении ошибки",
   "text.autoconfig.rrls.option.forceClose": "Убирать оверлей, даже если за ним ничего нет",
   "text.autoconfig.rrls.option.forceClose.@Tooltip": "На самом деле теперь есть, я давно планировал обходной путь, но теперь он есть в minecraft :)",
+  "text.autoconfig.rrls.option.blockOverlay": "Полная блокировка использований оверлеев",
+  "text.autoconfig.rrls.option.blockOverlay.@Tooltip": "Используйте на свой страх и риск!",
   "text.autoconfig.rrls.option.skipForgeOverlay": "Заменяет оверлей загрузки (Neo)Forge на ванильный"
 }

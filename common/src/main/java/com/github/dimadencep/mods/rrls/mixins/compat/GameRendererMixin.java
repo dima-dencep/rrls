@@ -41,7 +41,7 @@ public class GameRendererMixin {
     )
     public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) DrawContext drawContext) {
         try {
-            Overlay overlay = this.client.getOverlay();
+            Overlay overlay = this.client.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
                 overlay.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
