@@ -14,7 +14,6 @@ import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -29,27 +28,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
-
     @Shadow
     @Final
     MinecraftClient client;
-
-    @ModifyExpressionValue(
-            method = "render",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;",
-                    ordinal = 0
-            )
-    )
-    public Overlay rrls$fixOverlayRendering(Overlay original, @Local(ordinal = 0) DrawContext drawContext) { // TODO @Local(name = "i", ordinal = 0, index = 7) int mouseX, @Local(name = "j", ordinal = 1, index = 8) int mouseY
-        if (!OverlayHelper.isRenderingState(original))
-            return original;
-
-        original.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
-
-        return null;
-    }
 
     @Inject(
             method = "render",
@@ -62,8 +43,12 @@ public class GameRendererMixin {
         try {
             Overlay overlay = this.client.getOverlay();
 
-            if (ConfigExpectPlatform.miniRender() && OverlayHelper.isRenderingState(overlay))
-                overlay.rrls$miniRender(drawContext);
+            if (OverlayHelper.isRenderingState(overlay)) {
+                overlay.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
+
+                if (ConfigExpectPlatform.miniRender())
+                    overlay.rrls$miniRender(drawContext);
+            }
 
         } catch (RuntimeException ex) {
             Rrls.LOGGER.error(ex);

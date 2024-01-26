@@ -8,7 +8,7 @@
     "SplashOverlayMixin",
     "TitleScreenMixin",
     "compat.GameRendererMixin",
-    "compat.KeyboardMouseMixin",
+    "compat.RendererKeyboardMouseMixin",
     "compat.OverlayMixin",
     "compat.ServerResourcePackManagerMixin",
     "workaround.DrawContentMixin"
