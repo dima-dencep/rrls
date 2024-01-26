@@ -22,7 +22,6 @@ import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
-import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,6 +46,10 @@ public abstract class SplashOverlayMixin extends Overlay {
 
     @Shadow
     protected abstract void renderProgressBar(DrawContext drawContext, int minX, int minY, int maxX, int maxY, float opacity);
+    @Shadow
+    private static int withAlpha(int color, int alpha) {
+        return 0;
+    }
 
     @Inject(
             method = "<init>",
@@ -111,6 +114,32 @@ public abstract class SplashOverlayMixin extends Overlay {
         return ConfigExpectPlatform.removeOverlayAtEnd();
     }
 
+    @WrapOperation(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(IZ)V"
+            )
+    )
+    public void rrls$_clear(int mask, boolean getError, Operation<Void> original) {
+        if (!rrls$getState().isRendering()) {
+            original.call(mask, getError);
+        }
+    }
+
+    @WrapOperation(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clearColor(FFFF)V"
+            )
+    )
+    public void rrls$_clearColor(float red, float green, float blue, float alpha, Operation<Void> original) {
+        if (!rrls$getState().isRendering()) {
+            original.call(red, green, blue, alpha);
+        }
+    }
+
     @Unique
     private static float rrls$dvd$x = 0;
     @Unique
@@ -173,23 +202,11 @@ public abstract class SplashOverlayMixin extends Overlay {
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original) {
         if (ConfigExpectPlatform.aprilFool().canUes() && rrls$dvd$color != -1) {
-            return ColorHelper.Argb.getArgb(
-                    alpha,
-                    ColorHelper.Argb.getRed(rrls$dvd$color),
-                    ColorHelper.Argb.getGreen(rrls$dvd$color),
-                    ColorHelper.Argb.getBlue(rrls$dvd$color)
-            );
+            return withAlpha(rrls$dvd$color, alpha);
         }
 
         if (ConfigExpectPlatform.rgbProgress() && rrls$getState() != OverlayHelper.State.DEFAULT) {
-            int baseColor = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
-
-            return ColorHelper.Argb.getArgb(
-                    alpha,
-                    ColorHelper.Argb.getRed(baseColor),
-                    ColorHelper.Argb.getGreen(baseColor),
-                    ColorHelper.Argb.getBlue(baseColor)
-            );
+            return withAlpha(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF), alpha);
         }
 
         return original.call(alpha, red, green, blue);
