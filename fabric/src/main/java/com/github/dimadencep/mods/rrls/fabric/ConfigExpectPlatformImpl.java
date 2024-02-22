@@ -61,7 +61,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     @ConfigEntry.Category("other")
     @ConfigEntry.Gui.Tooltip(count = 2)
-    public boolean earlyPackStatusSend = true;
+    public boolean earlyPackStatusSend = false;
 
     @ConfigEntry.Category("other")
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)

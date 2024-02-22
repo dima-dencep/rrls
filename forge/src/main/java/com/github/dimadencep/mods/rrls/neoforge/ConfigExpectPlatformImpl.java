@@ -93,7 +93,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
                 .translation("text.autoconfig.rrls.option.earlyPackStatusSend")
                 .comment("text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]")
                 .comment("text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]")
-                .define("earlyPackStatusSend", true);
+                .define("earlyPackStatusSend", false);
 
         doubleLoad = builder
                 .translation("text.autoconfig.rrls.option.doubleLoad")
