@@ -11,11 +11,11 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import net.minecraft.client.resource.server.PackStateChangeCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.resource.server.ServerResourcePackManager;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,10 +24,6 @@ import java.util.UUID;
 
 @Mixin(ServerResourcePackManager.class)
 public class ServerResourcePackManagerMixin {
-    @Shadow
-    @Final
-    PackStateChangeCallback stateChangeCallback;
-
     @Inject(
             method = "onAdd",
             at = @At(
@@ -37,7 +33,11 @@ public class ServerResourcePackManagerMixin {
     )
     public void earlyResourcePackStatusSend(UUID id, ServerResourcePackManager.PackEntry pack, CallbackInfo ci) {
         if (ConfigExpectPlatform.earlyPackStatusSend()) {
-            this.stateChangeCallback.onFinish(pack.id, PackStateChangeCallback.FinishState.APPLIED);
+            ClientPlayNetworkHandler handler = MinecraftClient.getInstance().getNetworkHandler();
+
+            if (handler != null && handler.getConnection() != null && handler.getConnection().isOpen()) {
+                handler.getConnection().send(new ResourcePackStatusC2SPacket(id, ResourcePackStatusC2SPacket.Status.SUCCESSFULLY_LOADED));
+            }
         }
     }
 }
