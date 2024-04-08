@@ -15,10 +15,10 @@ import com.github.dimadencep.mods.rrls.Rrls;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Overlay;
+import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameRendererMixin {
     @Shadow
     @Final
-    MinecraftClient client;
+    Minecraft client;
 
     @Inject(
             method = "render",
@@ -39,12 +39,12 @@ public class GameRendererMixin {
                     target = "Lnet/minecraft/client/gui/DrawContext;draw()V"
             )
     )
-    public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) DrawContext drawContext) {
+    public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics drawContext) {
         try {
             Overlay overlay = this.client.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
-                overlay.render(DummyDrawContext.INSTANCE, 0, 0, client.getLastFrameDuration());
+                overlay.render(DummyDrawContext.INSTANCE, 0, 0, client.getDeltaFrameTime());
 
                 if (ConfigExpectPlatform.miniRender())
                     overlay.rrls$miniRender(drawContext);

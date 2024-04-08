@@ -13,10 +13,10 @@ package com.github.dimadencep.mods.rrls.forge.mixins;
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.resource.ResourceReload;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.LoadingOverlay;
+import net.minecraft.server.packs.resources.ReloadInstance;
 import net.neoforged.fml.earlydisplay.DisplayWindow;
 import net.neoforged.fml.loading.progress.ProgressMeter;
 import net.neoforged.fml.loading.progress.StartupNotificationManager;
@@ -34,10 +34,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Mixin(NeoForgeLoadingOverlay.class)
-public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
+public abstract class ForgeLoadingOverlayMixin extends LoadingOverlay {
     @Shadow
     @Final
-    private MinecraftClient minecraft;
+    private Minecraft minecraft;
     @Shadow
     @Final
     private ProgressMeter progressMeter;
@@ -47,7 +47,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
     @Shadow
     private float currentProgress;
 
-    public ForgeLoadingOverlayMixin(MinecraftClient client, ResourceReload monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
+    public ForgeLoadingOverlayMixin(Minecraft client, ReloadInstance monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
     }
 
@@ -58,7 +58,7 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
             ),
             cancellable = true
     )
-    public void rrls$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
 
         if (context instanceof DummyDrawContext || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
@@ -66,17 +66,17 @@ public abstract class ForgeLoadingOverlayMixin extends SplashOverlay {
                 progressMeter.complete();
                 displayWindow.close();
 
-                this.progress = currentProgress;
+                this.currentProgress = currentProgress;
 
             } else {
-                currentProgress = this.progress; // Sync progress (For mod compat?)
+                currentProgress = this.currentProgress; // Sync progress (For mod compat?)
             }
 
             super.render(context, mouseX, mouseY, delta);
 
             ci.cancel();
         } else {
-            rrls$setState(OverlayHelper.lookupState(minecraft.currentScreen, false)); // Forge loading overlay is loading overlay :)
+            rrls$setState(OverlayHelper.lookupState(minecraft.screen, false)); // Forge loading overlay is loading overlay :)
         }
     }
 

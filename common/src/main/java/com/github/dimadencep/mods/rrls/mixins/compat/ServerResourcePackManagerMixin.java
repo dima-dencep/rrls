@@ -11,18 +11,18 @@
 package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.resource.server.ServerResourcePackManager;
-import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.resources.server.ServerPackManager;
+import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 
-@Mixin(ServerResourcePackManager.class)
+@Mixin(ServerPackManager.class)
 public class ServerResourcePackManagerMixin {
     @Inject(
             method = "onAdd",
@@ -31,12 +31,12 @@ public class ServerResourcePackManagerMixin {
                     target = "Lnet/minecraft/client/resource/server/ServerResourcePackManager;onPackChanged()V"
             )
     )
-    public void earlyResourcePackStatusSend(UUID id, ServerResourcePackManager.PackEntry pack, CallbackInfo ci) {
+    public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData pack, CallbackInfo ci) {
         if (ConfigExpectPlatform.earlyPackStatusSend()) {
-            ClientPlayNetworkHandler handler = MinecraftClient.getInstance().getNetworkHandler();
+            ClientPacketListener handler = Minecraft.getInstance().getConnection();
 
-            if (handler != null && handler.getConnection() != null && handler.getConnection().isOpen()) {
-                handler.getConnection().send(new ResourcePackStatusC2SPacket(id, ResourcePackStatusC2SPacket.Status.SUCCESSFULLY_LOADED));
+            if (handler != null && handler.getConnection() != null && handler.getConnection().isConnected()) {
+                handler.getConnection().send(new ServerboundResourcePackPacket(id, ServerboundResourcePackPacket.Action.SUCCESSFULLY_LOADED));
             }
         }
     }
