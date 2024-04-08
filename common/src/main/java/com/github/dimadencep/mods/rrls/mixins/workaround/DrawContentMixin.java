@@ -26,7 +26,7 @@ public abstract class DrawContentMixin {
             method = "*",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/texture/GuiAtlasManager;getSprite(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/texture/Sprite;"
+                    target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
             )
     )
     public TextureAtlasSprite rrls$fixSpriteCrash(GuiSpriteManager instance, ResourceLocation objectId, Operation<TextureAtlasSprite> original) {
@@ -41,7 +41,7 @@ public abstract class DrawContentMixin {
             method = "*",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/texture/GuiAtlasManager;getScaling(Lnet/minecraft/client/texture/Sprite;)Lnet/minecraft/client/texture/Scaling;"
+                    target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSpriteScaling(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)Lnet/minecraft/client/resources/metadata/gui/GuiSpriteScaling;"
             )
     )
     public GuiSpriteScaling rrls$fixSpriteCrash(GuiSpriteManager instance, TextureAtlasSprite sprite, Operation<GuiSpriteScaling> original) {
@@ -52,10 +52,10 @@ public abstract class DrawContentMixin {
     }
 
     @WrapOperation(
-            method = "drawGuiTexture(Lnet/minecraft/util/Identifier;IIIIIIIII)V",
+            method = "blitSprite(Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/DrawContext;drawSprite(Lnet/minecraft/client/texture/Sprite;IIIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIII)V"
             )
     )
     public void rrls$fixSpriteCrash(GuiGraphics instance, TextureAtlasSprite sprite, int x, int y, int z, int width, int height, Operation<Void> original) {

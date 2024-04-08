@@ -35,11 +35,11 @@ import net.minecraft.network.chat.Component;
 @Mixin(Minecraft.class)
 public abstract class MinecraftClientMixin {
     @Shadow
-    protected abstract void showResourceReloadFailureToast(@Nullable Component description);
+    protected abstract void addResourcePackLoadFailToast(@Nullable Component component);
     @Shadow
-    protected abstract CompletableFuture<Void> reloadResources(boolean force, @Nullable Minecraft.GameLoadCookie loadingContext);
+    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
     @Shadow
-    protected abstract void onFinishedLoading(@Nullable Minecraft.GameLoadCookie loadingContext);
+    protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
 
     @Inject(
             method = "<init>",
@@ -49,11 +49,11 @@ public abstract class MinecraftClientMixin {
     )
     public void rrls$init(GameConfig args, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie loadingContext) {
         if (ConfigExpectPlatform.forceClose())
-            onFinishedLoading(loadingContext);
+            onResourceLoadFinished(loadingContext);
     }
 
     @Inject(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "HEAD"
             ),
@@ -64,18 +64,18 @@ public abstract class MinecraftClientMixin {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
             if (ConfigExpectPlatform.doubleLoad().isLoad())
-                reloadResources(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
-                        .thenRun(() -> showResourceReloadFailureToast(resourceName));
+                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
+                        .thenRun(() -> addResourcePackLoadFailToast(resourceName));
 
             ci.cancel();
         }
     }
 
     @Inject(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     shift = At.Shift.BEFORE
             ),
             cancellable = true
@@ -86,10 +86,10 @@ public abstract class MinecraftClientMixin {
     }
 
     @ModifyArg(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     ordinal = 0
             ),
             require = 0
@@ -101,11 +101,11 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(
             method = {
                     "tick",
-                    "handleInputEvents"
+                    "handleKeybinds"
             },
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/client/MinecraftClient;overlay:Lnet/minecraft/client/gui/screen/Overlay;"
+                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
     public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {

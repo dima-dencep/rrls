@@ -31,7 +31,7 @@ public class RendererKeyboardMouseMixin {
             method = "*",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;"
+                    target = "Lnet/minecraft/client/Minecraft;getOverlay()Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
     public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {

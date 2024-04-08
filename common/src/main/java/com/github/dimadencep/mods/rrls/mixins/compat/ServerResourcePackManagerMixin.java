@@ -25,10 +25,10 @@ import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 @Mixin(ServerPackManager.class)
 public class ServerResourcePackManagerMixin {
     @Inject(
-            method = "onAdd",
+            method = "pushNewPack",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/resource/server/ServerResourcePackManager;onPackChanged()V"
+                    target = "Lnet/minecraft/client/resources/server/ServerPackManager;registerForUpdate()V"
             )
     )
     public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData pack, CallbackInfo ci) {

@@ -30,21 +30,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameRendererMixin {
     @Shadow
     @Final
-    Minecraft client;
+    Minecraft minecraft;
 
     @Inject(
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/DrawContext;draw()V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;flush()V"
             )
     )
     public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics drawContext) {
         try {
-            Overlay overlay = this.client.overlay;
+            Overlay overlay = this.minecraft.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
-                overlay.render(DummyDrawContext.INSTANCE, 0, 0, client.getDeltaFrameTime());
+                overlay.render(DummyDrawContext.INSTANCE, 0, 0, minecraft.getDeltaFrameTime());
 
                 if (ConfigExpectPlatform.miniRender())
                     overlay.rrls$miniRender(drawContext);

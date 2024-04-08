@@ -34,7 +34,7 @@ public class OverlayMixin implements OverlayExtender {
     }
 
     @ModifyReturnValue(
-            method = "pausesGame",
+            method = "isPauseScreen",
             at = @At(
                     value = "RETURN"
             )

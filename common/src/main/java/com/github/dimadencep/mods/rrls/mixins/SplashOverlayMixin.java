@@ -39,15 +39,14 @@ import net.minecraft.server.packs.resources.ReloadInstance;
 @Mixin(LoadingOverlay.class)
 public abstract class SplashOverlayMixin extends Overlay {
     @Shadow
-    public float progress;
+    private float currentProgress;
     @Shadow
     @Final
-    private Minecraft client;
-
+    private Minecraft minecraft;
     @Shadow
-    protected abstract void renderProgressBar(GuiGraphics drawContext, int minX, int minY, int maxX, int maxY, float opacity);
+    protected abstract void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f);
     @Shadow
-    private static int withAlpha(int color, int alpha) {
+    private static int replaceAlpha(int i, int j) {
         return 0;
     }
 
@@ -71,11 +70,11 @@ public abstract class SplashOverlayMixin extends Overlay {
                 int s = (int) ((double) j * 0.8325);
                 int r = (int) (Math.min(i * 0.75, j) * 0.5);
 
-                this.renderProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+                this.drawProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
             }
 
             case TEXT -> context.drawCenteredString(
-                    client.font, ConfigExpectPlatform.reloadText(), i / 2, 70,
+                    minecraft.font, ConfigExpectPlatform.reloadText(), i / 2, 70,
                     ConfigExpectPlatform.rgbProgress() ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
             );
         }
@@ -89,14 +88,14 @@ public abstract class SplashOverlayMixin extends Overlay {
     )
     public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (rrls$getState() != OverlayHelper.State.DEFAULT) // Update attach (Optifine ❤️)
-            rrls$setState(OverlayHelper.lookupState(client.screen, rrls$getState() != OverlayHelper.State.WAIT));
+            rrls$setState(OverlayHelper.lookupState(minecraft.screen, rrls$getState() != OverlayHelper.State.WAIT));
     }
 
     @WrapWithCondition(
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screen/Screen;render(Lnet/minecraft/client/gui/DrawContext;IIF)V"
+                    target = "Lnet/minecraft/client/gui/screens/Screen;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
             )
     )
     public boolean rrls$screenrender(Screen instance, GuiGraphics context, int mouseX, int mouseY, float delta) {
@@ -107,7 +106,7 @@ public abstract class SplashOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"
+                    target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
             )
     )
     public boolean rrls$infinityLoading(Minecraft instance, Overlay overlay) {
@@ -152,7 +151,7 @@ public abstract class SplashOverlayMixin extends Overlay {
     private static int rrls$dvd$color = -1;
 
     @Inject(
-            method = "renderProgressBar",
+            method = "drawProgressBar",
             at = @At(
                     value = "HEAD"
             )
@@ -170,8 +169,8 @@ public abstract class SplashOverlayMixin extends Overlay {
         drawContext.pose().pushPose();
         drawContext.pose().translate(rrls$dvd$x * sx - minX, rrls$dvd$y * sy - minY, 0.0F);
 
-        rrls$dvd$x += mul * (progress * 5) * rrls$dvd$xdir;
-        rrls$dvd$y += ymul * (progress * 5) * rrls$dvd$ydir;
+        rrls$dvd$x += mul * (currentProgress * 5) * rrls$dvd$xdir;
+        rrls$dvd$y += ymul * (currentProgress * 5) * rrls$dvd$ydir;
 
         if (rrls$dvd$x > 0.5f) rrls$dvd$xdir = -1;
         if (rrls$dvd$y > 0.5f) rrls$dvd$ydir = -1;
@@ -183,7 +182,7 @@ public abstract class SplashOverlayMixin extends Overlay {
     }
 
     @Inject(
-            method = "renderProgressBar",
+            method = "drawProgressBar",
             at = @At(
                     value = "RETURN"
             )
@@ -194,19 +193,19 @@ public abstract class SplashOverlayMixin extends Overlay {
     }
 
     @WrapOperation(
-            method = "renderProgressBar",
+            method = "drawProgressBar",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/util/math/ColorHelper$Argb;getArgb(IIII)I"
+                    target = "Lnet/minecraft/util/FastColor$ARGB32;color(IIII)I"
             )
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original) {
         if (ConfigExpectPlatform.aprilFool().canUes() && rrls$dvd$color != -1) {
-            return withAlpha(rrls$dvd$color, alpha);
+            return replaceAlpha(rrls$dvd$color, alpha);
         }
 
         if (ConfigExpectPlatform.rgbProgress() && rrls$getState() != OverlayHelper.State.DEFAULT) {
-            return withAlpha(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF), alpha);
+            return replaceAlpha(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF), alpha);
         }
 
         return original.call(alpha, red, green, blue);

@@ -11,7 +11,7 @@
 package com.github.dimadencep.mods.rrls.utils;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.Screen;
 
@@ -23,7 +23,7 @@ public class OverlayHelper {
         if (reloading || ConfigExpectPlatform.forceClose())
             return State.HIDE;
 
-        if (screen instanceof GenericDirtMessageScreen) // Loading Minecraft
+        if (screen instanceof GenericMessageScreen) // Loading Minecraft
             return State.WAIT;
 
         return screen != null ? State.HIDE : State.WAIT;
