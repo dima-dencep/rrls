@@ -18,7 +18,7 @@ public interface OverlayExtender {
     OverlayHelper.State rrls$getState();
     void rrls$setState(OverlayHelper.State state);
 
-    default void rrls$miniRender(GuiGraphics context) {
+    default void rrls$miniRender(GuiGraphics graphics) {
         throw new UnsupportedOperationException("The '" + getClass().getCanonicalName() + "' overlay doesn't have a mini-render!");
     }
 }

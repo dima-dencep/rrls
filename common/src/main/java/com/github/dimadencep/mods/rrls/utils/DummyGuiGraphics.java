@@ -34,10 +34,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unused", "deprecation"})
-public class DummyDrawContext extends GuiGraphics {
-    public static final DummyDrawContext INSTANCE = new DummyDrawContext();
+public class DummyGuiGraphics extends GuiGraphics {
+    public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
-    private DummyDrawContext() {
+    private DummyGuiGraphics() {
         super(Minecraft.getInstance(), null);
     }
 
@@ -85,6 +85,11 @@ public class DummyDrawContext extends GuiGraphics {
     }
 
     @Override
+    public boolean containsPointInScissor(int i, int j) {
+        return false;
+    }
+
+    @Override
     public void applyScissor(@Nullable ScreenRectangle rect) {
     }
 
@@ -122,6 +127,10 @@ public class DummyDrawContext extends GuiGraphics {
 
     @Override
     public void fillGradient(VertexConsumer vertexConsumer, int startX, int startY, int endX, int endY, int z, int colorStart, int colorEnd) {
+    }
+
+    @Override
+    public void fillRenderType(RenderType renderType, int i, int j, int k, int l, int m) {
     }
 
     @Override

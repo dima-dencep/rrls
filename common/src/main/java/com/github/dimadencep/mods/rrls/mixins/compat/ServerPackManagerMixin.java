@@ -23,7 +23,7 @@ import net.minecraft.client.resources.server.ServerPackManager;
 import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 
 @Mixin(ServerPackManager.class)
-public class ServerResourcePackManagerMixin {
+public class ServerPackManagerMixin {
     @Inject(
             method = "pushNewPack",
             at = @At(
@@ -31,7 +31,7 @@ public class ServerResourcePackManagerMixin {
                     target = "Lnet/minecraft/client/resources/server/ServerPackManager;registerForUpdate()V"
             )
     )
-    public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData pack, CallbackInfo ci) {
+    public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData packData, CallbackInfo ci) {
         if (ConfigExpectPlatform.earlyPackStatusSend()) {
             ClientPacketListener handler = Minecraft.getInstance().getConnection();
 

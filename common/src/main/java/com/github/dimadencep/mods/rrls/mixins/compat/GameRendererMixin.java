@@ -12,7 +12,7 @@ package com.github.dimadencep.mods.rrls.mixins.compat;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.DummyGuiGraphics;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
@@ -39,15 +39,15 @@ public class GameRendererMixin {
                     target = "Lnet/minecraft/client/gui/GuiGraphics;flush()V"
             )
     )
-    public void rrls$miniRender(float tickDelta, long startTime, boolean tick, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics drawContext) {
+    public void rrls$miniRender(float partialTicks, long nanoTime, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
         try {
             Overlay overlay = this.minecraft.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
-                overlay.render(DummyDrawContext.INSTANCE, 0, 0, minecraft.getDeltaFrameTime());
+                overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, minecraft.getDeltaFrameTime());
 
                 if (ConfigExpectPlatform.miniRender())
-                    overlay.rrls$miniRender(drawContext);
+                    overlay.rrls$miniRender(graphics);
             }
 
         } catch (RuntimeException ex) {

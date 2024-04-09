@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(GuiGraphics.class)
-public abstract class DrawContentMixin {
+public abstract class GuiGraphicsMixin {
     @WrapOperation(
             method = "*",
             at = @At(
@@ -29,9 +29,9 @@ public abstract class DrawContentMixin {
                     target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
             )
     )
-    public TextureAtlasSprite rrls$fixSpriteCrash(GuiSpriteManager instance, ResourceLocation objectId, Operation<TextureAtlasSprite> original) {
+    public TextureAtlasSprite rrls$fixSpriteCrash(GuiSpriteManager instance, ResourceLocation location, Operation<TextureAtlasSprite> original) {
         try {
-            return original.call(instance, objectId);
+            return original.call(instance, location);
         } catch (Throwable th) {
             return null;
         }

@@ -11,7 +11,7 @@
 package com.github.dimadencep.mods.rrls.forge.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.DummyGuiGraphics;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -34,7 +34,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Mixin(NeoForgeLoadingOverlay.class)
-public abstract class ForgeLoadingOverlayMixin extends LoadingOverlay {
+public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     @Shadow
     @Final
     private Minecraft minecraft;
@@ -47,7 +47,7 @@ public abstract class ForgeLoadingOverlayMixin extends LoadingOverlay {
     @Shadow
     private float currentProgress;
 
-    public ForgeLoadingOverlayMixin(Minecraft client, ReloadInstance monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
+    public NeoForgeLoadingOverlayMixin(Minecraft client, ReloadInstance monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
     }
 
@@ -61,15 +61,15 @@ public abstract class ForgeLoadingOverlayMixin extends LoadingOverlay {
     public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
 
-        if (context instanceof DummyDrawContext || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
+        if (context instanceof DummyGuiGraphics || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
             if (!earlyLoadingScreenClosed) { // Stop forge's early loading screen
                 progressMeter.complete();
                 displayWindow.close();
 
-                this.currentProgress = currentProgress;
+                super.currentProgress = currentProgress;
 
             } else {
-                currentProgress = this.currentProgress; // Sync progress (For mod compat?)
+                currentProgress = super.currentProgress; // Sync progress (For mod compat?)
             }
 
             super.render(context, mouseX, mouseY, delta);

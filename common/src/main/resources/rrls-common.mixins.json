@@ -5,13 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "MinecraftClientMixin",
-    "SplashOverlayMixin",
+    "LoadingOverlayMixin",
     "TitleScreenMixin",
     "compat.GameRendererMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.OverlayMixin",
-    "compat.ServerResourcePackManagerMixin",
-    "workaround.DrawContentMixin"
+    "compat.ServerPackManagerMixin",
+    "workaround.GuiGraphicsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

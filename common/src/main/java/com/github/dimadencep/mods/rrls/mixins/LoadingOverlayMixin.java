@@ -11,7 +11,7 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import com.github.dimadencep.mods.rrls.utils.DummyDrawContext;
+import com.github.dimadencep.mods.rrls.utils.DummyGuiGraphics;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -37,16 +37,16 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.packs.resources.ReloadInstance;
 
 @Mixin(LoadingOverlay.class)
-public abstract class SplashOverlayMixin extends Overlay {
+public abstract class LoadingOverlayMixin extends Overlay {
     @Shadow
-    private float currentProgress;
+    public float currentProgress;
     @Shadow
     @Final
     private Minecraft minecraft;
     @Shadow
-    protected abstract void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f);
+    protected abstract void drawProgressBar(GuiGraphics guiGraphics, int minX, int minY, int maxX, int maxY, float partialTick);
     @Shadow
-    private static int replaceAlpha(int i, int j) {
+    private static int replaceAlpha(int color, int alpha) {
         return 0;
     }
 
@@ -56,24 +56,24 @@ public abstract class SplashOverlayMixin extends Overlay {
                     value = "TAIL"
             )
     )
-    private void rrls$init(Minecraft client, ReloadInstance monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading, CallbackInfo ci) {
-        rrls$setState(OverlayHelper.lookupState(client.screen, reloading));
+    private void rrls$init(Minecraft client, ReloadInstance reload, Consumer<Optional<Throwable>> onFinish, boolean fadeIn, CallbackInfo ci) {
+        rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
     }
 
     @Override
-    public void rrls$miniRender(GuiGraphics context) {
-        int i = context.guiWidth();
-        int j = context.guiHeight();
+    public void rrls$miniRender(GuiGraphics graphics) {
+        int i = graphics.guiWidth();
+        int j = graphics.guiHeight();
 
         switch (ConfigExpectPlatform.type()) {
             case PROGRESS -> {
                 int s = (int) ((double) j * 0.8325);
                 int r = (int) (Math.min(i * 0.75, j) * 0.5);
 
-                this.drawProgressBar(context, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
+                this.drawProgressBar(graphics, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
             }
 
-            case TEXT -> context.drawCenteredString(
+            case TEXT -> graphics.drawCenteredString(
                     minecraft.font, ConfigExpectPlatform.reloadText(), i / 2, 70,
                     ConfigExpectPlatform.rgbProgress() ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
             );
@@ -98,8 +98,8 @@ public abstract class SplashOverlayMixin extends Overlay {
                     target = "Lnet/minecraft/client/gui/screens/Screen;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
             )
     )
-    public boolean rrls$screenrender(Screen instance, GuiGraphics context, int mouseX, int mouseY, float delta) {
-        return !(context instanceof DummyDrawContext);
+    public boolean rrls$screenrender(Screen instance, GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        return !(graphics instanceof DummyGuiGraphics);
     }
 
     @WrapWithCondition(
@@ -156,18 +156,18 @@ public abstract class SplashOverlayMixin extends Overlay {
                     value = "HEAD"
             )
     )
-    public void rrls$dvdStart(GuiGraphics drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+    public void rrls$dvdStart(GuiGraphics graphics, int minX, int minY, int maxX, int maxY, float partialTick, CallbackInfo ci) {
         if (!ConfigExpectPlatform.aprilFool().canUes())
             return;
 
-        int sx = (drawContext.guiWidth() * 2) - (maxX - minX) * 2;
+        int sx = (graphics.guiWidth() * 2) - (maxX - minX) * 2;
         float mul = 1f / sx;
 
-        int sy = (drawContext.guiHeight() * 2) - (maxY - minY) * 2;
+        int sy = (graphics.guiHeight() * 2) - (maxY - minY) * 2;
         float ymul = 1f / sy;
 
-        drawContext.pose().pushPose();
-        drawContext.pose().translate(rrls$dvd$x * sx - minX, rrls$dvd$y * sy - minY, 0.0F);
+        graphics.pose().pushPose();
+        graphics.pose().translate(rrls$dvd$x * sx - minX, rrls$dvd$y * sy - minY, 0.0F);
 
         rrls$dvd$x += mul * (currentProgress * 5) * rrls$dvd$xdir;
         rrls$dvd$y += ymul * (currentProgress * 5) * rrls$dvd$ydir;
@@ -187,9 +187,9 @@ public abstract class SplashOverlayMixin extends Overlay {
                     value = "RETURN"
             )
     )
-    public void rrls$dvdStop(GuiGraphics drawContext, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+    public void rrls$dvdStop(GuiGraphics graphics, int minX, int minY, int maxX, int maxY, float partialTick, CallbackInfo ci) {
         if (ConfigExpectPlatform.aprilFool().canUes())
-            drawContext.pose().popPose();
+            graphics.pose().popPose();
     }
 
     @WrapOperation(
