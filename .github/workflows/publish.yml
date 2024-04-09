@@ -5,6 +5,7 @@ on:
     branches:
       - '**/stable'
       - '**/backport'
+      - '**/snapshot'
 
 jobs:
   build:
