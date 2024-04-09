@@ -57,7 +57,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          #curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: |
             forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
@@ -72,7 +72,6 @@ jobs:
             neoforge
 
           game-versions: |
-            1.20.5-Snapshot
             ${{ steps.read_property.outputs.minecraft_version }}
 
           dependencies: |
@@ -88,7 +87,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          #curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
           files: |
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
@@ -103,7 +102,6 @@ jobs:
             fabric
 
           game-versions: |
-            1.20.5-Snapshot
             ${{ steps.read_property.outputs.minecraft_version }}
           
           dependencies: |
