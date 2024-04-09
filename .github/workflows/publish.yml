@@ -66,6 +66,7 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
+          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-forge"
           version-type: release
 
           loaders: |
@@ -96,6 +97,7 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
+          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-fabric"
           version-type: release
 
           loaders: |
