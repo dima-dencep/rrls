@@ -57,7 +57,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
-          #curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: |
             forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
@@ -72,6 +72,7 @@ jobs:
           loaders: |
             neoforge
 
+          game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
 
@@ -79,7 +80,7 @@ jobs:
             recs(optional){modrinth:VbyJLvvb}{curseforge:457570}
 
           java: |
-            17
+            21
 
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -88,7 +89,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           curseforge-id: 833233
-          #curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           
           files: |
             fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
@@ -103,6 +104,7 @@ jobs:
           loaders: |
             fabric
 
+          game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
           
@@ -111,7 +113,7 @@ jobs:
             modmenu(optional)
 
           java: |
-            17
+            21
 
       - name: Publish Fabric & Forge to Github
         uses: Kir-Antipov/mc-publish@v3.3.0
