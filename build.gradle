@@ -77,8 +77,8 @@ allprojects {
         maven { url "https://maven.terraformersmc.com/releases" }
         maven { url "https://maven.parchmentmc.org" }
         maven {
-            name 'Maven for PR #787' // https://github.com/neoforged/NeoForge/pull/787
-            url 'https://prmaven.neoforged.net/NeoForge/pr787'
+            name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
+            url 'https://prmaven.neoforged.net/NeoForge/pr794'
             content {
                 includeModule('net.neoforged', 'neoforge')
                 includeModule('net.neoforged', 'testframework')
