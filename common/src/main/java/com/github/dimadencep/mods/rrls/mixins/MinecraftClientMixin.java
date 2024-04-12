@@ -101,7 +101,8 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(
             method = {
                     "tick",
-                    "handleInputEvents"
+                    "handleInputEvents",
+                    "startIntegratedServer"
             },
             at = @At(
                     value = "FIELD",
