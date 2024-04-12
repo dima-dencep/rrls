@@ -101,7 +101,8 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(
             method = {
                     "tick",
-                    "handleKeybinds"
+                    "handleKeybinds",
+                    "doWorldLoad"
             },
             at = @At(
                     value = "FIELD",
