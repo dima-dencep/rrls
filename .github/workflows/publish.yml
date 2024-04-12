@@ -5,6 +5,7 @@ on:
     branches:
       - '**/stable'
       - '**/backport'
+      - '**/snapshot'
 
 jobs:
   build:
@@ -65,11 +66,13 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
+          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-forge"
           version-type: release
 
           loaders: |
             neoforge
 
+          game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
 
@@ -95,11 +98,13 @@ jobs:
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
+          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-fabric"
           version-type: release
 
           loaders: |
             fabric
 
+          game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
           
