@@ -12,6 +12,7 @@ package com.github.dimadencep.mods.rrls.config;
 
 import java.util.Calendar;
 
+@SuppressWarnings("unused")
 public enum AprilFool {
     ON_APRIL,
     ALWAYS,

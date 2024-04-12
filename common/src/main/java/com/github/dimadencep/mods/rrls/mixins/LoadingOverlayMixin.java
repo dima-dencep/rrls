@@ -13,13 +13,12 @@ package com.github.dimadencep.mods.rrls.mixins;
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
 import com.github.dimadencep.mods.rrls.utils.DummyGuiGraphics;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,8 +37,6 @@ import net.minecraft.server.packs.resources.ReloadInstance;
 
 @Mixin(LoadingOverlay.class)
 public abstract class LoadingOverlayMixin extends Overlay {
-    @Shadow
-    public float currentProgress;
     @Shadow
     @Final
     private Minecraft minecraft;
@@ -139,59 +136,6 @@ public abstract class LoadingOverlayMixin extends Overlay {
         }
     }
 
-    @Unique
-    private static float rrls$dvd$x = 0;
-    @Unique
-    private static float rrls$dvd$y = 0;
-    @Unique
-    private static int rrls$dvd$xdir = 1;
-    @Unique
-    private static int rrls$dvd$ydir = 1;
-    @Unique
-    private static int rrls$dvd$color = -1;
-
-    @Inject(
-            method = "drawProgressBar",
-            at = @At(
-                    value = "HEAD"
-            )
-    )
-    public void rrls$dvdStart(GuiGraphics graphics, int minX, int minY, int maxX, int maxY, float partialTick, CallbackInfo ci) {
-        if (!ConfigExpectPlatform.aprilFool().canUes())
-            return;
-
-        int sx = (graphics.guiWidth() * 2) - (maxX - minX) * 2;
-        float mul = 1f / sx;
-
-        int sy = (graphics.guiHeight() * 2) - (maxY - minY) * 2;
-        float ymul = 1f / sy;
-
-        graphics.pose().pushPose();
-        graphics.pose().translate(rrls$dvd$x * sx - minX, rrls$dvd$y * sy - minY, 0.0F);
-
-        rrls$dvd$x += mul * (currentProgress * 5) * rrls$dvd$xdir;
-        rrls$dvd$y += ymul * (currentProgress * 5) * rrls$dvd$ydir;
-
-        if (rrls$dvd$x > 0.5f) rrls$dvd$xdir = -1;
-        if (rrls$dvd$y > 0.5f) rrls$dvd$ydir = -1;
-        if (rrls$dvd$x < 0f) rrls$dvd$xdir = 1;
-        if (rrls$dvd$y < 0f) rrls$dvd$ydir = 1;
-
-        if (rrls$dvd$y < 0f || rrls$dvd$x < 0f || rrls$dvd$y > 0.5f || rrls$dvd$x > 0.5f)
-            rrls$dvd$color = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
-    }
-
-    @Inject(
-            method = "drawProgressBar",
-            at = @At(
-                    value = "RETURN"
-            )
-    )
-    public void rrls$dvdStop(GuiGraphics graphics, int minX, int minY, int maxX, int maxY, float partialTick, CallbackInfo ci) {
-        if (ConfigExpectPlatform.aprilFool().canUes())
-            graphics.pose().popPose();
-    }
-
     @WrapOperation(
             method = "drawProgressBar",
             at = @At(
@@ -200,10 +144,6 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original) {
-        if (ConfigExpectPlatform.aprilFool().canUes() && rrls$dvd$color != -1) {
-            return replaceAlpha(rrls$dvd$color, alpha);
-        }
-
         if (ConfigExpectPlatform.rgbProgress() && rrls$getState() != OverlayHelper.State.DEFAULT) {
             return replaceAlpha(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF), alpha);
         }
