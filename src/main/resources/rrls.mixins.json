@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.dimadencep.mods.rrls.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "LoadingOverlayMixin",
+    "MinecraftClientMixin",
+    "TitleScreenMixin",
+    "compat.GameRendererMixin",
+    "compat.OverlayMixin",
+    "compat.RendererKeyboardMouseMixin",
+    "compat.ServerPackManagerMixin",
+    "workaround.GuiGraphicsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "NeoForgeLoadingOverlayMixin"
+  ]
+}

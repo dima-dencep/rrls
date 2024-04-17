@@ -1,102 +1,107 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1" apply false
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
-    id "net.neoforged.licenser" version "0.7.2" apply false
-    id "io.github.p03w.machete" version "2.+" apply false
+    id "java-library"
+    id "idea"
+    id "maven-publish"
+    id "net.neoforged.gradle.userdev" version "7.+"
+    id "net.neoforged.licenser" version "0.7.2"
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+archivesBaseName = "rrls"
+version = "5.0.0"
+group = "com.github.dima_dencep.mods"
+
+subsystems {
+    parchment {
+        minecraftVersion = "1.20.4"
+        mappingsVersion = "2024.02.25"
+        enabled = true
+    }
 }
 
-subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.p03w.machete"
-    apply plugin: "net.neoforged.licenser"
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    loom {
-        silentMojangMappingsLicense()
+runs {
+    configureEach {
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        modSource project.sourceSets.main
     }
 
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-1.20.4:${rootProject.parchment_version}@zip")
+    client {
+    }
+}
+
+repositories {
+    maven {
+        name "CurseForge"
+        url "https://cursemaven.com"
+
+        content {
+            includeGroup "curse.maven"
         }
     }
-
-    machete {
-        ignoredTasks.add("shadowJar")
-        ignoredTasks.add("jar")
-    }
-
-    license {
-        header = rootProject.file('HEADER')
-        skipExistingHeaders = false
-
-        tasks {
-            rrls {
-                files.from rootProject.fileTree("src", {
-                    include "**/*.java"
-                })
-            }
+    maven {
+        name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
+        url 'https://prmaven.neoforged.net/NeoForge/pr794'
+        content {
+            includeModule('net.neoforged', 'neoforge')
+            includeModule('net.neoforged', 'testframework')
         }
     }
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
+dependencies {
+    implementation "net.neoforged:neoforge:20.5.0-alpha.1.20.5-pre1.20240412.132656"
+}
 
-    archivesBaseName = rootProject.archives_base_name
-    version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-${project.name}"
-    group = rootProject.maven_group
+processResources {
+    inputs.property "version", project.version
 
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
+}
+
+license {
+    header = rootProject.file('HEADER')
+    skipExistingHeaders = false
+
+    tasks {
+        rrls {
+            files.from rootProject.fileTree("src", {
+                include "**/*.java"
+            })
+        }
+    }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
     repositories {
         maven {
-            name "Modrinth"
-            url "https://api.modrinth.com/maven"
-
-            content {
-                includeGroup "maven.modrinth"
-            }
-        }
-        maven {
-            name "CurseForge"
-            url "https://cursemaven.com"
-
-            content {
-                includeGroup "curse.maven"
-            }
-        }
-        maven { url "https://maven.shedaniel.me" }
-        maven { url "https://maven.neoforged.net/releases" }
-        maven { url "https://maven.terraformersmc.com/releases" }
-        maven { url "https://maven.parchmentmc.org" }
-        maven {
-            name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
-            url 'https://prmaven.neoforged.net/NeoForge/pr794'
-            content {
-                includeModule('net.neoforged', 'neoforge')
-                includeModule('net.neoforged', 'testframework')
-            }
+            url "file://${project.projectDir}/repo"
         }
     }
+}
 
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = "UTF-8"
-        options.release.set(17)
-    }
-
-    java {
-        withSourcesJar()
-    }
-
-    publishing {
-        repositories {
-        }
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
