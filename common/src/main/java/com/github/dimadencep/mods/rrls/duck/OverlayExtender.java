@@ -11,14 +11,14 @@
 package com.github.dimadencep.mods.rrls.duck;
 
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 @SuppressWarnings("unused")
 public interface OverlayExtender {
     OverlayHelper.State rrls$getState();
     void rrls$setState(OverlayHelper.State state);
 
-    default void rrls$miniRender(DrawContext context) {
+    default void rrls$miniRender(GuiGraphics graphics) {
         throw new UnsupportedOperationException("The '" + getClass().getCanonicalName() + "' overlay doesn't have a mini-render!");
     }
 }

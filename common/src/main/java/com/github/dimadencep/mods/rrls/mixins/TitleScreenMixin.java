@@ -11,7 +11,7 @@
 package com.github.dimadencep.mods.rrls.mixins;
 
 import com.github.dimadencep.mods.rrls.ConfigExpectPlatform;
-import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -21,12 +21,12 @@ public class TitleScreenMixin {
     @ModifyConstant(
             method = "render",
             constant = @Constant(
-                    floatValue = 1000.0F,
+                    floatValue = 2000.0F,
                     ordinal = 0
             ),
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return ConfigExpectPlatform.animationSpeed();
+        return ConfigExpectPlatform.animationSpeed() * 2;
     }
 }
