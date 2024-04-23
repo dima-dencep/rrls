@@ -76,19 +76,11 @@ allprojects {
         maven { url "https://maven.neoforged.net/releases" }
         maven { url "https://maven.terraformersmc.com/releases" }
         maven { url "https://maven.parchmentmc.org" }
-        maven {
-            name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
-            url 'https://prmaven.neoforged.net/NeoForge/pr794'
-            content {
-                includeModule('net.neoforged', 'neoforge')
-                includeModule('net.neoforged', 'testframework')
-            }
-        }
     }
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(21)
     }
 
     java {
