@@ -11,7 +11,6 @@
 package com.github.dimadencep.mods.rrls.fabric;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
@@ -71,10 +70,6 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public float animationSpeed = 1000.0F;
 
-    @ConfigEntry.Category("splash")
-    @ConfigEntry.Gui.Excluded
-    public AprilFool aprilFool = AprilFool.ON_APRIL;
-
     public static HideType hideType() {
         return RrlsFabric.MOD_CONFIG.hideType;
     }
@@ -125,10 +120,6 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static float animationSpeed() {
         return RrlsFabric.MOD_CONFIG.animationSpeed;
-    }
-
-    public static AprilFool aprilFool() {
-        return RrlsFabric.MOD_CONFIG.aprilFool;
     }
 
     public static boolean skipForgeOverlay() {

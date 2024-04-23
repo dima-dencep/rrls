@@ -11,7 +11,6 @@
 package com.github.dimadencep.mods.rrls.neoforge;
 
 import com.github.dimadencep.mods.rrls.Rrls;
-import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
@@ -40,7 +39,6 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     public final ModConfigSpec.BooleanValue earlyPackStatusSend;
     public final ModConfigSpec.EnumValue<DoubleLoad> doubleLoad;
     public final ModConfigSpec.ConfigValue<Double> animationSpeed;
-    public final ModConfigSpec.EnumValue<AprilFool> aprilFool;
     public final ModConfigSpec.BooleanValue skipForgeOverlay;
 
     public ConfigExpectPlatformImpl(ModConfigSpec.Builder builder) {
@@ -103,10 +101,6 @@ public class ConfigExpectPlatformImpl { // TODO categorize
                 .translation("text.autoconfig.rrls.option.animationSpeed")
                 .comment("text.autoconfig.rrls.option.animationSpeed.@Tooltip")
                 .define("animationSpeed", 1000.0);
-
-        aprilFool = builder
-                .translation("text.autoconfig.rrls.option.aprilFool")
-                .defineEnum("aprilFool", AprilFool.ON_APRIL);
 
         skipForgeOverlay = builder
                 .translation("text.autoconfig.rrls.option.skipForgeOverlay")
@@ -180,10 +174,6 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static float animationSpeed() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().animationSpeed.get().floatValue();
-    }
-
-    public static AprilFool aprilFool() {
-        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().aprilFool.get();
     }
 
     public static boolean skipForgeOverlay() {

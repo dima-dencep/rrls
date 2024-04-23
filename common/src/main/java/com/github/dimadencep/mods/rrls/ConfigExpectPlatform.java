@@ -10,7 +10,6 @@
 
 package com.github.dimadencep.mods.rrls;
 
-import com.github.dimadencep.mods.rrls.config.AprilFool;
 import com.github.dimadencep.mods.rrls.config.DoubleLoad;
 import com.github.dimadencep.mods.rrls.config.HideType;
 import com.github.dimadencep.mods.rrls.config.Type;
@@ -79,11 +78,6 @@ public class ConfigExpectPlatform {
 
     @ExpectPlatform
     public static float animationSpeed() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static AprilFool aprilFool() {
         throw new AssertionError();
     }
 

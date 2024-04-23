@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1" apply false
+    id "io.github.goooler.shadow" version "8.1.7" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.2" apply false
@@ -21,7 +21,10 @@ subprojects {
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-1.20.4:${rootProject.parchment_version}@zip")
+        }
     }
 
     machete {
@@ -72,6 +75,15 @@ allprojects {
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://maven.neoforged.net/releases" }
         maven { url "https://maven.terraformersmc.com/releases" }
+        maven { url "https://maven.parchmentmc.org" }
+        maven {
+            name 'Maven for PR #794' // https://github.com/neoforged/NeoForge/pull/794
+            url 'https://prmaven.neoforged.net/NeoForge/pr794'
+            content {
+                includeModule('net.neoforged', 'neoforge')
+                includeModule('net.neoforged', 'testframework')
+            }
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {

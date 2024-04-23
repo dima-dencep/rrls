@@ -13,28 +13,28 @@ package com.github.dimadencep.mods.rrls.mixins.compat;
 import com.github.dimadencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.Keyboard;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
-import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.KeyboardHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHandler;
+import net.minecraft.client.gui.screens.Overlay;
+import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = {
         GameRenderer.class,
-        Keyboard.class,
-        Mouse.class
+        KeyboardHandler.class,
+        MouseHandler.class
 })
 public class RendererKeyboardMouseMixin {
     @WrapOperation(
             method = "*",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;"
+                    target = "Lnet/minecraft/client/Minecraft;getOverlay()Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
-    public Overlay rrls$miniRender(MinecraftClient instance, Operation<Overlay> original) {
+    public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
         if (OverlayHelper.isRenderingState(overlay))

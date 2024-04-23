@@ -18,10 +18,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.RunArgs;
-import net.minecraft.client.gui.screen.Overlay;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,15 +27,19 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Overlay;
+import net.minecraft.client.main.GameConfig;
+import net.minecraft.network.chat.Component;
 
-@Mixin(MinecraftClient.class)
+@Mixin(Minecraft.class)
 public abstract class MinecraftClientMixin {
     @Shadow
-    protected abstract void showResourceReloadFailureToast(@Nullable Text description);
+    protected abstract void addResourcePackLoadFailToast(@Nullable Component component);
     @Shadow
-    protected abstract CompletableFuture<Void> reloadResources(boolean force, @Nullable MinecraftClient.LoadingContext loadingContext);
+    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
     @Shadow
-    protected abstract void onFinishedLoading(@Nullable MinecraftClient.LoadingContext loadingContext);
+    protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
 
     @Inject(
             method = "<init>",
@@ -47,49 +47,49 @@ public abstract class MinecraftClientMixin {
                     value = "RETURN"
             )
     )
-    public void rrls$init(RunArgs args, CallbackInfo ci, @Local(ordinal = 0) MinecraftClient.LoadingContext loadingContext) {
+    public void rrls$init(GameConfig args, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie loadingContext) {
         if (ConfigExpectPlatform.forceClose())
-            onFinishedLoading(loadingContext);
+            onResourceLoadFinished(loadingContext);
     }
 
     @Inject(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "HEAD"
             ),
             cancellable = true
     ) // TODO refactor when @WrapMethod
-    public void rrls$onResourceReloadFailure(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
+    public void rrls$onResourceReloadFailure(Throwable exception, Component resourceName, Minecraft.GameLoadCookie loadingContext, CallbackInfo ci) {
         if (!ConfigExpectPlatform.resetResources()) {
             Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
 
             if (ConfigExpectPlatform.doubleLoad().isLoad())
-                reloadResources(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
-                        .thenRun(() -> showResourceReloadFailureToast(resourceName));
+                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
+                        .thenRun(() -> addResourcePackLoadFailToast(resourceName));
 
             ci.cancel();
         }
     }
 
     @Inject(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     shift = At.Shift.BEFORE
             ),
             cancellable = true
     )
-    public void rrls$doubleLoad(Throwable exception, Text resourceName, MinecraftClient.LoadingContext loadingContext, CallbackInfo ci) {
+    public void rrls$doubleLoad(Throwable exception, Component resourceName, Minecraft.GameLoadCookie loadingContext, CallbackInfo ci) {
         if (!ConfigExpectPlatform.doubleLoad().isLoad())
             ci.cancel();
     }
 
     @ModifyArg(
-            method = "onResourceReloadFailure",
+            method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     ordinal = 0
             ),
             require = 0
@@ -101,15 +101,15 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(
             method = {
                     "tick",
-                    "handleInputEvents",
-                    "startIntegratedServer"
+                    "handleKeybinds",
+                    "doWorldLoad"
             },
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/client/MinecraftClient;overlay:Lnet/minecraft/client/gui/screen/Overlay;"
+                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
-    public Overlay rrls$miniRender(MinecraftClient instance, Operation<Overlay> original) {
+    public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
         if (OverlayHelper.isRenderingState(overlay))
