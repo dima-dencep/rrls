@@ -11,7 +11,8 @@
     "compat.RendererKeyboardMouseMixin",
     "compat.OverlayMixin",
     "compat.ServerPackManagerMixin",
-    "workaround.GuiGraphicsMixin"
+    "workaround.GuiGraphicsMixin",
+    "workaround.VertexBufferMixin"
   ],
   "injectors": {
     "defaultRequire": 1
