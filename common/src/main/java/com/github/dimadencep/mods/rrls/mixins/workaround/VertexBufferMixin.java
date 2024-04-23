@@ -10,8 +10,8 @@
 
 package com.github.dimadencep.mods.rrls.mixins.workaround;
 
-import net.minecraft.client.gl.ShaderProgram;
-import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.renderer.ShaderInstance;
+import com.mojang.blaze3d.vertex.VertexBuffer;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,14 +21,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(VertexBuffer.class)
 public class VertexBufferMixin {
     @Inject(
-            method = "drawInternal",
+            method = "_drawWithShader",
             at = @At(
                     value = "HEAD"
             ),
             cancellable = true
     )
-    public void rrls$workaroundNullShader(Matrix4f viewMatrix, Matrix4f projectionMatrix, ShaderProgram program, CallbackInfo ci) {
-        if (program == null)
+    public void rrls$workaroundNullShader(Matrix4f viewMatrix, Matrix4f projectionMatrix, ShaderInstance shader, CallbackInfo ci) {
+        if (shader == null)
             ci.cancel();
     }
 }
