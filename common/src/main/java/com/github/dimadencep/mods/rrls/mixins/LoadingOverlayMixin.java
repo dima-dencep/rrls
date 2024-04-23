@@ -114,7 +114,8 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(IZ)V"
+                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(IZ)V",
+                    remap = false
             )
     )
     public void rrls$_clear(int mask, boolean getError, Operation<Void> original) {
@@ -127,7 +128,8 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clearColor(FFFF)V"
+                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clearColor(FFFF)V",
+                    remap = false
             )
     )
     public void rrls$_clearColor(float red, float green, float blue, float alpha, Operation<Void> original) {
