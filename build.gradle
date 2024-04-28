@@ -44,6 +44,14 @@ subprojects {
             }
         }
     }
+
+    processResources {
+        // inputs.property "project", project
+
+        filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
+            expand "project": project
+        }
+    }
 }
 
 allprojects {
@@ -56,22 +64,6 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
-        maven {
-            name "Modrinth"
-            url "https://api.modrinth.com/maven"
-
-            content {
-                includeGroup "maven.modrinth"
-            }
-        }
-        maven {
-            name "CurseForge"
-            url "https://cursemaven.com"
-
-            content {
-                includeGroup "curse.maven"
-            }
-        }
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://maven.neoforged.net/releases" }
         maven { url "https://maven.terraformersmc.com/releases" }
