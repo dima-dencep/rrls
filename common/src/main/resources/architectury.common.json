@@ -1,7 +1,7 @@
 {
   "injected_interfaces": {
     "net/minecraft/class_4071": [
-      "com/github/dimadencep/mods/rrls/duck/OverlayExtender"
+      "org/redlance/dima_dencep/mods/rrls/duck/OverlayExtender"
     ]
   },
   "accessWidener": "rrls.accesswidener"

@@ -30,10 +30,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.github.dimadencep.mods.rrls.fabric.RrlsFabric"
+      "org.redlance.dima_dencep.mods.rrls.fabric.RrlsFabric"
     ],
     "modmenu": [
-      "com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"
+      "org.redlance.dima_dencep.mods.rrls.fabric.integration.ModMenuImpl"
     ]
   },
   "mixins": [
