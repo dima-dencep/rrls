@@ -1,8 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.github.dimadencep.mods.rrls.mixins",
-  "compatibilityLevel": "JAVA_17",
+  "package": "org.redlance.dima_dencep.mods.rrls.mixins",
+  "compatibilityLevel": "JAVA_21",
   "client": [
     "MinecraftClientMixin",
     "LoadingOverlayMixin",

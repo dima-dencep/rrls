@@ -1,4 +1,4 @@
-modLoader = "lowcodefml"
+modLoader = "lowcodefml" # javafml
 loaderVersion = "*"
 issueTrackerURL = "https://github.com/dima-dencep/rrls/issues"
 license = "OSL-3.0"
@@ -6,12 +6,12 @@ license = "OSL-3.0"
 [[mods]]
 displayTest = "IGNORE_ALL_VERSION"
 modId = "rrls"
-version = "${version}"
+version = "${project.version}"
 displayURL = "https://curseforge.com/minecraft/mc-mods/rrls"
 displayName = "Remove Reloading Screen"
-updateJSONURL = "https://api.modrinth.com/updates/rrls/forge_updates.json"
+# updateJSONURL = "https://api.modrinth.com/updates/rrls/forge_updates.json"
 authors = "dima_dencep"
-credits = "ne4t0gg, nneewwtt, Madis0, notlin, Amirhan-Taipovjan, GodGun968, TheBossMagnus, LostLuma, FITFC, Gazmanovich"
+credits = "ne4t0gg, nneewwtt, Madis0, notlin, Amirhan-Taipovjan, GodGun968, TheBossMagnus, LostLuma, FITFC, Gazmanovich, TheLegendofSaram"
 description = "Makes resource packs load in the background, allowing you to do other things while waiting!"
 logoFile = "icon.png"
 
@@ -23,20 +23,13 @@ config = "rrls-common.mixins.json"
 [[dependencies.rrls]]
 modId = "neoforge"
 type = "required"
-versionRange = "*"
+versionRange = "[${project.forge_version},]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.rrls]]
-modId = "roughlyenoughconfigscreens"
-type = "optional"
-versionRange = "*"
-ordering = "NONE"
-side = "CLIENT"
-
-[[dependencies.rrls]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.20,)"
+versionRange = "[${project.minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"

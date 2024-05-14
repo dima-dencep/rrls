@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "rrls",
-  "version": "${version}",
+  "version": "${project.version}",
   "name": "Remove Reloading Screen",
   "description": "Makes resource packs load in the background, allowing you to do other things while waiting!",
   "authors": [
@@ -17,7 +17,8 @@
     "TheBossMagnus",
     "LostLuma",
     "FITFC",
-    "Gazmanovich"
+    "Gazmanovich",
+    "TheLegendofSaram"
   ],
   "contact": {
     "homepage": "https://curseforge.com/minecraft/mc-mods/rrls",
@@ -29,10 +30,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.github.dimadencep.mods.rrls.fabric.RrlsFabric"
+      "org.redlance.dima_dencep.mods.rrls.fabric.RrlsFabric"
     ],
     "modmenu": [
-      "com.github.dimadencep.mods.rrls.fabric.integration.ModMenuImpl"
+      "org.redlance.dima_dencep.mods.rrls.fabric.integration.ModMenuImpl"
     ]
   },
   "mixins": [
@@ -40,8 +41,10 @@
     "rrls-common.mixins.json"
   ],
   "depends": {
-    "minecraft": "~1.20",
-    "cloth-config": "*"
+    "fabricloader": ">=${project.loader_version}",
+    "minecraft": ">=${project.minecraft_version}",
+    "cloth-config": ">=${project.cloth_config_version}",
+    "java": ">=${project.targetCompatibility}"
   },
   "conflicts": {
     "dynamicfps": "*"
