@@ -22,6 +22,8 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Optional;
+
 @SuppressWarnings("unused")
 public class ConfigExpectPlatformImpl { // TODO categorize
     public static final Pair<ConfigExpectPlatformImpl, ModConfigSpec> CONFIG_SPEC_PAIR = new ModConfigSpec.Builder()
@@ -108,11 +110,23 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     }
 
     static { // Early loading for config
-        ModContainer activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID).orElseThrow();
+        Optional<? extends ModContainer> activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID);
         ModConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
 
-        ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, configSpec, activeContainer, "rrls.toml");
-        activeContainer.addConfig(modConfig);
+        final ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, configSpec, activeContainer.orElse(null), "rrls.toml") {
+            @Override
+            public String getModId() {
+                if (this.container == null) {
+                    return Rrls.MOD_ID;
+                }
+
+                return super.getModId();
+            }
+        };
+        activeContainer.ifPresentOrElse(
+                container -> container.addConfig(modConfig),
+                () -> Rrls.LOGGER.error("Unable to find ModContainer, this can cause issues!")
+        );
 
         if (!configSpec.isLoaded()) {
             Rrls.LOGGER.warn("Config is not loaded?");
