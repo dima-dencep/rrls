@@ -113,7 +113,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
         Optional<? extends ModContainer> activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID);
         ModConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
 
-        final ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, configSpec, activeContainer.orElse(null), "rrls.toml") {
+        final ModConfig modConfig = new ModConfig(ModConfig.Type.STARTUP, configSpec, activeContainer.orElse(null), "rrls.toml") {
             @Override
             public String getModId() {
                 if (this.container == null) {
@@ -124,11 +124,11 @@ public class ConfigExpectPlatformImpl { // TODO categorize
             }
         };
         activeContainer.ifPresentOrElse(
-                container -> container.addConfig(modConfig),
+                container -> container.addConfig(modConfig), // Configs with the STARTUP type are loaded here
                 () -> Rrls.LOGGER.error("Unable to find ModContainer, this can cause issues!")
         );
 
-        if (!configSpec.isLoaded()) {
+        if (!configSpec.isLoaded()) { // Fallback
             Rrls.LOGGER.warn("Config is not loaded?");
 
             configSpec.acceptConfig(

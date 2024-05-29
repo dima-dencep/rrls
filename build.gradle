@@ -64,6 +64,23 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        maven {
+            name 'Maven for PR #1037' // https://github.com/neoforged/NeoForge/pull/1037
+            url 'https://prmaven.neoforged.net/NeoForge/pr1037'
+            content {
+                includeModule('net.neoforged', 'testframework')
+                includeModule('net.neoforged', 'neoforge')
+            }
+        }
+        maven {
+            name 'Maven for PR #150' // https://github.com/neoforged/FancyModLoader/pull/150
+            url 'https://prmaven.neoforged.net/FancyModLoader/pr150'
+            content {
+                includeModule('net.neoforged.fancymodloader', 'junit-fml')
+                includeModule('net.neoforged.fancymodloader', 'loader')
+                includeModule('net.neoforged.fancymodloader', 'earlydisplay')
+            }
+        }
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://maven.neoforged.net/releases" }
         maven { url "https://maven.terraformersmc.com/releases" }
