@@ -10,7 +10,10 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.client.ResourceLoadStateTracker;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.client.player.LocalPlayer;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -138,5 +141,36 @@ public abstract class MinecraftClientMixin {
             return null;
 
         return original;
+    }
+
+    @WrapOperation(
+            method = {
+                    "handleKeybinds",
+                    "continueAttack"
+            },
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/player/LocalPlayer;isUsingItem()Z"
+            )
+    )
+    public boolean rrls$fixIsUsingItemNPE(LocalPlayer instance, Operation<Boolean> original) {
+        if (instance == null) {
+            return false;
+        }
+
+        return original.call(instance);
+    }
+
+    @WrapWithCondition(
+            method = {
+                    "continueAttack"
+            },
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;stopDestroyBlock()V"
+            )
+    )
+    public boolean rrls$fixStopDestroyBlockNPE(MultiPlayerGameMode instance) {
+        return instance != null;
     }
 }

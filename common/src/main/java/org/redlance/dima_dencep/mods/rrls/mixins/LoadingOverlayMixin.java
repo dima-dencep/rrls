@@ -54,6 +54,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(Minecraft client, ReloadInstance reload, Consumer<Optional<Throwable>> onFinish, boolean fadeIn, CallbackInfo ci) {
+        if (client.screen == null && ConfigExpectPlatform.forceClose()) {
+            client.setScreen(null); // set TitleScreen
+        }
+
         rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
     }
 
