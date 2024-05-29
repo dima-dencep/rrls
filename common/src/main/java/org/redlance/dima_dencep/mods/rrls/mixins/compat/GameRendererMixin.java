@@ -51,7 +51,7 @@ public class GameRendererMixin {
             }
 
         } catch (RuntimeException ex) {
-            Rrls.LOGGER.error(ex);
+            Rrls.LOGGER.error("Failed to draw overlay!", ex);
         }
     }
 }
