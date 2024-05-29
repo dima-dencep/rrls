@@ -8,42 +8,41 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.neoforge;
+package org.redlance.dima_dencep.mods.rrls.forge;
 
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.config.ConfigFileTypeHandler;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class ConfigExpectPlatformImpl { // TODO categorize
-    public static final Pair<ConfigExpectPlatformImpl, ModConfigSpec> CONFIG_SPEC_PAIR = new ModConfigSpec.Builder()
+    public static final Pair<ConfigExpectPlatformImpl, ForgeConfigSpec> CONFIG_SPEC_PAIR = new ForgeConfigSpec.Builder()
             .configure(ConfigExpectPlatformImpl::new);
-    public final ModConfigSpec.EnumValue<HideType> hideType;
-    public final ModConfigSpec.BooleanValue rgbProgress;
-    public final ModConfigSpec.BooleanValue forceClose;
-    public final ModConfigSpec.BooleanValue blockOverlay;
-    public final ModConfigSpec.BooleanValue miniRender;
-    public final ModConfigSpec.EnumValue<Type> type;
-    public final ModConfigSpec.ConfigValue<String> reloadText;
-    public final ModConfigSpec.BooleanValue resetResources;
-    public final ModConfigSpec.BooleanValue reInitScreen;
-    public final ModConfigSpec.BooleanValue removeOverlayAtEnd;
-    public final ModConfigSpec.BooleanValue earlyPackStatusSend;
-    public final ModConfigSpec.EnumValue<DoubleLoad> doubleLoad;
-    public final ModConfigSpec.ConfigValue<Double> animationSpeed;
-    public final ModConfigSpec.BooleanValue skipForgeOverlay;
+    public final ForgeConfigSpec.EnumValue<HideType> hideType;
+    public final ForgeConfigSpec.BooleanValue rgbProgress;
+    public final ForgeConfigSpec.BooleanValue forceClose;
+    public final ForgeConfigSpec.BooleanValue blockOverlay;
+    public final ForgeConfigSpec.BooleanValue miniRender;
+    public final ForgeConfigSpec.EnumValue<Type> type;
+    public final ForgeConfigSpec.ConfigValue<String> reloadText;
+    public final ForgeConfigSpec.BooleanValue resetResources;
+    public final ForgeConfigSpec.BooleanValue reInitScreen;
+    public final ForgeConfigSpec.BooleanValue removeOverlayAtEnd;
+    public final ForgeConfigSpec.BooleanValue earlyPackStatusSend;
+    public final ForgeConfigSpec.EnumValue<DoubleLoad> doubleLoad;
+    public final ForgeConfigSpec.ConfigValue<Double> animationSpeed;
+    public final ForgeConfigSpec.BooleanValue skipForgeOverlay;
 
-    public ConfigExpectPlatformImpl(ModConfigSpec.Builder builder) {
+    public ConfigExpectPlatformImpl(ForgeConfigSpec.Builder builder) {
         hideType = builder
                 .translation("text.autoconfig.rrls.option.hideType")
                 .defineEnum("hideType", HideType.RELOADING);
@@ -111,18 +110,9 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     static { // Early loading for config
         Optional<? extends ModContainer> activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID);
-        ModConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
+        ForgeConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
 
-        final ModConfig modConfig = new ModConfig(ModConfig.Type.STARTUP, configSpec, activeContainer.orElse(null), "rrls.toml") {
-            @Override
-            public String getModId() {
-                if (this.container == null) {
-                    return Rrls.MOD_ID;
-                }
-
-                return super.getModId();
-            }
-        };
+        final ModConfig modConfig = new ModConfig(ModConfig.Type.CLIENT, configSpec, activeContainer.orElse(null), "rrls.toml");
         activeContainer.ifPresentOrElse(
                 container -> container.addConfig(modConfig), // Configs with the STARTUP type are loaded here
                 () -> Rrls.LOGGER.error("Unable to find ModContainer, this can cause issues!")
@@ -132,7 +122,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
             Rrls.LOGGER.warn("Config is not loaded?");
 
             configSpec.acceptConfig(
-                    ConfigFileTypeHandler.TOML.reader(FMLPaths.CONFIGDIR.get())
+                    modConfig.getHandler().reader(FMLPaths.CONFIGDIR.get())
                             .apply(modConfig)
             );
         }

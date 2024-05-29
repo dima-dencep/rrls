@@ -11,7 +11,6 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
-import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
@@ -64,14 +63,14 @@ public abstract class LoadingOverlayMixin extends Overlay {
         int j = graphics.guiHeight();
 
         switch (ConfigExpectPlatform.type()) {
-            case Type.PROGRESS -> {
+            case PROGRESS -> {
                 int s = (int) ((double) j * 0.8325);
                 int r = (int) (Math.min(i * 0.75, j) * 0.5);
 
                 this.drawProgressBar(graphics, i / 2 - r, s - 5, i / 2 + r, s + 5, 0.8F);
             }
 
-            case Type.TEXT -> graphics.drawCenteredString(
+            case TEXT -> graphics.drawCenteredString(
                     minecraft.font, ConfigExpectPlatform.reloadText(), i / 2, 70,
                     ConfigExpectPlatform.rgbProgress() ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
             );

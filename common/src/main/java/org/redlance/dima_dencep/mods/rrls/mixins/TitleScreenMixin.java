@@ -21,12 +21,12 @@ public class TitleScreenMixin {
     @ModifyConstant(
             method = "render",
             constant = @Constant(
-                    floatValue = 2000.0F,
+                    floatValue = 1000.0F,
                     ordinal = 0
             ),
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return ConfigExpectPlatform.animationSpeed() * 2;
+        return ConfigExpectPlatform.animationSpeed();
     }
 }

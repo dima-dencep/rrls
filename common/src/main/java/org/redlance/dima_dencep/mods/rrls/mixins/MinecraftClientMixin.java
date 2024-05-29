@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import net.minecraft.client.ResourceLoadStateTracker;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -17,8 +18,8 @@ import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,9 +38,13 @@ public abstract class MinecraftClientMixin {
     @Shadow
     protected abstract void addResourcePackLoadFailToast(@Nullable Component component);
     @Shadow
-    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl);
     @Shadow
-    protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    protected abstract void onGameLoadFinished();
+
+    @Shadow
+    @Final
+    private ResourceLoadStateTracker reloadStateTracker;
 
     @Inject(
             method = "<init>",
@@ -47,9 +52,10 @@ public abstract class MinecraftClientMixin {
                     value = "TAIL"
             )
     )
-    public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
+    public void rrls$init(GameConfig gameConfig, CallbackInfo ci) {
         if (ConfigExpectPlatform.forceClose()) {
-            onResourceLoadFinished(gameLoadCookie);
+            this.reloadStateTracker.finishReload();
+            this.onGameLoadFinished();
         }
     }
 
@@ -60,14 +66,14 @@ public abstract class MinecraftClientMixin {
             ),
             cancellable = true
     )
-    public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
+    public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, CallbackInfo ci) {
         if (!ConfigExpectPlatform.resetResources()) {
             ci.cancel();
 
             Rrls.LOGGER.error("Caught error loading resourcepacks!", throwable);
 
             if (ConfigExpectPlatform.doubleLoad().isLoad()) {
-                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, gameLoadCookie)
+                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD)
                         .thenRun(() -> addResourcePackLoadFailToast(errorMessage));
             }
         }
@@ -77,12 +83,12 @@ public abstract class MinecraftClientMixin {
             method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(Z)Ljava/util/concurrent/CompletableFuture;",
                     shift = At.Shift.BEFORE
             ),
             cancellable = true
     )
-    public void rrls$doubleLoad(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
+    public void rrls$doubleLoad(Throwable throwable, Component errorMessage, CallbackInfo ci) {
         if (!ConfigExpectPlatform.doubleLoad().isLoad()) {
             ci.cancel();
         }
@@ -92,7 +98,7 @@ public abstract class MinecraftClientMixin {
             method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(Z)Ljava/util/concurrent/CompletableFuture;",
                     ordinal = 0
             ),
             require = 0

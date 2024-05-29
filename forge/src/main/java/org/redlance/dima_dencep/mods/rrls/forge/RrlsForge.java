@@ -10,14 +10,12 @@
 
 /*package org.redlance.dima_dencep.mods.rrls.forge;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.ModContainer;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod;
 
-@Mod(value = Rrls.MOD_ID, dist = Dist.CLIENT)
+@Mod(Rrls.MOD_ID)
 public class RrlsForge extends Rrls {
-    public RrlsForge(ModContainer container) {
+    public RrlsForge() {
         // no-op
     }
 }*/

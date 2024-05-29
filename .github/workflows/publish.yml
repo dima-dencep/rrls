@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 21
+          java-version: 17
 
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
@@ -71,6 +71,7 @@ jobs:
 
           loaders: |
             neoforge
+            forge
 
           game-version-filter: none
           game-versions: |
@@ -80,7 +81,7 @@ jobs:
             recs(optional){modrinth:VbyJLvvb}{curseforge:457570}
 
           java: |
-            21
+            17
 
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -103,6 +104,7 @@ jobs:
 
           loaders: |
             fabric
+            quilt
 
           game-version-filter: none
           game-versions: |
@@ -113,7 +115,7 @@ jobs:
             modmenu(optional)
 
           java: |
-            21
+            17
 
       - name: Publish Fabric & Forge to Github
         uses: Kir-Antipov/mc-publish@v3.3.0

@@ -10,34 +10,32 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 
+import net.minecraft.network.protocol.game.ClientboundResourcePackPacket;
+import net.minecraft.network.protocol.game.ServerboundResourcePackPacket;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.UUID;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.resources.server.ServerPackManager;
-import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 
-@Mixin(ServerPackManager.class)
-public class ServerPackManagerMixin {
+@Mixin(ClientPacketListener.class)
+public abstract class ServerPackManagerMixin {
+    @Shadow
+    protected abstract void send(ServerboundResourcePackPacket.Action action);
+
     @Inject(
-            method = "pushNewPack",
+            method = "handleResourcePack",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/resources/server/ServerPackManager;registerForUpdate()V"
+                    target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;downloadCallback(Ljava/util/concurrent/CompletableFuture;)V"
             )
     )
-    public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData packData, CallbackInfo ci) {
+    public void earlyResourcePackStatusSend(ClientboundResourcePackPacket packet, CallbackInfo ci) {
         if (ConfigExpectPlatform.earlyPackStatusSend()) {
-            ClientPacketListener handler = Minecraft.getInstance().getConnection();
-
-            if (handler != null && handler.getConnection() != null && handler.getConnection().isConnected()) {
-                handler.getConnection().send(new ServerboundResourcePackPacket(id, ServerboundResourcePackPacket.Action.SUCCESSFULLY_LOADED));
-            }
+            send(ServerboundResourcePackPacket.Action.SUCCESSFULLY_LOADED);
         }
     }
 }

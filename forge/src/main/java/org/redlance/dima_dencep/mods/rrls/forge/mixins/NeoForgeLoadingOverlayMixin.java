@@ -17,10 +17,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.server.packs.resources.ReloadInstance;
-import net.neoforged.fml.earlydisplay.DisplayWindow;
-import net.neoforged.fml.loading.progress.ProgressMeter;
-import net.neoforged.fml.loading.progress.StartupNotificationManager;
-import net.neoforged.neoforge.client.loading.NeoForgeLoadingOverlay;
+import net.minecraftforge.fml.earlydisplay.DisplayWindow;
+import net.minecraftforge.fml.loading.progress.ProgressMeter;
+import net.minecraftforge.fml.loading.progress.StartupNotificationManager;
+import net.minecraftforge.client.loading.ForgeLoadingOverlay;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,19 +33,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Mixin(NeoForgeLoadingOverlay.class)
+@Mixin(ForgeLoadingOverlay.class)
 public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
-    @Shadow
+    @Shadow(remap = false)
     @Final
     private Minecraft minecraft;
-    @Shadow
+    @Shadow(remap = false)
     @Final
-    private ProgressMeter progressMeter;
-    @Shadow
+    private ProgressMeter progress;
+    @Shadow(remap = false)
     @Final
     private DisplayWindow displayWindow;
-    @Shadow
-    private float currentProgress;
 
     public NeoForgeLoadingOverlayMixin(Minecraft client, ReloadInstance monitor, Consumer<Optional<Throwable>> exceptionHandler, boolean reloading) {
         super(client, monitor, exceptionHandler, reloading);
@@ -59,17 +57,12 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
             cancellable = true
     )
     public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
+        boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progress);
 
         if (context instanceof DummyGuiGraphics || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
             if (!earlyLoadingScreenClosed) { // Stop forge's early loading screen
-                progressMeter.complete();
+                progress.complete();
                 displayWindow.close();
-
-                super.currentProgress = currentProgress;
-
-            } else {
-                currentProgress = super.currentProgress; // Sync progress (For mod compat?)
             }
 
             super.render(context, mouseX, mouseY, delta);

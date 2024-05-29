@@ -21,7 +21,6 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -85,11 +84,6 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public boolean containsPointInScissor(int x, int y) {
-        return false;
-    }
-
-    @Override
     public void applyScissor(@Nullable ScreenRectangle rectangle) {
     }
 
@@ -127,10 +121,6 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     public void fillGradient(VertexConsumer consumer, int x1, int y1, int x2, int y2, int z, int colorFrom, int colorTo) {
-    }
-
-    @Override
-    public void fillRenderType(RenderType renderType, int x1, int y1, int x2, int y2, int z) {
     }
 
     @Override
@@ -192,30 +182,6 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blitSprite(ResourceLocation sprite, int x, int y, int width, int height) {
-    }
-
-    @Override
-    public void blitSprite(ResourceLocation sprite, int x, int y, int blitOffset, int width, int height) {
-    }
-
-    @Override
-    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int uWidth, int vHeight) {
-    }
-
-    @Override
-    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
-    }
-
-    @Override
-    public void blitSprite(TextureAtlasSprite sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
-    }
-
-    @Override
-    public void blitSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height) {
-    }
-
-    @Override
     public void blit(ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight) {
     }
 
@@ -244,12 +210,23 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blitNineSlicedSprite(TextureAtlasSprite sprite, GuiSpriteScaling.NineSlice nineSlice, int x, int y, int blitOffset, int width, int height) {
+    public void blitNineSliced(ResourceLocation atlasLocation, int x, int y, int width, int height, int sliceSize, int uOffset, int vOffset, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blitTiledSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height, int uPosition, int vPosition, int spriteWidth, int spriteHeight, int nineSliceWidth, int nineSliceHeight) {
+    public void blitNineSliced(ResourceLocation atlasLocation, int x, int y, int width, int height, int sliceWidth, int sliceHeight, int uWidth, int vHeight, int textureX, int textureY) {
     }
+
+    @Override
+    public void blitNineSliced(ResourceLocation atlasLocation, int x, int y, int width, int height, int leftSliceWidth, int topSliceHeight, int rightSliceWidth, int bottomSliceHeight, int uWidth, int vHeight, int textureX, int textureY) {
+    }
+
+    @Override
+    public void blitRepeating(ResourceLocation atlasLocation, int x, int y, int width, int height, int uOffset, int vOffset, int sourceWidth, int sourceHeight) {
+    }
+
+    // private static IntIterator slices(int target, int total) {
+    // }
 
     @Override
     public void renderItem(ItemStack stack, int x, int y) {
@@ -265,10 +242,6 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     public void renderFakeItem(ItemStack stack, int x, int y) {
-    }
-
-    @Override
-    public void renderFakeItem(ItemStack stack, int x, int y, int seed) {
     }
 
     @Override
