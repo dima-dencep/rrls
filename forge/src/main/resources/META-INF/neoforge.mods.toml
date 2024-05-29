@@ -18,7 +18,7 @@ logoFile = "icon.png"
 [[mixins]]
 config = "rrls.mixins.json"
 [[mixins]]
-config = "rrls-common.mixins.json"
+config = "rrls-forge.mixins.json"
 
 [[dependencies.rrls]]
 modId = "neoforge"
