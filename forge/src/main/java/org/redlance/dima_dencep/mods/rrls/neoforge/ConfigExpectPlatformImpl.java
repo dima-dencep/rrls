@@ -33,6 +33,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     public final ModConfigSpec.BooleanValue forceClose;
     public final ModConfigSpec.BooleanValue blockOverlay;
     public final ModConfigSpec.BooleanValue miniRender;
+    public final ModConfigSpec.BooleanValue enableScissor;
     public final ModConfigSpec.EnumValue<Type> type;
     public final ModConfigSpec.ConfigValue<String> reloadText;
     public final ModConfigSpec.BooleanValue resetResources;
@@ -66,6 +67,11 @@ public class ConfigExpectPlatformImpl { // TODO categorize
         miniRender = builder
                 .translation("text.autoconfig.rrls.option.miniRender")
                 .define("miniRender", true);
+
+        enableScissor = builder
+                .translation("text.autoconfig.rrls.option.enableScissor")
+                .comment("text.autoconfig.rrls.option.enableScissor.@Tooltip")
+                .define("enableScissor", false);
 
         type = builder
                 .translation("text.autoconfig.rrls.option.type")
@@ -156,6 +162,10 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static boolean miniRender() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().miniRender.get();
+    }
+
+    public static boolean enableScissor() {
+        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().enableScissor.get();
     }
 
     public static Type type() {

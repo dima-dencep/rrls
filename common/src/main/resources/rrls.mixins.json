@@ -7,7 +7,7 @@
     "MinecraftClientMixin",
     "LoadingOverlayMixin",
     "TitleScreenMixin",
-    "compat.GameRendererMixin",
+    "GameRendererMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.OverlayMixin",
     "compat.ServerPackManagerMixin",
