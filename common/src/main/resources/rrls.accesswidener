@@ -31,3 +31,7 @@ accessible field net/minecraft/client/Minecraft overlay Lnet/minecraft/client/gu
 accessible class net/minecraft/client/resources/server/ServerPackManager$ServerPackData
 accessible field net/minecraft/client/gui/screens/LoadingOverlay currentProgress F
 accessible class net/minecraft/client/Minecraft$GameLoadCookie
+accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/Map;
+accessible field net/minecraft/client/resources/TextureAtlasHolder textureAtlas Lnet/minecraft/client/renderer/texture/TextureAtlas;
+accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
+accessible field net/minecraft/client/resources/SplashManager splashes Ljava/util/List;

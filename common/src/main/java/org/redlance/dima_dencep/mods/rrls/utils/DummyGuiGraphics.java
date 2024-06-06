@@ -43,7 +43,7 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     @Deprecated
-    public void drawManaged(Runnable drawCallback) {
+    public void drawManaged(Runnable runnable) {
     }
 
     @Override
@@ -61,23 +61,23 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void hLine(int x1, int x2, int y, int color) {
+    public void hLine(int minX, int maxX, int y, int color) {
     }
 
     @Override
-    public void hLine(RenderType layer, int x1, int x2, int y, int color) {
+    public void hLine(RenderType renderType, int minX, int maxX, int y, int color) {
     }
 
     @Override
-    public void vLine(int x, int y1, int y2, int color) {
+    public void vLine(int x, int minY, int maxY, int color) {
     }
 
     @Override
-    public void vLine(RenderType layer, int x, int y1, int y2, int color) {
+    public void vLine(RenderType renderType, int x, int minY, int maxY, int color) {
     }
 
     @Override
-    public void enableScissor(int x1, int y1, int x2, int y2) {
+    public void enableScissor(int minX, int minY, int maxX, int maxY) {
     }
 
     @Override
@@ -85,12 +85,12 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public boolean containsPointInScissor(int i, int j) {
+    public boolean containsPointInScissor(int x, int y) {
         return false;
     }
 
     @Override
-    public void applyScissor(@Nullable ScreenRectangle rect) {
+    public void applyScissor(@Nullable ScreenRectangle rectangle) {
     }
 
     @Override
@@ -98,93 +98,93 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void fill(int x1, int y1, int x2, int y2, int color) {
+    public void fill(int minX, int minY, int maxX, int maxY, int color) {
     }
 
     @Override
-    public void fill(int x1, int y1, int x2, int y2, int z, int color) {
+    public void fill(int minX, int minY, int maxX, int maxY, int z, int color) {
     }
 
     @Override
-    public void fill(RenderType layer, int x1, int y1, int x2, int y2, int color) {
+    public void fill(RenderType renderType, int minX, int minY, int maxX, int maxY, int color) {
     }
 
     @Override
-    public void fill(RenderType layer, int x1, int y1, int x2, int y2, int z, int color) {
+    public void fill(RenderType renderType, int minX, int minY, int maxX, int maxY, int z, int color) {
     }
 
     @Override
-    public void fillGradient(int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
+    public void fillGradient(int x1, int y1, int x2, int y2, int colorFrom, int colorTo) {
     }
 
     @Override
-    public void fillGradient(int startX, int startY, int endX, int endY, int z, int colorStart, int colorEnd) {
+    public void fillGradient(int x1, int y1, int x2, int y2, int z, int colorFrom, int colorTo) {
     }
 
     @Override
-    public void fillGradient(RenderType layer, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, int z) {
+    public void fillGradient(RenderType renderType, int x1, int y1, int x2, int y2, int colorFrom, int colorTo, int z) {
     }
 
     @Override
-    public void fillGradient(VertexConsumer vertexConsumer, int startX, int startY, int endX, int endY, int z, int colorStart, int colorEnd) {
+    public void fillGradient(VertexConsumer consumer, int x1, int y1, int x2, int y2, int z, int colorFrom, int colorTo) {
     }
 
     @Override
-    public void fillRenderType(RenderType renderType, int i, int j, int k, int l, int m) {
+    public void fillRenderType(RenderType renderType, int x1, int y1, int x2, int y2, int z) {
     }
 
     @Override
-    public void drawCenteredString(Font textRenderer, String text, int centerX, int y, int color) {
+    public void drawCenteredString(Font font, String text, int x, int y, int color) {
     }
 
     @Override
-    public void drawCenteredString(Font textRenderer, Component text, int centerX, int y, int color) {
+    public void drawCenteredString(Font font, Component text, int x, int y, int color) {
     }
 
     @Override
-    public void drawCenteredString(Font textRenderer, FormattedCharSequence text, int centerX, int y, int color) {
+    public void drawCenteredString(Font font, FormattedCharSequence text, int x, int y, int color) {
     }
 
     @Override
-    public int drawString(Font textRenderer, @Nullable String text, int x, int y, int color) {
+    public int drawString(Font font, @Nullable String text, int x, int y, int color) {
         return -1;
     }
 
     @Override
-    public int drawString(Font textRenderer, @Nullable String text, int x, int y, int color, boolean shadow) {
+    public int drawString(Font font, @Nullable String text, int x, int y, int color, boolean dropShadow) {
         return -1;
     }
 
     @Override
-    public int drawString(Font textRenderer, FormattedCharSequence text, int x, int y, int color) {
+    public int drawString(Font font, FormattedCharSequence text, int x, int y, int color) {
         return -1;
     }
 
     @Override
-    public int drawString(Font textRenderer, FormattedCharSequence text, int x, int y, int color, boolean shadow) {
+    public int drawString(Font font, FormattedCharSequence text, int x, int y, int color, boolean dropShadow) {
         return -1;
     }
 
     @Override
-    public int drawString(Font textRenderer, Component text, int x, int y, int color) {
+    public int drawString(Font font, Component text, int x, int y, int color) {
         return -1;
     }
 
     @Override
-    public int drawString(Font textRenderer, Component text, int x, int y, int color, boolean shadow) {
+    public int drawString(Font font, Component text, int x, int y, int color, boolean dropShadow) {
         return -1;
     }
 
     @Override
-    public void drawWordWrap(Font textRenderer, FormattedText text, int x, int y, int width, int color) {
+    public void drawWordWrap(Font font, FormattedText text, int x, int y, int lineWidth, int color) {
     }
 
     @Override
-    public void blit(int x, int y, int z, int width, int height, TextureAtlasSprite sprite) {
+    public void blit(int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite) {
     }
 
     @Override
-    public void blit(int x, int y, int z, int width, int height, TextureAtlasSprite sprite, float red, float green, float blue, float alpha) {
+    public void blit(int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite, float red, float green, float blue, float alpha) {
     }
 
     @Override
@@ -192,67 +192,67 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blitSprite(ResourceLocation texture, int x, int y, int width, int height) {
+    public void blitSprite(ResourceLocation sprite, int x, int y, int width, int height) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation texture, int x, int y, int z, int width, int height) {
+    public void blitSprite(ResourceLocation sprite, int x, int y, int blitOffset, int width, int height) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation texture, int i, int j, int k, int l, int x, int y, int width, int height) {
+    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int uWidth, int vHeight) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation texture, int i, int j, int k, int l, int x, int y, int z, int width, int height) {
+    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
     }
 
     @Override
-    public void blitSprite(TextureAtlasSprite sprite, int i, int j, int k, int l, int x, int y, int z, int width, int height) {
+    public void blitSprite(TextureAtlasSprite sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
     }
 
     @Override
-    public void blitSprite(TextureAtlasSprite sprite, int x, int y, int z, int width, int height) {
+    public void blitSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height) {
     }
 
     @Override
-    public void blit(ResourceLocation texture, int x, int y, int u, int v, int width, int height) {
+    public void blit(ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight) {
     }
 
     @Override
-    public void blit(ResourceLocation texture, int x, int y, int z, float u, float v, int width, int height, int textureWidth, int textureHeight) {
+    public void blit(ResourceLocation atlasLocation, int x, int y, int blitOffset, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blit(ResourceLocation texture, int x, int y, int width, int height, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+    public void blit(ResourceLocation atlasLocation, int x, int y, int width, int height, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blit(ResourceLocation texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
+    public void blit(ResourceLocation atlasLocation, int x, int y, float uOffset, float vOffset, int width, int height, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blit(ResourceLocation texture, int x1, int x2, int y1, int y2, int z, int regionWidth, int regionHeight, float u, float v, int textureWidth, int textureHeight) {
+    public void blit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, int uWidth, int vHeight, float uOffset, float vOffset, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void innerBlit(ResourceLocation texture, int x1, int x2, int y1, int y2, int z, float u1, float u2, float v1, float v2) {
+    public void innerBlit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, float minU, float maxU, float minV, float maxV) {
     }
 
     @Override
-    public void innerBlit(ResourceLocation texture, int x1, int x2, int y1, int y2, int z, float u1, float u2, float v1, float v2, float red, float green, float blue, float alpha) {
+    public void innerBlit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, float minU, float maxU, float minV, float maxV, float red, float green, float blue, float alpha) {
     }
 
     @Override
-    public void blitNineSlicedSprite(TextureAtlasSprite sprite, GuiSpriteScaling.NineSlice nineSlice, int x, int y, int z, int width, int height) {
+    public void blitNineSlicedSprite(TextureAtlasSprite sprite, GuiSpriteScaling.NineSlice nineSlice, int x, int y, int blitOffset, int width, int height) {
     }
 
     @Override
-    public void blitTiledSprite(TextureAtlasSprite sprite, int x, int y, int z, int width, int height, int i, int j, int tileWidth, int tileHeight, int k, int l) {
+    public void blitTiledSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height, int uPosition, int vPosition, int spriteWidth, int spriteHeight, int nineSliceWidth, int nineSliceHeight) {
     }
 
     @Override
-    public void renderItem(ItemStack item, int x, int y) {
+    public void renderItem(ItemStack stack, int x, int y) {
     }
 
     @Override
@@ -260,7 +260,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void renderItem(ItemStack stack, int x, int y, int seed, int z) {
+    public void renderItem(ItemStack stack, int x, int y, int seed, int guiOffset) {
     }
 
     @Override
@@ -276,50 +276,50 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void renderItem(@Nullable LivingEntity entity, @Nullable Level world, ItemStack stack, int x, int y, int seed) {
+    public void renderItem(@Nullable LivingEntity entity, @Nullable Level level, ItemStack stack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderItem(@Nullable LivingEntity entity, @Nullable Level world, ItemStack stack, int x, int y, int seed, int z) {
+    public void renderItem(@Nullable LivingEntity entity, @Nullable Level level, ItemStack stack, int x, int y, int seed, int guiOffset) {
     }
 
     @Override
-    public void renderItemDecorations(Font textRenderer, ItemStack stack, int x, int y) {
+    public void renderItemDecorations(Font font, ItemStack stack, int x, int y) {
     }
 
     @Override
-    public void renderItemDecorations(Font textRenderer, ItemStack stack, int x, int y, @Nullable String countOverride) {
+    public void renderItemDecorations(Font font, ItemStack stack, int x, int y, @Nullable String text) {
     }
 
     @Override
-    public void renderTooltip(Font textRenderer, ItemStack stack, int x, int y) {
+    public void renderTooltip(Font font, ItemStack stack, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderTooltip(Font textRenderer, List<Component> text, Optional<TooltipComponent> data, int x, int y) {
+    public void renderTooltip(Font font, List<Component> tooltipLines, Optional<TooltipComponent> visualTooltipComponent, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderTooltip(Font textRenderer, Component text, int x, int y) {
+    public void renderTooltip(Font font, Component text, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderComponentTooltip(Font textRenderer, List<Component> text, int x, int y) {
+    public void renderComponentTooltip(Font font, List<Component> tooltipLines, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderTooltip(Font textRenderer, List<? extends FormattedCharSequence> text, int x, int y) {
+    public void renderTooltip(Font font, List<? extends FormattedCharSequence> tooltipLines, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderTooltip(Font textRenderer, List<FormattedCharSequence> text, ClientTooltipPositioner positioner, int x, int y) {
+    public void renderTooltip(Font font, List<FormattedCharSequence> tooltipLines, ClientTooltipPositioner tooltipPositioner, int mouseX, int mouseY) {
     }
 
     @Override
-    public void renderTooltipInternal(Font textRenderer, List<ClientTooltipComponent> components, int x, int y, ClientTooltipPositioner positioner) {
+    public void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner) {
     }
 
     @Override
-    public void renderComponentHoverEffect(Font textRenderer, @Nullable Style style, int x, int y) {
+    public void renderComponentHoverEffect(Font font, @Nullable Style style, int mouseX, int mouseY) {
     }
 }

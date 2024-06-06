@@ -40,6 +40,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     @ConfigEntry.Category("global")
     public boolean miniRender = true;
 
+    @ConfigEntry.Category("global")
+    @ConfigEntry.Gui.Tooltip
+    public boolean enableScissor = false;
+
     @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public Type type = Type.PROGRESS;
@@ -88,6 +92,10 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean miniRender() {
         return RrlsFabric.MOD_CONFIG.miniRender;
+    }
+
+    public static boolean enableScissor() {
+        return RrlsFabric.MOD_CONFIG.enableScissor;
     }
 
     public static Type type() {

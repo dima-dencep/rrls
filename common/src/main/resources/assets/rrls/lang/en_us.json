@@ -10,6 +10,8 @@
   "text.autoconfig.rrls.option.ignoreScreen": "Ignoring uninitialized screen on loading",
   "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "MAY CAUSE PROBLEMS",
   "text.autoconfig.rrls.option.miniRender": "Render a mini (aka hidden) version of the overlay",
+  "text.autoconfig.rrls.option.enableScissor": "Trim the rendering of the default overlay",
+  "text.autoconfig.rrls.option.enableScissor.@Tooltip": "Enable this if the window is flooded with color (mostly black)",
   "text.autoconfig.rrls.option.type": "What will be displayed on reloading",
   "text.autoconfig.rrls.option.reloadText": "The text that will be displayed if TEXT is selected above",
   "text.autoconfig.rrls.option.resetResources": "Reset resources when failed load",

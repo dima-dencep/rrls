@@ -42,6 +42,11 @@ public class ConfigExpectPlatform {
     }
 
     @ExpectPlatform
+    public static boolean enableScissor() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static Type type() {
         throw new AssertionError();
     }

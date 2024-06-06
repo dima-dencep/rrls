@@ -12,13 +12,15 @@
     "nneewwtt",
     "Madis0",
     "notlin4",
-    "Amirhan-Taipovjan",
+    "oldveseliyschoolnik",
     "GodGun968",
     "TheBossMagnus",
     "LostLuma",
     "FITFC",
     "Gazmanovich",
-    "TheLegendofSaram"
+    "TheLegendofSaram",
+    "thesh1xx",
+    "yichifauzi"
   ],
   "contact": {
     "homepage": "https://curseforge.com/minecraft/mc-mods/rrls",
@@ -37,14 +39,12 @@
     ]
   },
   "mixins": [
-    "rrls.mixins.json",
-    "rrls-common.mixins.json"
+    "rrls.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${project.loader_version}",
     "minecraft": ">=${project.minecraft_version}",
-    "cloth-config": ">=${project.cloth_config_version}",
-    "java": ">=${project.targetCompatibility}"
+    "cloth-config": ">=${project.cloth_config_version}"
   },
   "conflicts": {
     "dynamicfps": "*"

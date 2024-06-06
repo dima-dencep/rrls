@@ -44,12 +44,13 @@ public abstract class MinecraftClientMixin {
     @Inject(
             method = "<init>",
             at = @At(
-                    value = "RETURN"
+                    value = "TAIL"
             )
     )
-    public void rrls$init(GameConfig args, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie loadingContext) {
-        if (ConfigExpectPlatform.forceClose())
-            onResourceLoadFinished(loadingContext);
+    public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
+        if (ConfigExpectPlatform.forceClose()) {
+            onResourceLoadFinished(gameLoadCookie);
+        }
     }
 
     @Inject(
@@ -58,16 +59,17 @@ public abstract class MinecraftClientMixin {
                     value = "HEAD"
             ),
             cancellable = true
-    ) // TODO refactor when @WrapMethod
-    public void rrls$onResourceReloadFailure(Throwable exception, Component resourceName, Minecraft.GameLoadCookie loadingContext, CallbackInfo ci) {
+    )
+    public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
         if (!ConfigExpectPlatform.resetResources()) {
-            Rrls.LOGGER.error("Caught error loading resourcepacks!", exception);
-
-            if (ConfigExpectPlatform.doubleLoad().isLoad())
-                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, loadingContext)
-                        .thenRun(() -> addResourcePackLoadFailToast(resourceName));
-
             ci.cancel();
+
+            Rrls.LOGGER.error("Caught error loading resourcepacks!", throwable);
+
+            if (ConfigExpectPlatform.doubleLoad().isLoad()) {
+                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, gameLoadCookie)
+                        .thenRun(() -> addResourcePackLoadFailToast(errorMessage));
+            }
         }
     }
 
@@ -80,9 +82,10 @@ public abstract class MinecraftClientMixin {
             ),
             cancellable = true
     )
-    public void rrls$doubleLoad(Throwable exception, Component resourceName, Minecraft.GameLoadCookie loadingContext, CallbackInfo ci) {
-        if (!ConfigExpectPlatform.doubleLoad().isLoad())
+    public void rrls$doubleLoad(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
+        if (!ConfigExpectPlatform.doubleLoad().isLoad()) {
             ci.cancel();
+        }
     }
 
     @ModifyArg(
@@ -94,7 +97,7 @@ public abstract class MinecraftClientMixin {
             ),
             require = 0
     )
-    public boolean rrls$doubleLoad(boolean force) {
+    public boolean rrls$doubleLoad(boolean error) { // always true
         return ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD;
     }
 

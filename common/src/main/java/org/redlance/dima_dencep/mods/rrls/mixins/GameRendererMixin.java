@@ -8,7 +8,7 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.mixins.compat;
+package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -44,14 +45,31 @@ public class GameRendererMixin {
             Overlay overlay = this.minecraft.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
-                overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, minecraft.getDeltaFrameTime());
+                rrls$enableScissor(graphics, () ->
+                        overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, minecraft.getDeltaFrameTime())
+                );
 
                 if (ConfigExpectPlatform.miniRender())
                     overlay.rrls$miniRender(graphics);
             }
 
         } catch (RuntimeException ex) {
-            Rrls.LOGGER.error(ex);
+            Rrls.LOGGER.error("Failed to draw overlay!", ex);
+        }
+    }
+
+    @Unique
+    private static void rrls$enableScissor(GuiGraphics graphics, Runnable runnable) {
+        if (ConfigExpectPlatform.enableScissor()) {
+            graphics.pose().pushPose();
+            graphics.enableScissor(0, 0, 0, 0);
+
+            runnable.run();
+
+            graphics.disableScissor();
+            graphics.pose().popPose();
+        } else {
+            runnable.run();
         }
     }
 }
