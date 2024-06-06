@@ -11,7 +11,7 @@ displayURL = "https://curseforge.com/minecraft/mc-mods/rrls"
 displayName = "Remove Reloading Screen"
 # updateJSONURL = "https://api.modrinth.com/updates/rrls/forge_updates.json"
 authors = "dima_dencep"
-credits = "ne4t0gg, nneewwtt, Madis0, notlin, oldveseliyschoolnik, GodGun968, TheBossMagnus, LostLuma, FITFC, Gazmanovich, TheLegendofSaram, thesh1xx"
+credits = "ne4t0gg, nneewwtt, Madis0, notlin, oldveseliyschoolnik, GodGun968, TheBossMagnus, LostLuma, FITFC, Gazmanovich, TheLegendofSaram, thesh1xx, yichifauzi"
 description = "Makes resource packs load in the background, allowing you to do other things while waiting!"
 logoFile = "icon.png"
 
