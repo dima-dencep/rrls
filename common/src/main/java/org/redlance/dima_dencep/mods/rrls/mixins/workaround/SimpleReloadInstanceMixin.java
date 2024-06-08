@@ -45,7 +45,7 @@ public class SimpleReloadInstanceMixin {
             )
     )
     public <U, V> CompletableFuture<V> rrls$async(CompletableFuture<Unit> instance, CompletionStage<? extends U> other, BiFunction<?, ? super U, ? extends V> fn, Operation<CompletableFuture<V>> original) {
-        if (ConfigExpectPlatform.forceClose() && rrls$filterListener()) {
+        if (ConfigExpectPlatform.hideType().forceClose() && rrls$filterListener(val$listener)) {
             Rrls.LOGGER.info("Skip wait for {}!", val$listener.getName());
 
             return CompletableFuture.completedFuture(fn.apply(null, null));
@@ -55,20 +55,20 @@ public class SimpleReloadInstanceMixin {
     }
 
     @Unique
-    private boolean rrls$filterListener() {
-        if (this.val$listener instanceof FontManager fontManager) {
+    private static boolean rrls$filterListener(PreparableReloadListener listener) {
+        if (listener instanceof FontManager fontManager) {
             return !fontManager.fontSets.containsKey(Minecraft.DEFAULT_FONT);
         }
 
-        if (this.val$listener instanceof LanguageManager languageManager) {
+        if (listener instanceof LanguageManager languageManager) {
             return languageManager.getLanguages().size() == 1;
         }
 
-        if (this.val$listener instanceof SplashManager splashManager) {
+        if (listener instanceof SplashManager splashManager) {
             return splashManager.splashes.isEmpty();
         }
 
-        if (this.val$listener instanceof GuiSpriteManager spriteManager) {
+        if (listener instanceof GuiSpriteManager spriteManager) {
             return spriteManager.textureAtlas.texturesByName.isEmpty();
         }
 

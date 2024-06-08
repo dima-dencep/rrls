@@ -6,8 +6,6 @@
   "text.autoconfig.rrls.option.hideType": "Оверлеи, которые будут скрыты",
   "text.autoconfig.rrls.option.rgbProgress": "Разноцветность",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
-  "text.autoconfig.rrls.option.ignoreScreen": "Игнорирование неинициализированного экрана при загрузке",
-  "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "МОЖЕТ ВЫЗВАТЬ ПРОБЛЕМЫ",
   "text.autoconfig.rrls.option.miniRender": "Отображение мини(скрытой)-версии оверлея",
   "text.autoconfig.rrls.option.enableScissor": "Обрезать рендеринг стандартного оверлея",
   "text.autoconfig.rrls.option.enableScissor.@Tooltip": "Включите эту опцию, если окно заливается цветом (в основном черным)",
@@ -24,8 +22,6 @@
   "text.autoconfig.rrls.option.animationSpeed": "Скорость анимации сплеша",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "В милисекундах",
   "text.autoconfig.rrls.option.doubleLoad": "Повторная загрузка ресурсов при возникновении ошибки",
-  "text.autoconfig.rrls.option.forceClose": "Убирать оверлей, даже если за ним ничего нет",
-  "text.autoconfig.rrls.option.forceClose.@Tooltip": "На самом деле теперь есть, я давно планировал обходной путь, но теперь он есть в minecraft :)",
   "text.autoconfig.rrls.option.blockOverlay": "Полная блокировка использований оверлеев",
   "text.autoconfig.rrls.option.blockOverlay.@Tooltip": "Используйте на свой страх и риск!",
   "text.autoconfig.rrls.option.skipForgeOverlay": "Заменяет оверлей загрузки (Neo)Forge на ванильный"

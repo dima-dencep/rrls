@@ -10,7 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.config;
 
-public enum HideType { // TODO dehardcode
+public enum HideType {
     ALL,
     LOADING,
     RELOADING,
@@ -26,5 +26,9 @@ public enum HideType { // TODO dehardcode
         } else {
             return this == LOADING;
         }
+    }
+
+    public boolean forceClose() {
+        return this == LOADING || this == ALL;
     }
 }

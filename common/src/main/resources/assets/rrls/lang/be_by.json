@@ -3,8 +3,6 @@
   "text.autoconfig.rrls.option.hideType": "Схаваць экраны перазагрузкі",
   "text.autoconfig.rrls.option.rgbProgress": "Каляровы радок прагрэсу",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖА ВЫКЛІКАЦЬ ЭПІЛЕПСІЮ",
-  "text.autoconfig.rrls.option.ignoreScreen": "Схаваць экраны загрузкі",
-  "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "МОГУЦЬ УЗНІКНУЦЬ ПРАБЛЕМЫ",
   "text.autoconfig.rrls.option.miniRender": "Адлюстраванне прагрэссу перазагрузкі пакетаў рэсурсаў",
   "text.autoconfig.rrls.option.resetResources": "Скідваць пакеты рэсурсаў, калі не атрымалася загрузіць",
   "text.autoconfig.rrls.option.reInitScreen": "Рэініцыялізацыя бягучага экрана пасля перазагрузкі",

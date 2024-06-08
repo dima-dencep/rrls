@@ -7,8 +7,6 @@
   "text.autoconfig.rrls.option.hideType": "Superposiciones que se ocultarán",
   "text.autoconfig.rrls.option.rgbProgress": "Colorido",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cPUEDE CAUSAR EPILEPSIA",
-  "text.autoconfig.rrls.option.ignoreScreen": "Ignorar pantalla no inicializada al cargar",
-  "text.autoconfig.rrls.option.ignoreScreen.@Tooltip": "PUEDE CAUSAR PROBLEMAS",
   "text.autoconfig.rrls.option.miniRender": "Mostrar una versión mini (oculta) de la superposición",
   "text.autoconfig.rrls.option.type": "Lo que se mostrará al recargar",
   "text.autoconfig.rrls.option.reloadText": "El texto que se mostrará si se selecciona TEXTO arriba",
@@ -23,8 +21,6 @@
   "text.autoconfig.rrls.option.animationSpeed": "Velocidad de animación de la pantalla de inicio",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "En milisegundos",
   "text.autoconfig.rrls.option.doubleLoad": "Volver a cargar los recursos si ocurre un error",
-  "text.autoconfig.rrls.option.forceClose": "Ocultar la superposición, incluso si no hay nada detrás de ella",
-  "text.autoconfig.rrls.option.forceClose.@Tooltip": "En realidad, ahora sí hay, he estado planeando una solución alternativa durante mucho tiempo, pero ahora hay una en Minecraft :)",
   "text.autoconfig.rrls.option.blockOverlay": "Bloqueo completo del uso de superposiciones",
   "text.autoconfig.rrls.option.blockOverlay.@Tooltip": "¡Úsalo bajo tu propio riesgo!",
   "text.autoconfig.rrls.option.skipForgeOverlay": "Reemplaza la superposición de carga de (Neo)Forge con la de vainilla"

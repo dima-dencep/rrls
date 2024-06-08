@@ -27,11 +27,6 @@ public class ConfigExpectPlatform {
     }
 
     @ExpectPlatform
-    public static boolean forceClose() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static boolean blockOverlay() {
         throw new AssertionError();
     }

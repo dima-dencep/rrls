@@ -31,10 +31,6 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     @ConfigEntry.Category("global")
     @ConfigEntry.Gui.Tooltip
-    public boolean forceClose = false;
-
-    @ConfigEntry.Category("global")
-    @ConfigEntry.Gui.Tooltip
     public boolean blockOverlay = false;
 
     @ConfigEntry.Category("global")
@@ -80,10 +76,6 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean rgbProgress() {
         return RrlsFabric.MOD_CONFIG.rgbProgress;
-    }
-
-    public static boolean forceClose() {
-        return RrlsFabric.MOD_CONFIG.forceClose;
     }
 
     public static boolean blockOverlay() {

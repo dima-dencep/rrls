@@ -20,7 +20,7 @@ public class OverlayHelper {
         if (!ConfigExpectPlatform.hideType().canHide(reloading))
             return State.DEFAULT;
 
-        if (reloading || ConfigExpectPlatform.forceClose())
+        if (reloading || ConfigExpectPlatform.hideType().forceClose())
             return State.HIDE;
 
         if (screen instanceof GenericMessageScreen) // Loading Minecraft
