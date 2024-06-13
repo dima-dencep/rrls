@@ -4,7 +4,7 @@
   "text.autoconfig.rrls.category.splash": "Superposición de pantalla de inicio",
   "text.autoconfig.rrls.category.other": "Otro",
   "text.autoconfig.rrls.category.platform": "Específico de la plataforma",
-  "text.autoconfig.rrls.option.hideType": "Superposiciones que se ocultarán",
+  "text.autoconfig.rrls.option.hideOverlays": "Superposiciones que se ocultarán",
   "text.autoconfig.rrls.option.rgbProgress": "Colorido",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cPUEDE CAUSAR EPILEPSIA",
   "text.autoconfig.rrls.option.miniRender": "Mostrar una versión mini (oculta) de la superposición",

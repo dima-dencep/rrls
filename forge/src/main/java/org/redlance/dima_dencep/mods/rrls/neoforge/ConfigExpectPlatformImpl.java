@@ -46,7 +46,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     public ConfigExpectPlatformImpl(ModConfigSpec.Builder builder) {
         hideType = builder
                 .translation("text.autoconfig.rrls.option.hideType")
-                .defineEnum("hideType", HideType.RELOADING);
+                .defineEnum("hideOverlays", HideType.ALL);
 
         rgbProgress = builder
                 .translation("text.autoconfig.rrls.option.rgbProgress")

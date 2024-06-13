@@ -3,7 +3,7 @@
   "text.autoconfig.rrls.category.global": "Глобальные",
   "text.autoconfig.rrls.category.splash": "Экран (пере)загрузки",
   "text.autoconfig.rrls.category.other": "Прочее",
-  "text.autoconfig.rrls.option.hideType": "Оверлеи, которые будут скрыты",
+  "text.autoconfig.rrls.option.hideOverlays": "Оверлеи, которые будут скрыты",
   "text.autoconfig.rrls.option.rgbProgress": "Разноцветность",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖЕТ ВЫЗВАТЬ ЭПИЛЕПСИЮ",
   "text.autoconfig.rrls.option.miniRender": "Отображение мини(скрытой)-версии оверлея",

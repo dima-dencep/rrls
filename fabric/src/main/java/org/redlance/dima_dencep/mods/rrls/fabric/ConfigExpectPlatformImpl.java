@@ -23,7 +23,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ConfigExpectPlatformImpl implements ConfigData {
     @ConfigEntry.Category("global")
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    public HideType hideType = HideType.RELOADING;
+    public HideType hideOverlays = HideType.ALL;
 
     @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
@@ -71,7 +71,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public float animationSpeed = 1000.0F;
 
     public static HideType hideType() {
-        return RrlsFabric.MOD_CONFIG.hideType;
+        return RrlsFabric.MOD_CONFIG.hideOverlays;
     }
 
     public static boolean rgbProgress() {

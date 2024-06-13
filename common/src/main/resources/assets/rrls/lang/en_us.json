@@ -4,7 +4,7 @@
   "text.autoconfig.rrls.category.splash": "Splash overlay",
   "text.autoconfig.rrls.category.other": "Other",
   "text.autoconfig.rrls.category.platform": "Platform-specific",
-  "text.autoconfig.rrls.option.hideType": "Overlays that will be hidden",
+  "text.autoconfig.rrls.option.hideOverlays": "Overlays that will be hidden",
   "text.autoconfig.rrls.option.rgbProgress": "Colorful",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cMAY CAUSE EPILEPSY",
   "text.autoconfig.rrls.option.miniRender": "Render a mini (aka hidden) version of the overlay",

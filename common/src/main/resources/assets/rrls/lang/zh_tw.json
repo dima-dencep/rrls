@@ -4,7 +4,7 @@
   "text.autoconfig.rrls.category.splash": "閃爍標語的覆蓋層",
   "text.autoconfig.rrls.category.other": "其他",
   "text.autoconfig.rrls.category.platform": "特定平台",
-  "text.autoconfig.rrls.option.hideType": "將被隱藏的覆蓋層",
+  "text.autoconfig.rrls.option.hideOverlays": "將被隱藏的覆蓋層",
   "text.autoconfig.rrls.option.rgbProgress": "彩色進度條",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能會引起癲癇",
   "text.autoconfig.rrls.option.miniRender": "資源包（重新）載入進度顯示",

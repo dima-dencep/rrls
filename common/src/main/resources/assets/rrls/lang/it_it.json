@@ -1,6 +1,6 @@
 {
   "text.autoconfig.rrls.title": "Rimuovi la schermata di ri-caricamento (Remove Reloading Screen)",
-  "text.autoconfig.rrls.option.hideType": "Nascondi la schermata di ri-caricamento",
+  "text.autoconfig.rrls.option.hideOverlays": "Nascondi la schermata di ri-caricamento",
   "text.autoconfig.rrls.option.rgbProgress": "Barra di avanzamento colorata",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cPOTREBBE CAUSARE EPILESSIA",
   "text.autoconfig.rrls.option.miniRender": "Visualizzazione del processo di ricaricamento dei pacchetti di risorse",

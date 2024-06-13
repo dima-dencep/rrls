@@ -1,6 +1,6 @@
 {
   "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "text.autoconfig.rrls.option.hideType": "Схаваць экраны перазагрузкі",
+  "text.autoconfig.rrls.option.hideOverlays": "Схаваць экраны перазагрузкі",
   "text.autoconfig.rrls.option.rgbProgress": "Каляровы радок прагрэсу",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖА ВЫКЛІКАЦЬ ЭПІЛЕПСІЮ",
   "text.autoconfig.rrls.option.miniRender": "Адлюстраванне прагрэссу перазагрузкі пакетаў рэсурсаў",

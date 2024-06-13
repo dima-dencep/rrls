@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.rrls": "Ресурслар яңадан йөкләү экранын бетерә, һәм яңадан кушу вакытында уенны ачык калдыра",
   "text.autoconfig.rrls.title": "Remove Reloading Screen көйләүләре",
-  "text.autoconfig.rrls.option.hideType": "Яңадан йөкләү экранын яшерү",
+  "text.autoconfig.rrls.option.hideOverlays": "Яңадан йөкләү экранын яшерү",
   "text.autoconfig.rrls.option.rgbProgress": "Төсле прогрессбар",
   "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cЭПИЛЕПСИЯНЕ ЧАКЫРА АЛА",
   "text.autoconfig.rrls.option.miniRender": "Ресурслар яңадан йөкләү процессын күрсәтү",
