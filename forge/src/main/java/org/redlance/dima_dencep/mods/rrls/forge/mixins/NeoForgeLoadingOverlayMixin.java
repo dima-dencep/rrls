@@ -38,7 +38,7 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     @Shadow(remap = false)
     @Final
     private Minecraft minecraft;
-    @Shadow(remap = false)
+    @Shadow(remap = false, aliases = {"progressMeter", "progress"})
     @Final
     private ProgressMeter progress;
     @Shadow(remap = false)
