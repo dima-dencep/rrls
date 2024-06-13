@@ -10,13 +10,13 @@
 
 package org.redlance.dima_dencep.mods.rrls.neoforge;
 
+import net.neoforged.fml.config.ConfigTracker;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.config.ConfigFileTypeHandler;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -24,13 +24,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Optional;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused","UnstableApiUsage"})
 public class ConfigExpectPlatformImpl { // TODO categorize
     public static final Pair<ConfigExpectPlatformImpl, ModConfigSpec> CONFIG_SPEC_PAIR = new ModConfigSpec.Builder()
             .configure(ConfigExpectPlatformImpl::new);
     public final ModConfigSpec.EnumValue<HideType> hideType;
     public final ModConfigSpec.BooleanValue rgbProgress;
-    public final ModConfigSpec.BooleanValue forceClose;
     public final ModConfigSpec.BooleanValue blockOverlay;
     public final ModConfigSpec.BooleanValue miniRender;
     public final ModConfigSpec.BooleanValue enableScissor;
@@ -53,11 +52,6 @@ public class ConfigExpectPlatformImpl { // TODO categorize
                 .translation("text.autoconfig.rrls.option.rgbProgress")
                 .comment("text.autoconfig.rrls.option.rgbProgress.@Tooltip")
                 .define("rgbProgress", false);
-
-        forceClose = builder
-                .translation("text.autoconfig.rrls.option.forceClose")
-                .comment("text.autoconfig.rrls.option.forceClose.@Tooltip")
-                .define("forceClose", false);
 
         blockOverlay = builder
                 .translation("text.autoconfig.rrls.option.blockOverlay")
@@ -136,11 +130,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
         if (!configSpec.isLoaded()) { // Fallback
             Rrls.LOGGER.warn("Config is not loaded?");
-
-            configSpec.acceptConfig(
-                    ConfigFileTypeHandler.TOML.reader(FMLPaths.CONFIGDIR.get())
-                            .apply(modConfig)
-            );
+            ConfigTracker.INSTANCE.openConfig(modConfig, FMLPaths.CONFIGDIR.get(), null);
         }
     }
 
@@ -150,10 +140,6 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static boolean rgbProgress() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().rgbProgress.get();
-    }
-
-    public static boolean forceClose() {
-        return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().forceClose.get();
     }
 
     public static boolean blockOverlay() {

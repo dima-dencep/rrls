@@ -64,15 +64,28 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
-        maven { url "https://maven.shedaniel.me" }
-        maven { url "https://maven.neoforged.net/releases" }
-        maven { url "https://maven.terraformersmc.com/releases" }
-        maven { url "https://maven.parchmentmc.org" }
+        maven {
+            name "NeoForged"
+            url "https://maven.neoforged.net/releases"
+            content {
+                excludeGroupByRegex "org.parchmentmc"
+            }
+        }
+        maven {
+            name "ParchmentMC"
+            url "https://maven.parchmentmc.org"
+        }
+        maven {
+            url "https://maven.shedaniel.me"
+        }
+        maven {
+            url "https://maven.terraformersmc.com/releases"
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release.set(21)
+        options.release.set 21
     }
 
     java {
