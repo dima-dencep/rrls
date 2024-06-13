@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import net.minecraft.client.DeltaTracker;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
@@ -40,13 +41,13 @@ public class GameRendererMixin {
                     target = "Lnet/minecraft/client/gui/GuiGraphics;flush()V"
             )
     )
-    public void rrls$miniRender(float partialTicks, long nanoTime, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
+    public void rrls$miniRender(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
         try {
             Overlay overlay = this.minecraft.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
                 rrls$enableScissor(graphics, () ->
-                        overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, minecraft.getDeltaFrameTime())
+                        overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, deltaTracker.getRealtimeDeltaTicks())
                 );
 
                 if (ConfigExpectPlatform.miniRender())
