@@ -111,6 +111,17 @@ public abstract class LoadingOverlayMixin extends Overlay {
         return ConfigExpectPlatform.removeOverlayAtEnd();
     }
 
+    @WrapWithCondition(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screens/Screen;init(Lnet/minecraft/client/Minecraft;II)V"
+            )
+    )
+    public boolean rrls$reinitScreen(Screen instance, Minecraft minecraft, int width, int height) {
+        return ConfigExpectPlatform.reInitScreen();
+    }
+
     @WrapOperation(
             method = "render",
             at = @At(
