@@ -13,7 +13,8 @@
     "compat.ServerPackManagerMixin",
     "workaround.GuiGraphicsMixin",
     "workaround.SimpleReloadInstanceMixin",
-    "workaround.VertexBufferMixin"
+    "workaround.VertexBufferMixin",
+    "workaround.SimpleJsonResourceReloadListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

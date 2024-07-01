@@ -1,6 +1,6 @@
 {
   "text.autoconfig.rrls.title": "移除重新載入畫面｜Remove Reloading Screen",
-  "text.autoconfig.rrls.category.global": "全球",
+  "text.autoconfig.rrls.category.global": "全域",
   "text.autoconfig.rrls.category.splash": "閃爍標語的覆蓋層",
   "text.autoconfig.rrls.category.other": "其他",
   "text.autoconfig.rrls.category.platform": "特定平台",
@@ -16,7 +16,7 @@
   "text.autoconfig.rrls.option.reInitScreen": "在重新載入後重新初始化目前畫面。",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "停用此功能可能會在重新載入完成後解決卡住的問題。",
   "text.autoconfig.rrls.option.removeOverlayAtEnd": "結束後隱藏覆蓋層",
-  "text.autoconfig.rrls.option.removeOverlayAtEnd.@Tooltip": "無限 (重新)加載？",
+  "text.autoconfig.rrls.option.removeOverlayAtEnd.@Tooltip": "無限（重新）載入？",
   "text.autoconfig.rrls.option.earlyPackStatusSend": "提早傳送伺服器資源包狀態",
   "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]": "有些伺服器特別等待玩家載入資源，因此遊戲可能顯示不正確",
   "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "例如：重新載入資源時你正在地下，這可能導致顯示異常",
@@ -25,5 +25,5 @@
   "text.autoconfig.rrls.option.doubleLoad": "如果發生錯誤，請重新載入資源",
   "text.autoconfig.rrls.option.blockOverlay": "完全阻斷覆蓋層的使用",
   "text.autoconfig.rrls.option.blockOverlay.@Tooltip": "使用風險自負!",
-  "text.autoconfig.rrls.option.skipForgeOverlay": "用原版替代 (Neo)Forge 載入覆蓋"
+  "text.autoconfig.rrls.option.skipForgeOverlay": "用原版替代 (Neo）Forge 載入覆蓋"
 }
