@@ -45,7 +45,7 @@ jobs:
           properties: 'mod_version minecraft_version'
 
       - name: Upload assets to releases
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

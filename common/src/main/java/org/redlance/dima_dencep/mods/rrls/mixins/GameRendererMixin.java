@@ -47,7 +47,9 @@ public class GameRendererMixin {
 
             if (OverlayHelper.isRenderingState(overlay)) {
                 rrls$enableScissor(graphics, () ->
-                        overlay.render(DummyGuiGraphics.INSTANCE, 0, 0, deltaTracker.getRealtimeDeltaTicks())
+                        overlay.render(DummyGuiGraphics.INSTANCE, 0, 0,
+                                deltaTracker.getGameTimeDeltaPartialTick(false) // Neo: Fix https://bugs.mojang.com/browse/MC-273464
+                        )
                 );
 
                 if (ConfigExpectPlatform.miniRender())

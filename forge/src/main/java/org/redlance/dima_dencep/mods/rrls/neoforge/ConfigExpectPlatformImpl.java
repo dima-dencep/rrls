@@ -10,24 +10,20 @@
 
 package org.redlance.dima_dencep.mods.rrls.neoforge;
 
-import net.neoforged.fml.config.ConfigTracker;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Optional;
-
-@SuppressWarnings({"unused","UnstableApiUsage"})
+@SuppressWarnings("unused")
 public class ConfigExpectPlatformImpl { // TODO categorize
     public static final Pair<ConfigExpectPlatformImpl, ModConfigSpec> CONFIG_SPEC_PAIR = new ModConfigSpec.Builder()
             .configure(ConfigExpectPlatformImpl::new);
+
     public final ModConfigSpec.EnumValue<HideType> hideType;
     public final ModConfigSpec.BooleanValue rgbProgress;
     public final ModConfigSpec.BooleanValue blockOverlay;
@@ -110,28 +106,12 @@ public class ConfigExpectPlatformImpl { // TODO categorize
     }
 
     static { // Early loading for config
-        Optional<? extends ModContainer> activeContainer = ModList.get().getModContainerById(Rrls.MOD_ID);
         ModConfigSpec configSpec = ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getValue();
 
-        final ModConfig modConfig = new ModConfig(ModConfig.Type.STARTUP, configSpec, activeContainer.orElse(null), "rrls.toml") {
-            @Override
-            public String getModId() {
-                if (this.container == null) {
-                    return Rrls.MOD_ID;
-                }
-
-                return super.getModId();
-            }
-        };
-        activeContainer.ifPresentOrElse(
-                container -> container.addConfig(modConfig), // Configs with the STARTUP type are loaded here
-                () -> Rrls.LOGGER.error("Unable to find ModContainer, this can cause issues!")
+        ModList.get().getModContainerById(Rrls.MOD_ID).ifPresentOrElse(
+                container -> container.registerConfig(ModConfig.Type.STARTUP, configSpec, "rrls.toml"),
+                () -> Rrls.LOGGER.fatal("Unable to find ModContainer, config will not load!")
         );
-
-        if (!configSpec.isLoaded()) { // Fallback
-            Rrls.LOGGER.warn("Config is not loaded?");
-            ConfigTracker.INSTANCE.openConfig(modConfig, FMLPaths.CONFIGDIR.get(), null);
-        }
     }
 
     public static HideType hideType() {
