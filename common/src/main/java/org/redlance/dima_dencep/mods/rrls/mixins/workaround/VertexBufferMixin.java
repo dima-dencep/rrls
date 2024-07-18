@@ -28,7 +28,8 @@ public class VertexBufferMixin {
             cancellable = true
     )
     public void rrls$workaroundNullShader(Matrix4f viewMatrix, Matrix4f projectionMatrix, ShaderInstance shader, CallbackInfo ci) {
-        if (shader == null)
+        if (shader == null) {
             ci.cancel();
+        }
     }
 }

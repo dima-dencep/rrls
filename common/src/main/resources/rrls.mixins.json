@@ -14,7 +14,8 @@
     "workaround.GuiGraphicsMixin",
     "workaround.SimpleReloadInstanceMixin",
     "workaround.VertexBufferMixin",
-    "workaround.SimpleJsonResourceReloadListenerMixin"
+    "workaround.SimpleJsonResourceReloadListenerMixin",
+    "workaround.EntityRenderDispatcherMixin"
   ],
   "injectors": {
     "defaultRequire": 1
