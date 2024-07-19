@@ -8,16 +8,18 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-/*package org.redlance.dima_dencep.mods.rrls.forge;
+package org.redlance.dima_dencep.mods.rrls.forge;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import net.neoforged.fml.common.Mod;
 
 @Mod(value = Rrls.MOD_ID, dist = Dist.CLIENT)
 public class RrlsForge extends Rrls {
     public RrlsForge(ModContainer container) {
-        // no-op
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
-}*/
+}
