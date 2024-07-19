@@ -11,8 +11,7 @@
   "text.autoconfig.rrls.option.reInitScreen": "Яңадан йөкләүдән соң хәзерге экран кабат әзерләү",
   "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Функция сүндерелгәндә, яңадан йөкләүне тәмамланганнан соң асылынып торуны бетерә ала",
   "text.autoconfig.rrls.option.earlyPackStatusSend": "Серверның ресурс җыелмасы турында халәтне иртә җибәрү",
-  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[0]": "Уенчы ресурсларны йөкләү өчен кайбер серверлар махсус көтә, бу сәбәпле уен ялгыш күрсәтә ала",
-  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip[1]": "Мәсәлән: Ресурслар яңадан йөкләнгәндә Сез җир астында булды",
+  "text.autoconfig.rrls.option.earlyPackStatusSend.@Tooltip": "Уенчы ресурсларны йөкләү өчен кайбер серверлар махсус көтә, бу сәбәпле уен ялгыш күрсәтә ала\nМәсәлән: Ресурслар яңадан йөкләнгәндә Сез җир астында булды",
   "text.autoconfig.rrls.option.animationSpeed": "Спләш анимациясе тизлеге",
   "text.autoconfig.rrls.option.animationSpeed.@Tooltip": "Миллисекундта"
 }

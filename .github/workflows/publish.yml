@@ -76,9 +76,6 @@ jobs:
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
 
-          dependencies: |
-            recs(optional){modrinth:VbyJLvvb}{curseforge:457570}
-
           java: |
             21
 
@@ -107,10 +104,9 @@ jobs:
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-          
+
           dependencies: |
             cloth-config
-            modmenu(optional)
 
           java: |
             21

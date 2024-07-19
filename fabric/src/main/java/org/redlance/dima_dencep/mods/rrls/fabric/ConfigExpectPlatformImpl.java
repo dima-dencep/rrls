@@ -59,7 +59,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public boolean removeOverlayAtEnd = true;
 
     @ConfigEntry.Category("other")
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip
     public boolean earlyPackStatusSend = false;
 
     @ConfigEntry.Category("other")
