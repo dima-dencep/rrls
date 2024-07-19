@@ -4,7 +4,9 @@
   "package": "org.redlance.dima_dencep.mods.rrls.forge.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "NeoForgeLoadingOverlayMixin"
+    "NeoForgeLoadingOverlayMixin",
+    "config.ConfigurationScreenMixin",
+    "config.ConfigurationSectionScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
