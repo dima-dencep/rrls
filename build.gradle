@@ -1,8 +1,8 @@
 plugins {
-    id "io.github.goooler.shadow" version "8.1.7" apply false
+    id "io.github.goooler.shadow" version "8.1.8" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
-    id "net.neoforged.licenser" version "0.7.2" apply false
+    id "net.neoforged.licenser" version "0.7.+" apply false
     id "io.github.p03w.machete" version "2.+" apply false
 }
 
