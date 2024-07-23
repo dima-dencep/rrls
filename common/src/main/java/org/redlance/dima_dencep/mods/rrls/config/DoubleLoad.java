@@ -16,6 +16,9 @@ public enum DoubleLoad {
     NONE;
 
     public boolean isLoad() {
-        return this == FORCE_LOAD || this == LOAD;
+        return switch (this) {
+            case FORCE_LOAD, LOAD -> true;
+            case NONE -> false;
+        };
     }
 }

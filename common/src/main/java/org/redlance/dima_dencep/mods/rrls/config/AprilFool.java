@@ -21,21 +21,17 @@ public enum AprilFool {
     private static Calendar calendar;
 
     public boolean canUes() {
-        if (this == ALWAYS)
-            return true;
-
-        try {
-            if (this == ON_APRIL) {
+        return switch (this) {
+            case ON_APRIL -> {
                 if (calendar == null) {
                     calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(System.currentTimeMillis());
                 }
 
-                return calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DAY_OF_MONTH) == 1;
+                yield calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DAY_OF_MONTH) == 1;
             }
-        } catch (Throwable ignored) {
-        }
-
-        return false;
+            case ALWAYS -> true;
+            case DISABLED -> false;
+        };
     }
 }

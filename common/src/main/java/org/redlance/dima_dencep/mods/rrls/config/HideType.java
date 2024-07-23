@@ -17,15 +17,12 @@ public enum HideType {
     NONE;
 
     public boolean canHide(boolean reloading) {
-        if (this == NONE) return false;
-
-        if (this == ALL) return true;
-
-        if (reloading) {
-            return this == RELOADING;
-        } else {
-            return this == LOADING;
-        }
+        return switch (this) {
+            case ALL -> true;
+            case LOADING -> !reloading;
+            case RELOADING -> reloading;
+            case NONE -> false;
+        };
     }
 
     public boolean forceClose() {
