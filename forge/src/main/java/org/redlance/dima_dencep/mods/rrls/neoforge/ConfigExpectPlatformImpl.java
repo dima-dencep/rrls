@@ -73,7 +73,7 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
         resetResources = builder
                 .translation("text.autoconfig.rrls.option.resetResources")
-                .define("resetResources", false);
+                .define("resetResources", true);
 
         reInitScreen = builder
                 .translation("text.autoconfig.rrls.option.reInitScreen")

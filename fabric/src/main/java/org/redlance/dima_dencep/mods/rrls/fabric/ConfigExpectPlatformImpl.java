@@ -48,7 +48,7 @@ public class ConfigExpectPlatformImpl implements ConfigData {
     public String reloadText = "Edit in config!";
 
     @ConfigEntry.Category("other")
-    public boolean resetResources = false;
+    public boolean resetResources = true;
 
     @ConfigEntry.Category("splash")
     @ConfigEntry.Gui.Tooltip
