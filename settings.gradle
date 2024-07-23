@@ -3,6 +3,7 @@ pluginManagement {
         maven { url "https://maven.fabricmc.net/" }
         maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.neoforged.net/releases" }
+        maven { url "https://maven.wagyourtail.xyz/releases" }
         gradlePluginPortal()
     }
 }
@@ -12,3 +13,5 @@ rootProject.name = "rrls"
 include("common")
 include("fabric")
 include("forge")
+
+project(":forge").name = "neoforge"

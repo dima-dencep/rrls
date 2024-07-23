@@ -1,24 +1,35 @@
-architectury {
-    common("neoforge", "fabric")
+plugins {
+    id "net.neoforged.moddev"
 }
 
-loom {
-    accessWidenerPath = file("src/main/resources/rrls.accesswidener")
+neoForge {
+    neoFormVersion = rootProject.neoform_version
+
+    accessTransformers = files("src/main/resources/META-INF/accesstransformer.cfg")
+    interfaceInjectionData = files("src/main/resources/META-INF/interfaces.json")
+
+    parchment {
+        minecraftVersion = rootProject.minecraft_version
+        mappingsVersion = rootProject.parchment_version
+    }
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    compileOnly expectPlatform.annotationsDep
+
+    compileOnly "net.fabricmc:sponge-mixin:0.14.0+mixin.0.8.6"
+    compileOnly annotationProcessor("io.github.llamalad7:mixinextras-neoforge:0.3.5")
 }
 
 jar {
     from rootProject.file("LICENSE")
 }
 
-publishing {
+/*publishing {
     publications {
         mavenCommon(MavenPublication) {
             artifactId = rootProject.archives_base_name
             from components.java
         }
     }
-}
+}*/

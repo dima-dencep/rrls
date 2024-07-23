@@ -33,7 +33,7 @@ import java.util.function.BiFunction;
 
 @Mixin(targets = "net.minecraft.server.packs.resources.SimpleReloadInstance$1")
 public class SimpleReloadInstanceMixin {
-    @Shadow
+    @Shadow(aliases = {"val$preparablereloadlistener"})
     @Final
     PreparableReloadListener val$listener;
 

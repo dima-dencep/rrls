@@ -13,7 +13,7 @@ package org.redlance.dima_dencep.mods.rrls;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import xyz.wagyourtail.unimined.expect.annotation.ExpectPlatform;
 
 public class ConfigExpectPlatform {
     @ExpectPlatform

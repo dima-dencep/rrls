@@ -1,48 +1,40 @@
 plugins {
-    id "io.github.goooler.shadow"
+    id "net.neoforged.moddev"
 }
 
-architectury {
-    platformSetupLoomIde()
-    neoForge()
-}
+neoForge {
+    version = rootProject.forge_version
 
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-}
+    accessTransformers = project(":common").neoForge.accessTransformers.files
+    interfaceInjectionData = project(":common").neoForge.interfaceInjectionData.files
 
-configurations {
-    common
-    shadowCommon
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentNeoForge.extendsFrom common
+    parchment {
+        minecraftVersion = project(":common").neoForge.parchment.minecraftVersion
+        mappingsVersion = project(":common").neoForge.parchment.mappingsVersion
+    }
+
+    runs {
+        configureEach {
+            systemProperty("mixin.debug.export", "true")
+        }
+
+        client {
+            client()
+        }
+    }
+
+    mods {
+        create("rrls") {
+            sourceSet(sourceSets.main)
+            sourceSet(project(":common").sourceSets.getByName("main"))
+        }
+    }
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:${rootProject.forge_version}"
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
-}
-
-shadowJar {
-    exclude "fabric.mod.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set "dev-shadow"
-}
-
-remapJar {
-    atAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
-
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set null
-}
-
-jar {
-    archiveClassifier.set "dev"
+    compileOnly(project(":common")) {
+        transitive = false
+    }
 }
 
 sourcesJar {
@@ -51,17 +43,11 @@ sourcesJar {
     from commonSources.archiveFile.map { zipTree(it) }
 }
 
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-publishing {
+/*publishing {
     publications {
         mavenNeoForge(MavenPublication) {
             artifactId = rootProject.archives_base_name
             from components.java
         }
     }
-}
+}*/

@@ -1,0 +1,5 @@
+{
+  "net/minecraft/client/gui/screens/Overlay": [
+    "org/redlance/dima_dencep/mods/rrls/duck/OverlayExtender"
+  ]
+}

@@ -1,25 +1,29 @@
 plugins {
-    id "io.github.goooler.shadow"
-}
-
-architectury {
-    platformSetupLoomIde()
-    fabric()
+    id "dev.architectury.loom"
 }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-}
+    silentMojangMappingsLicense() // Reason for using architectury loom
 
-configurations {
-    common
-    shadowCommon
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
+    accessWidenerPath = file("src/main/resources/rrls.accesswidener")
+
+    runs {
+        client {
+            client()
+            configName = "Fabric Client"
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
 }
 
 dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${project(":common").neoForge.parchment.minecraftVersion.get()}:${project(":common").neoForge.parchment.mappingsVersion.get()}@zip")
+    }
+
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
     // modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
@@ -31,25 +35,9 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-}
-
-shadowJar {
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set "dev-shadow"
-}
-
-remapJar {
-    injectAccessWidener = true
-
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set null
-}
-
-jar {
-    archiveClassifier.set "dev"
+    implementation(project(":common")) {
+        transitive = false
+    }
 }
 
 sourcesJar {
@@ -58,17 +46,11 @@ sourcesJar {
     from commonSources.archiveFile.map { zipTree(it) }
 }
 
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-publishing {
+/*publishing {
     publications {
         mavenFabric(MavenPublication) {
             artifactId = rootProject.archives_base_name
             from components.java
         }
     }
-}
+}*/

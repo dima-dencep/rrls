@@ -1,31 +1,18 @@
+import xyz.wagyourtail.unimined.expect.task.ExpectPlatformJar
+
 plugins {
-    id "io.github.goooler.shadow" version "8.1.8" apply false
-    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "xyz.wagyourtail.unimined.expect-platform" version "1.0.5"
+    id "net.neoforged.moddev" version "1.0.14" apply false
     id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.+" apply false
     id "io.github.p03w.machete" version "2.+" apply false
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
-}
-
 subprojects {
-    apply plugin: "dev.architectury.loom"
+    apply plugin: "xyz.wagyourtail.unimined.expect-platform"
     apply plugin: "io.github.p03w.machete"
     apply plugin: "net.neoforged.licenser"
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
-        }
-    }
+    apply plugin: "java-library"
 
     machete {
         ignoredTasks.add("shadowJar")
@@ -46,17 +33,39 @@ subprojects {
     }
 
     processResources {
-        // inputs.property "project", project
-
         filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
             expand "project": project
+        }
+    }
+
+    if (project.name != "common") {
+        var platofmTask = tasks.create("${project.name}ExeptPlatform", ExpectPlatformJar) {
+            var jarTask = project(":common").tasks.jar
+            dependsOn(jarTask)
+
+            group = "unimined"
+            platformName = project.name
+
+            archiveClassifier.set "platform"
+
+            inputFiles = files(jarTask.archiveFile)
+        }
+
+        tasks.jar {
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+            dependsOn(platofmTask)
+            from(zipTree(platofmTask.archiveFile))
+        }
+
+        tasks.withType(JavaExec).configureEach {
+            expectPlatform.insertAgent(it, project.name)
         }
     }
 }
 
 allprojects {
     apply plugin: "java"
-    apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
     archivesBaseName = rootProject.archives_base_name
@@ -80,6 +89,9 @@ allprojects {
         }
         maven {
             url "https://maven.terraformersmc.com/releases"
+        }
+        maven {
+            url "https://maven.wagyourtail.xyz/releases"
         }
     }
 
