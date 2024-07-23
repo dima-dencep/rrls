@@ -1,7 +1,7 @@
 import xyz.wagyourtail.unimined.expect.task.ExpectPlatformJar
 
 plugins {
-    id "xyz.wagyourtail.unimined.expect-platform" version "1.0.5"
+    id "xyz.wagyourtail.unimined.expect-platform" version "1.0.5" apply false
     id "net.neoforged.moddev" version "1.0.14" apply false
     id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.+" apply false
