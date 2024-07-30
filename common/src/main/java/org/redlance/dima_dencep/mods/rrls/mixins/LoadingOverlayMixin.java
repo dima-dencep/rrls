@@ -63,7 +63,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @Unique
-    private FocusableTextWidget textWidget;
+    private FocusableTextWidget rrls$textWidget;
 
     @Override
     public void rrls$miniRender(GuiGraphics graphics) {
