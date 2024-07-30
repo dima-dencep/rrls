@@ -12,5 +12,6 @@ package org.redlance.dima_dencep.mods.rrls.config;
 
 public enum Type {
     PROGRESS,
-    TEXT
+    TEXT,
+    TEXT_WITH_BACKGROUND
 }

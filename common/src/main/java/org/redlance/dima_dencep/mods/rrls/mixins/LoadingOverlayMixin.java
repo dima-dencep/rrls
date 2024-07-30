@@ -10,6 +10,9 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.components.FocusableTextWidget;
+import net.minecraft.network.chat.Component;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
@@ -20,6 +23,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -58,6 +62,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
         rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
     }
 
+    @Unique
+    private FocusableTextWidget textWidget;
+
     @Override
     public void rrls$miniRender(GuiGraphics graphics) {
         int i = graphics.guiWidth();
@@ -75,6 +82,37 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     minecraft.font, ConfigExpectPlatform.reloadText(), i / 2, 70,
                     ConfigExpectPlatform.rgbProgress() ? ThreadLocalRandom.current().nextInt(0, 0xFFFFFF) : -1
             );
+
+            case Type.TEXT_WITH_BACKGROUND -> {
+                if (textWidget == null) {
+                    textWidget = new FocusableTextWidget(i, Component.literal(ConfigExpectPlatform.reloadText()), minecraft.font, 12);
+                }
+
+                textWidget.setX(i / 2 - textWidget.getWidth() / 2);
+                textWidget.setY(j - j / 3);
+
+                var shaderColor = RenderSystem.getShaderColor();
+                shaderColor = new float[] {
+                        shaderColor[0], shaderColor[1], shaderColor[2], shaderColor[3]
+                }; //Deep copy so these value won't change along with the call below.
+
+                // RGB
+                if (ConfigExpectPlatform.rgbProgress()) {
+                    var color = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
+                    RenderSystem.setShaderColor((float) ((color >> 16) & 255) / 255, (float) ((color >> 8) & 255) / 255, (float) (color & 255) / 255, shaderColor[3]);
+                }
+
+                // This will make sure the widget is rendered above other widgets in Pause screen
+                graphics.pose().pushPose();
+                graphics.pose().translate(0, 0,255);
+
+                textWidget.render(graphics, 0, 0, 0);
+
+                graphics.pose().popPose();
+
+                if (ConfigExpectPlatform.rgbProgress())
+                    RenderSystem.setShaderColor(shaderColor[0], shaderColor[1], shaderColor[2], shaderColor[3]);
+            }
         }
     }
 
