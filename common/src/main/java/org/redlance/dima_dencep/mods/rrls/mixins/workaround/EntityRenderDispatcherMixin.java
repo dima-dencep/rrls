@@ -10,10 +10,13 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -27,6 +30,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityRenderDispatcherMixin {
     @Unique
     private static final Minecraft RRLS$MINECRAFT = Minecraft.getInstance();
+
+    @WrapOperation(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;getRenderer(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"
+            )
+    )
+    public <T extends Entity> EntityRenderer<? super T> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, T entityrenderer, Operation<EntityRenderer<? super T>> original) {
+        try {
+            return original.call(instance, entityrenderer);
+        } catch (Throwable th) {
+            if (ConfigExpectPlatform.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
+                return null;
+            }
+
+            throw th;
+        }
+    }
 
     @Inject(
             method = "render",
