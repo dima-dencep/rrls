@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,17 +30,17 @@ public abstract class ConfigurationSectionScreenMixin {
     @Final
     protected ConfigurationScreen.ConfigurationSectionScreen.Context context;
     @Shadow
-    protected ConfigurationScreen.RestartType needsRestart;
+    protected ModConfigSpec.RestartType needsRestart;
 
     @Inject(
-            method = "<init>(Lnet/minecraft/client/gui/screens/Screen;Lnet/neoforged/fml/config/ModConfig$Type;Lnet/neoforged/fml/config/ModConfig;Lnet/minecraft/network/chat/Component;)V",
+            method = "<init>(Lnet/minecraft/client/gui/screens/Screen;Lnet/neoforged/fml/config/ModConfig$Type;Lnet/neoforged/fml/config/ModConfig;Lnet/minecraft/network/chat/Component;Lnet/neoforged/neoforge/client/gui/ConfigurationScreen$ConfigurationSectionScreen$Filter;)V",
             at = @At(
                     value = "TAIL"
             )
     )
-    public void rrls$fixStartupConfigs(Screen parent, ModConfig.Type type, ModConfig modConfig, Component title, CallbackInfo ci) {
+    public void rrls$fixStartupConfigs(Screen parent, ModConfig.Type type, ModConfig modConfig, Component title, ConfigurationScreen.ConfigurationSectionScreen.Filter filter, CallbackInfo ci) {
         if (Rrls.MOD_ID.equals(context.modId())) {
-            this.needsRestart = ConfigurationScreen.RestartType.NONE;
+            this.needsRestart = ModConfigSpec.RestartType.NONE;
         }
     }
 
