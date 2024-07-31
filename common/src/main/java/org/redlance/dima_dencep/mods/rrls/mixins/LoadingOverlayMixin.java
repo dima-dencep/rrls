@@ -10,7 +10,6 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.network.chat.Component;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
@@ -52,6 +51,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
         return 0;
     }
 
+    @Unique
+    private FocusableTextWidget rrls$textWidget;
+
     @Inject(
             method = "<init>",
             at = @At(
@@ -60,10 +62,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
     )
     private void rrls$init(Minecraft client, ReloadInstance reload, Consumer<Optional<Throwable>> onFinish, boolean fadeIn, CallbackInfo ci) {
         rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
-    }
 
-    @Unique
-    private FocusableTextWidget rrls$textWidget;
+        if (ConfigExpectPlatform.type() == Type.TEXT_WITH_BACKGROUND)
+            rrls$textWidget = new FocusableTextWidget(1, Component.literal(ConfigExpectPlatform.reloadText()), minecraft.font, 12);
+    }
 
     @Override
     public void rrls$miniRender(GuiGraphics graphics) {
@@ -84,25 +86,36 @@ public abstract class LoadingOverlayMixin extends Overlay {
             );
 
             case Type.TEXT_WITH_BACKGROUND -> {
-                if (rrls$textWidget == null) {
-                    rrls$textWidget = new FocusableTextWidget(i, Component.literal(ConfigExpectPlatform.reloadText()), minecraft.font, 12);
+                if (rrls$textWidget != null) {
+                    rrls$textWidget.setMaxWidth(i);
+                    rrls$textWidget.setX(i / 2 - rrls$textWidget.getWidth() / 2);
+                    rrls$textWidget.setY(j - j / 3);
+
+                    if (ConfigExpectPlatform.rgbProgress())
+                        rrls$textWidget.setColor(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF));
+
+                    // This will make sure the widget is rendered above other widgets in Pause screen
+                    graphics.pose().pushPose();
+                    graphics.pose().translate(0, 0,255);
+
+                    rrls$textWidget.render(graphics, 0, 0, 0);
+
+                    graphics.pose().popPose();
                 }
-
-                rrls$textWidget.setX(i / 2 - rrls$textWidget.getWidth() / 2);
-                rrls$textWidget.setY(j - j / 3);
-
-                if (ConfigExpectPlatform.rgbProgress())
-                    rrls$textWidget.setColor(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF));
-
-                // This will make sure the widget is rendered above other widgets in Pause screen
-                graphics.pose().pushPose();
-                graphics.pose().translate(0, 0,255);
-
-                rrls$textWidget.render(graphics, 0, 0, 0);
-
-                graphics.pose().popPose();
             }
         }
+    }
+
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
+            )
+    )
+    public void rrls$onLoadDone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci)
+    {
+        this.rrls$textWidget = null;
     }
 
     @Inject(
