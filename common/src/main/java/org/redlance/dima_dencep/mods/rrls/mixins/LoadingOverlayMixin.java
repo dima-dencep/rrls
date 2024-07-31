@@ -84,21 +84,21 @@ public abstract class LoadingOverlayMixin extends Overlay {
             );
 
             case Type.TEXT_WITH_BACKGROUND -> {
-                if (textWidget == null) {
-                    textWidget = new FocusableTextWidget(i, Component.literal(ConfigExpectPlatform.reloadText()), minecraft.font, 12);
+                if (rrls$textWidget == null) {
+                    rrls$textWidget = new FocusableTextWidget(i, Component.literal(ConfigExpectPlatform.reloadText()), minecraft.font, 12);
                 }
 
-                textWidget.setX(i / 2 - textWidget.getWidth() / 2);
-                textWidget.setY(j - j / 3);
+                rrls$textWidget.setX(i / 2 - rrls$textWidget.getWidth() / 2);
+                rrls$textWidget.setY(j - j / 3);
 
                 if (ConfigExpectPlatform.rgbProgress())
-                    textWidget.setColor(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF));
+                    rrls$textWidget.setColor(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF));
 
                 // This will make sure the widget is rendered above other widgets in Pause screen
                 graphics.pose().pushPose();
                 graphics.pose().translate(0, 0,255);
 
-                textWidget.render(graphics, 0, 0, 0);
+                rrls$textWidget.render(graphics, 0, 0, 0);
 
                 graphics.pose().popPose();
             }
