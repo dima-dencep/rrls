@@ -91,16 +91,8 @@ public abstract class LoadingOverlayMixin extends Overlay {
                 textWidget.setX(i / 2 - textWidget.getWidth() / 2);
                 textWidget.setY(j - j / 3);
 
-                var shaderColor = RenderSystem.getShaderColor();
-                shaderColor = new float[] {
-                        shaderColor[0], shaderColor[1], shaderColor[2], shaderColor[3]
-                }; //Deep copy so these value won't change along with the call below.
-
-                // RGB
-                if (ConfigExpectPlatform.rgbProgress()) {
-                    var color = ThreadLocalRandom.current().nextInt(0, 0xFFFFFF);
-                    RenderSystem.setShaderColor((float) ((color >> 16) & 255) / 255, (float) ((color >> 8) & 255) / 255, (float) (color & 255) / 255, shaderColor[3]);
-                }
+                if (ConfigExpectPlatform.rgbProgress())
+                    textWidget.setColor(ThreadLocalRandom.current().nextInt(0, 0xFFFFFF));
 
                 // This will make sure the widget is rendered above other widgets in Pause screen
                 graphics.pose().pushPose();
@@ -109,9 +101,6 @@ public abstract class LoadingOverlayMixin extends Overlay {
                 textWidget.render(graphics, 0, 0, 0);
 
                 graphics.pose().popPose();
-
-                if (ConfigExpectPlatform.rgbProgress())
-                    RenderSystem.setShaderColor(shaderColor[0], shaderColor[1], shaderColor[2], shaderColor[3]);
             }
         }
     }
