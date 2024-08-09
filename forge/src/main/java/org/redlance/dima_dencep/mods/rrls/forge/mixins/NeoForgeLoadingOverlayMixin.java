@@ -89,6 +89,10 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return ConfigExpectPlatform.animationSpeed();
+        if (!rrls$getState().isRendering()) {
+            return ConfigExpectPlatform.animationSpeed();
+        }
+
+        return instance;
     }
 }

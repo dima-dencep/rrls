@@ -214,7 +214,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
-        return ConfigExpectPlatform.animationSpeed();
+        if (!rrls$getState().isRendering()) {
+            return ConfigExpectPlatform.animationSpeed();
+        }
+
+        return instance;
     }
 
     @Override // YAY Conflicts!!!
