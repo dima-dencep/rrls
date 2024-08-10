@@ -1,5 +1,4 @@
 accessWidener   v2  named
-extendable method net/minecraft/server/packs/resources/SimplePreparableReloadListener reload (Lnet/minecraft/server/packs/resources/PreparableReloadListener$PreparationBarrier;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;Lnet/minecraft/util/profiling/ProfilerFiller;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;
 accessible method net/minecraft/client/gui/GuiGraphics flushIfUnmanaged ()V
 extendable method net/minecraft/client/gui/GuiGraphics flushIfUnmanaged ()V
 accessible method net/minecraft/client/gui/GuiGraphics flushIfManaged ()V
