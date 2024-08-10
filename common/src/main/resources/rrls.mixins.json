@@ -12,7 +12,7 @@
     "compat.OverlayMixin",
     "compat.ServerPackManagerMixin",
     "workaround.GuiGraphicsMixin",
-    "workaround.SimpleReloadInstanceMixin",
+    "workaround.ReloadableResourceManagerMixin",
     "workaround.VertexBufferMixin",
     "workaround.EntityRenderDispatcherMixin"
   ],
