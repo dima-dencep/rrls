@@ -109,7 +109,10 @@ public class ReloadableResourceManagerMixin {
     @Unique
     private void rrls$reloadListener(PreparableReloadListener listener, Executor gameExecutor, BiConsumer<Void, Throwable> action) {
         try {
-            if (this.resources.getNamespaces().isEmpty()) {
+            if (this.resources.getNamespaces().isEmpty() || this.resources.getNamespaces().size() < 2 /* EBE workaround */) {
+                this.resources.close();
+
+                Rrls.LOGGER.info("Creating new resource manager!");
                 this.resources = new MultiPackResourceManager(PackType.CLIENT_RESOURCES,
                         RRLS$MINECRAFT.getResourcePackRepository().openAllSelected()
                 );
@@ -124,6 +127,7 @@ public class ReloadableResourceManagerMixin {
 
         } catch (Throwable th) {
             this.rrls$listeners.add(listener);
+            Rrls.LOGGER.warn("Failed to reload {}!", listener.getName(), th);
         }
     }
 
