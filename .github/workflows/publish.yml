@@ -75,7 +75,7 @@ jobs:
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-            1.21.1
+            1.21
 
           java: |
             21
@@ -105,7 +105,7 @@ jobs:
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
-            1.21.1
+            1.21
 
           dependencies: |
             cloth-config
