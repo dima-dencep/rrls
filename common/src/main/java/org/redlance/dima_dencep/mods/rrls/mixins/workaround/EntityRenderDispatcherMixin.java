@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.world.entity.Entity;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -32,13 +33,13 @@ public class EntityRenderDispatcherMixin {
     private static final Minecraft RRLS$MINECRAFT = Minecraft.getInstance();
 
     @WrapOperation(
-            method = "render",
+            method = "render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;getRenderer(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"
             )
     )
-    public <T extends Entity> EntityRenderer<? super T> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, T entityrenderer, Operation<EntityRenderer<? super T>> original) {
+    public <E extends Entity> EntityRenderer<? super E, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, E entityrenderer, Operation<EntityRenderer<? super E, ?>> original) {
         try {
             return original.call(instance, entityrenderer);
         } catch (Throwable th) {
@@ -51,14 +52,14 @@ public class EntityRenderDispatcherMixin {
     }
 
     @Inject(
-            method = "render",
+            method = "render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/CrashReport;forThrowable(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;"
             ),
             cancellable = true
     )
-    public <E extends Entity> void rrls$workaroundEntityCrash(E entity, double x, double y, double z, float rotationYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+    public <E extends Entity, S extends EntityRenderState> void rrls$workaroundEntityCrash(E entity, double d, double e, double f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, EntityRenderer<? super E, S> entityRenderer, CallbackInfo ci) {
         if (ConfigExpectPlatform.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
             Rrls.LOGGER.warn("Preverting entity ({}) crash.", entity);
 

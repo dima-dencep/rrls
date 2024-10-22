@@ -11,14 +11,13 @@
 package org.redlance.dima_dencep.mods.rrls.utils;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import java.util.List;
-import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
@@ -33,27 +32,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings({"unused", "deprecation"})
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+@SuppressWarnings("unused")
 public class DummyGuiGraphics extends GuiGraphics {
     public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
     private DummyGuiGraphics() {
         super(Minecraft.getInstance(), null);
-    }
-
-    @Override
-    @Deprecated
-    public void drawManaged(Runnable runnable) {
-    }
-
-    @Override
-    @Deprecated
-    public void flushIfUnmanaged() {
-    }
-
-    @Override
-    @Deprecated
-    public void flushIfManaged() {
     }
 
     @Override
@@ -91,10 +80,6 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     public void applyScissor(@Nullable ScreenRectangle rectangle) {
-    }
-
-    @Override
-    public void setColor(float red, float green, float blue, float alpha) {
     }
 
     @Override
@@ -180,11 +165,8 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blit(int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite) {
-    }
-
-    @Override
-    public void blit(int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite, float red, float green, float blue, float alpha) {
+    public int drawStringWithBackdrop(Font font, Component text, int x, int y, int xOffset, int color) {
+        return -1;
     }
 
     @Override
@@ -192,63 +174,59 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blitSprite(ResourceLocation sprite, int x, int y, int width, int height) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, int k, int l) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation sprite, int x, int y, int blitOffset, int width, int height) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, int k, int l, int m) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int uWidth, int vHeight) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p) {
     }
 
     @Override
-    public void blitSprite(ResourceLocation sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l) {
     }
 
     @Override
-    public void blitSprite(TextureAtlasSprite sprite, int textureWidth, int textureHeight, int uPosition, int vPosition, int x, int y, int blitOffset, int uWidth, int vHeight) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m) {
     }
 
     @Override
-    public void blitSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height) {
+    public void blitSprite(Function<ResourceLocation, RenderType> function, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q) {
     }
 
     @Override
-    public void blit(ResourceLocation atlasLocation, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight) {
+    public void blitNineSlicedSprite(Function<ResourceLocation, RenderType> function, TextureAtlasSprite textureAtlasSprite, GuiSpriteScaling.NineSlice nineSlice, int i, int j, int k, int l, int m) {
     }
 
     @Override
-    public void blit(ResourceLocation atlasLocation, int x, int y, int blitOffset, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
+    public void blitNineSliceInnerSegment(Function<ResourceLocation, RenderType> function, GuiSpriteScaling.NineSlice nineSlice, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, int s) {
     }
 
     @Override
-    public void blit(ResourceLocation atlasLocation, int x, int y, int width, int height, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
+    public void blitTiledSprite(Function<ResourceLocation, RenderType> function, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, int s) {
     }
 
     @Override
-    public void blit(ResourceLocation atlasLocation, int x, int y, float uOffset, float vOffset, int width, int height, int textureWidth, int textureHeight) {
+    public void blit(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o) {
     }
 
     @Override
-    public void blit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, int uWidth, int vHeight, float uOffset, float vOffset, int textureWidth, int textureHeight) {
+    public void blit(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n) {
     }
 
     @Override
-    public void innerBlit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, float minU, float maxU, float minV, float maxV) {
+    public void blit(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p) {
     }
 
     @Override
-    public void innerBlit(ResourceLocation atlasLocation, int x1, int x2, int y1, int y2, int blitOffset, float minU, float maxU, float minV, float maxV, float red, float green, float blue, float alpha) {
+    public void blit(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p, int q) {
     }
 
     @Override
-    public void blitNineSlicedSprite(TextureAtlasSprite sprite, GuiSpriteScaling.NineSlice nineSlice, int x, int y, int blitOffset, int width, int height) {
-    }
-
-    @Override
-    public void blitTiledSprite(TextureAtlasSprite sprite, int x, int y, int blitOffset, int width, int height, int uPosition, int vPosition, int spriteWidth, int spriteHeight, int nineSliceWidth, int nineSliceHeight) {
+    public void innerBlit(Function<ResourceLocation, RenderType> function, ResourceLocation resourceLocation, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
     }
 
     @Override
@@ -300,7 +278,15 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
+    public void renderTooltip(Font font, List<Component> list, Optional<TooltipComponent> optional, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    }
+
+    @Override
     public void renderTooltip(Font font, Component text, int mouseX, int mouseY) {
+    }
+
+    @Override
+    public void renderTooltip(Font font, Component component, int i, int j, @Nullable ResourceLocation resourceLocation) {
     }
 
     @Override
@@ -308,7 +294,15 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
+    public void renderComponentTooltip(Font font, List<Component> list, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    }
+
+    @Override
     public void renderTooltip(Font font, List<? extends FormattedCharSequence> tooltipLines, int mouseX, int mouseY) {
+    }
+
+    @Override
+    public void renderTooltip(Font font, List<? extends FormattedCharSequence> list, int i, int j, @Nullable ResourceLocation resourceLocation) {
     }
 
     @Override
@@ -316,10 +310,26 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner) {
+    public void renderTooltipInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable ResourceLocation resourceLocation) {
+    }
+
+    @Override
+    public void renderItemBar(ItemStack itemStack, int i, int j) {
+    }
+
+    @Override
+    public void renderItemCount(Font font, ItemStack itemStack, int i, int j, @Nullable String string) {
+    }
+
+    @Override
+    public void renderItemCooldown(ItemStack itemStack, int i, int j) {
     }
 
     @Override
     public void renderComponentHoverEffect(Font font, @Nullable Style style, int mouseX, int mouseY) {
+    }
+
+    @Override
+    public void drawSpecial(Consumer<MultiBufferSource> consumer) {
     }
 }

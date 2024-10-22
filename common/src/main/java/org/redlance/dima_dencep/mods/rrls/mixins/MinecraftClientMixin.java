@@ -44,7 +44,9 @@ public abstract class MinecraftClientMixin {
     @Inject(
             method = "<init>",
             at = @At(
-                    value = "TAIL"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/quickplay/QuickPlayLog;of(Ljava/lang/String;)Lnet/minecraft/client/quickplay/QuickPlayLog;",
+                    shift = At.Shift.AFTER
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
