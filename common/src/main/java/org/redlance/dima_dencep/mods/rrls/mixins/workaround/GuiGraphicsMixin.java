@@ -14,16 +14,22 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.GuiSpriteManager;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+import java.util.function.Function;
+
 @Mixin(GuiGraphics.class)
 public abstract class GuiGraphicsMixin {
     @WrapOperation(
-            method = "*",
+            method = {
+                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
+                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIIIIII)V"
+            },
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
@@ -38,30 +44,35 @@ public abstract class GuiGraphicsMixin {
     }
 
     @WrapOperation(
-            method = "*",
+            method = {
+                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
+                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIIIIII)V"
+            },
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSpriteScaling(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)Lnet/minecraft/client/resources/metadata/gui/GuiSpriteScaling;"
             )
     )
     public GuiSpriteScaling rrls$fixSpriteCrash(GuiSpriteManager instance, TextureAtlasSprite sprite, Operation<GuiSpriteScaling> original) {
-        if (sprite == null)
+        if (sprite == null) {
             return null;
+        }
 
         return original.call(instance, sprite);
     }
 
     @WrapOperation(
-            method = "blitSprite(Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V",
+            method = "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIIIIII)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Ljava/util/function/Function;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;IIII)V"
             )
     )
-    public void rrls$fixSpriteCrash(GuiGraphics instance, TextureAtlasSprite sprite, int x, int y, int z, int width, int height, Operation<Void> original) {
-        if (sprite == null)
+    public void rrls$fixSpriteCrash(GuiGraphics instance, Function<ResourceLocation, RenderType> function, TextureAtlasSprite arg, int i, int j, int k, int l, Operation<Void> original) {
+        if (arg == null) {
             return;
+        }
 
-        original.call(instance, sprite, x, y, z, width, height);
+        original.call(instance, function, arg, i, j, k, l);
     }
 }

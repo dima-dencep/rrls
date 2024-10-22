@@ -166,13 +166,13 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(IZ)V",
+                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(I)V",
                     remap = false
             )
     )
-    public void rrls$_clear(int mask, boolean getError, Operation<Void> original) {
+    public void rrls$_clear(int i, Operation<Void> original) {
         if (!rrls$getState().isRendering()) {
-            original.call(mask, getError);
+            original.call(i);
         }
     }
 
@@ -194,7 +194,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "drawProgressBar",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/util/FastColor$ARGB32;color(IIII)I"
+                    target = "Lnet/minecraft/util/ARGB;color(IIII)I"
             )
     )
     public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original) {

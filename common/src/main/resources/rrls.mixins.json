@@ -4,17 +4,17 @@
   "package": "org.redlance.dima_dencep.mods.rrls.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "MinecraftClientMixin",
-    "LoadingOverlayMixin",
-    "TitleScreenMixin",
     "GameRendererMixin",
-    "compat.RendererKeyboardMouseMixin",
+    "LoadingOverlayMixin",
+    "MinecraftClientMixin",
+    "TitleScreenMixin",
     "compat.OverlayMixin",
+    "compat.RendererKeyboardMouseMixin",
     "compat.ServerPackManagerMixin",
+    "workaround.CompilationCacheMixin",
+    "workaround.EntityRenderDispatcherMixin",
     "workaround.GuiGraphicsMixin",
-    "workaround.ReloadableResourceManagerMixin",
-    "workaround.VertexBufferMixin",
-    "workaround.EntityRenderDispatcherMixin"
+    "workaround.ReloadableResourceManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

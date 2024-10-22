@@ -15,6 +15,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSpriteManager;
 import net.minecraft.client.gui.font.FontManager;
+import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.server.packs.PackResources;
@@ -25,7 +26,6 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.util.Unit;
-import net.minecraft.util.profiling.InactiveProfiler;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.spongepowered.asm.mixin.Mixin;
@@ -90,6 +90,12 @@ public class ReloadableResourceManagerMixin {
         ) {
             rrls$reloadListener(spriteManager, RRLS$MINECRAFT, (unused, throwable) -> {});
         }
+
+        if (listener instanceof ShaderManager shaderManager &&
+                shaderManager.compilationCache.configs == ShaderManager.Configs.EMPTY
+        ) {
+            rrls$reloadListener(shaderManager, RRLS$MINECRAFT, (unused, throwable) -> {});
+        }
     }
 
     @Inject(
@@ -121,8 +127,7 @@ public class ReloadableResourceManagerMixin {
             Rrls.LOGGER.info("Quick reload listener '{}'", listener.getName());
 
             listener.reload(
-                    CompletableFuture::completedFuture, (ReloadableResourceManager) (Object) this, InactiveProfiler.INSTANCE,
-                    InactiveProfiler.INSTANCE, Util.backgroundExecutor(), gameExecutor
+                    CompletableFuture::completedFuture, (ReloadableResourceManager) (Object) this, Util.backgroundExecutor(), gameExecutor
             ).whenCompleteAsync(action, Util.backgroundExecutor());
 
         } catch (Throwable th) {
