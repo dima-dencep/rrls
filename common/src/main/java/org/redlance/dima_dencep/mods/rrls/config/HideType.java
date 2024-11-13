@@ -10,11 +10,20 @@
 
 package org.redlance.dima_dencep.mods.rrls.config;
 
-public enum HideType {
-    ALL,
-    LOADING,
-    RELOADING,
-    NONE;
+import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.common.TranslatableEnum;
+
+public enum HideType implements TranslatableEnum {
+    ALL(Component.translatable("rrls.configuration.hide.all")),
+    LOADING(Component.translatable("rrls.configuration.hide.loading")),
+    RELOADING(Component.translatable("rrls.configuration.hide.reloading")),
+    NONE(Component.translatable("rrls.configuration.hide_doubleload.none"));
+
+    private final Component translatedName;
+
+    HideType(Component translatedName) {
+        this.translatedName = translatedName;
+    }
 
     public boolean canHide(boolean reloading) {
         return switch (this) {
@@ -27,5 +36,10 @@ public enum HideType {
 
     public boolean forceClose() {
         return this == LOADING || this == ALL;
+    }
+
+    @Override
+    public Component getTranslatedName() {
+        return this.translatedName;
     }
 }

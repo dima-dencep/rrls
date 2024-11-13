@@ -10,8 +10,22 @@
 
 package org.redlance.dima_dencep.mods.rrls.config;
 
-public enum Type {
-    PROGRESS,
-    TEXT,
-    TEXT_WITH_BACKGROUND
+import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.common.TranslatableEnum;
+
+public enum Type implements TranslatableEnum {
+    PROGRESS(Component.translatable("rrls.configuration.type.progress")),
+    TEXT(Component.translatable("rrls.configuration.type.text")),
+    TEXT_WITH_BACKGROUND(Component.translatable("rrls.configuration.type.textbg"));
+
+    private final Component translatedName;
+
+    Type(Component translatedName) {
+        this.translatedName = translatedName;
+    }
+
+    @Override
+    public Component getTranslatedName() {
+        return this.translatedName;
+    }
 }

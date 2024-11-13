@@ -16,12 +16,15 @@ import com.llamalad7.mixinextras.sugar.Cancellable;
 import net.minecraft.client.renderer.CompiledShaderProgram;
 import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.client.renderer.ShaderProgram;
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Used to prevent the game from crashing if rrls failed to load the reloader early.
+ */
 @Mixin(ShaderManager.CompilationCache.class)
 public class CompilationCacheMixin {
     @WrapOperation(
@@ -34,7 +37,7 @@ public class CompilationCacheMixin {
     private CompiledShaderProgram rrls$supressMissingCache(ShaderManager.CompilationCache instance, ShaderProgram shaderProgram, Operation<CompiledShaderProgram> original, @Cancellable CallbackInfoReturnable<?> cir) {
         CompiledShaderProgram compiledShaderProgram = original.call(instance, shaderProgram);
 
-        if (compiledShaderProgram == null && ConfigExpectPlatform.hideType().forceClose()) {
+        if (compiledShaderProgram == null && RrlsConfig.hideType().forceClose()) {
             cir.setReturnValue(null);
         }
 
@@ -53,7 +56,7 @@ public class CompilationCacheMixin {
             cancellable = true
     )
     private void rrls$supressMissingCache(CallbackInfoReturnable<?> cir) {
-        if (ConfigExpectPlatform.hideType().forceClose()) {
+        if (RrlsConfig.hideType().forceClose()) {
             cir.setReturnValue(null);
         }
     }

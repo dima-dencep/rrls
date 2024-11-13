@@ -10,7 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,7 +32,7 @@ public class ServerPackManagerMixin {
             )
     )
     public void earlyResourcePackStatusSend(UUID id, ServerPackManager.ServerPackData packData, CallbackInfo ci) {
-        if (ConfigExpectPlatform.earlyPackStatusSend()) {
+        if (RrlsConfig.earlyPackStatusSend()) {
             ClientPacketListener handler = Minecraft.getInstance().getConnection();
 
             if (handler != null && handler.getConnection() != null && handler.getConnection().isConnected()) {

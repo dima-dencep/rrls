@@ -8,9 +8,9 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.forge.mixins;
+package org.redlance.dima_dencep.mods.rrls.neoforge.mixins;
 
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import net.minecraft.client.Minecraft;
@@ -61,7 +61,7 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
 
-        if (context instanceof DummyGuiGraphics || ConfigExpectPlatform.skipForgeOverlay() || earlyLoadingScreenClosed) {
+        if (context instanceof DummyGuiGraphics || RrlsConfig.skipForgeOverlay() || earlyLoadingScreenClosed) {
             if (!earlyLoadingScreenClosed) { // Stop forge's early loading screen
                 progressMeter.complete();
                 displayWindow.close();
@@ -90,7 +90,7 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     )
     public float rrls$changeAnimationSpeed(float instance) {
         if (!rrls$getState().isRendering()) {
-            return ConfigExpectPlatform.animationSpeed();
+            return RrlsConfig.animationSpeed();
         }
 
         return instance;

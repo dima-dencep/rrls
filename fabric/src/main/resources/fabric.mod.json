@@ -33,9 +33,6 @@
   "entrypoints": {
     "client": [
       "org.redlance.dima_dencep.mods.rrls.fabric.RrlsFabric"
-    ],
-    "modmenu": [
-      "org.redlance.dima_dencep.mods.rrls.fabric.integration.ModMenuImpl"
     ]
   },
   "mixins": [
@@ -44,7 +41,7 @@
   "depends": {
     "fabricloader": ">=${project.loader_version}",
     "minecraft": ">=${project.minecraft_version}",
-    "cloth-config": ">=${project.cloth_config_version}"
+    "forgeconfigapiport": ">=${project.fcapip_version}"
   },
   "conflicts": {
     "dynamicfps": "*"

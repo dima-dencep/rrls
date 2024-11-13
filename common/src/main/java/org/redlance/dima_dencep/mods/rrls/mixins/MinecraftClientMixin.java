@@ -10,8 +10,8 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -50,7 +50,7 @@ public abstract class MinecraftClientMixin {
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
-        if (ConfigExpectPlatform.hideType().forceClose()) {
+        if (RrlsConfig.hideType().forceClose()) {
             onResourceLoadFinished(gameLoadCookie);
         }
     }
@@ -63,13 +63,13 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
-        if (!ConfigExpectPlatform.resetResources()) {
+        if (!RrlsConfig.resetResources()) {
             ci.cancel();
 
             Rrls.LOGGER.error("Caught error loading resourcepacks!", throwable);
 
-            if (ConfigExpectPlatform.doubleLoad().isLoad()) {
-                reloadResourcePacks(ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD, gameLoadCookie)
+            if (RrlsConfig.doubleLoad().isLoad()) {
+                reloadResourcePacks(RrlsConfig.doubleLoad() == DoubleLoad.FORCE_LOAD, gameLoadCookie)
                         .thenRun(() -> addResourcePackLoadFailToast(errorMessage));
             }
         }
@@ -85,7 +85,7 @@ public abstract class MinecraftClientMixin {
             cancellable = true
     )
     public void rrls$doubleLoad(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
-        if (!ConfigExpectPlatform.doubleLoad().isLoad()) {
+        if (!RrlsConfig.doubleLoad().isLoad()) {
             ci.cancel();
         }
     }
@@ -100,7 +100,7 @@ public abstract class MinecraftClientMixin {
             require = 0
     )
     public boolean rrls$doubleLoad(boolean error) { // always true
-        return ConfigExpectPlatform.doubleLoad() == DoubleLoad.FORCE_LOAD;
+        return RrlsConfig.doubleLoad() == DoubleLoad.FORCE_LOAD;
     }
 
     @WrapOperation(
@@ -130,7 +130,7 @@ public abstract class MinecraftClientMixin {
             )
     )
     public Overlay rrls$blockOverlay(Overlay original) {
-        if (ConfigExpectPlatform.blockOverlay() && OverlayHelper.isRenderingState(original))
+        if (RrlsConfig.blockOverlay() && OverlayHelper.isRenderingState(original))
             return null;
 
         return original;

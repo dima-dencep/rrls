@@ -1,10 +1,10 @@
 {
-  "text.autoconfig.rrls.title": "Rimuovi la schermata di ri-caricamento (Remove Reloading Screen)",
-  "text.autoconfig.rrls.option.hideOverlays": "Nascondi la schermata di ri-caricamento",
-  "text.autoconfig.rrls.option.rgbProgress": "Barra di avanzamento colorata",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cPOTREBBE CAUSARE EPILESSIA",
-  "text.autoconfig.rrls.option.miniRender": "Visualizzazione del processo di ricaricamento dei pacchetti di risorse",
-  "text.autoconfig.rrls.option.resetResources": "Ripristina i pacchetti di risorse se il caricamento fallisce",
-  "text.autoconfig.rrls.option.reInitScreen": "Reinizza la schermata corrente dopo un ricaricamento",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "La disattivare questa funzione può eliminare il blocco dopo il completamento del ricaricamento"
+  "rrls.configuration.title": "Rimuovi la schermata di ri-caricamento (Remove Reloading Screen)",
+  "rrls.configuration.hideOverlays": "Nascondi la schermata di ri-caricamento",
+  "rrls.configuration.rgbProgress": "Barra di avanzamento colorata",
+  "rrls.configuration.rgbProgress.tooltip": "§cPOTREBBE CAUSARE EPILESSIA",
+  "rrls.configuration.miniRender": "Visualizzazione del processo di ricaricamento dei pacchetti di risorse",
+  "rrls.configuration.resetResources": "Ripristina i pacchetti di risorse se il caricamento fallisce",
+  "rrls.configuration.reInitScreen": "Reinizza la schermata corrente dopo un ricaricamento",
+  "rrls.configuration.reInitScreen.tooltip": "La disattivare questa funzione può eliminare il blocco dopo il completamento del ricaricamento"
 }

@@ -107,7 +107,7 @@ jobs:
             ${{ steps.read_property.outputs.minecraft_version }}
 
           dependencies: |
-            cloth-config
+            forge-config-api-port
 
           java: |
             21

@@ -21,13 +21,7 @@ configurations {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-    // modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-
-    modCompileOnly("com.terraformersmc:modmenu:${rootProject.modmenu_version}") {
-        transitive = false
-    }
-
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
+    modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.fcapip_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 

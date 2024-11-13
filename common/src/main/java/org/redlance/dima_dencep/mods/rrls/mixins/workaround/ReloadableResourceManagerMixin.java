@@ -26,8 +26,8 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.util.Unit;
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -59,7 +59,7 @@ public class ReloadableResourceManagerMixin {
             )
     )
     public void rrls$initReloader(PreparableReloadListener listener, CallbackInfo ci) {
-        if (!ConfigExpectPlatform.hideType().forceClose()) {
+        if (!RrlsConfig.hideType().forceClose()) {
             return;
         }
 
@@ -138,7 +138,7 @@ public class ReloadableResourceManagerMixin {
 
     @Unique
     private void rrls$refreshScreen() {
-        if (ConfigExpectPlatform.reInitScreen() && RRLS$MINECRAFT.screen != null) {
+        if (RrlsConfig.reInitScreen() && RRLS$MINECRAFT.screen != null) {
             RRLS$MINECRAFT.screen.init(RRLS$MINECRAFT,
                     RRLS$MINECRAFT.getWindow().getGuiScaledWidth(), RRLS$MINECRAFT.getWindow().getGuiScaledHeight()
             );

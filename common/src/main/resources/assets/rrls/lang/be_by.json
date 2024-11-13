@@ -1,10 +1,10 @@
 {
-  "text.autoconfig.rrls.title": "Remove Reloading Screen",
-  "text.autoconfig.rrls.option.hideOverlays": "Схаваць экраны перазагрузкі",
-  "text.autoconfig.rrls.option.rgbProgress": "Каляровы радок прагрэсу",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§cМОЖА ВЫКЛІКАЦЬ ЭПІЛЕПСІЮ",
-  "text.autoconfig.rrls.option.miniRender": "Адлюстраванне прагрэссу перазагрузкі пакетаў рэсурсаў",
-  "text.autoconfig.rrls.option.resetResources": "Скідваць пакеты рэсурсаў, калі не атрымалася загрузіць",
-  "text.autoconfig.rrls.option.reInitScreen": "Рэініцыялізацыя бягучага экрана пасля перазагрузкі",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "Адключэнне гэтай функцыі можа выклікаць праблемы пасля сканчэння перазагрузкі"
+  "rrls.configuration.title": "Remove Reloading Screen",
+  "rrls.configuration.hideOverlays": "Схаваць экраны перазагрузкі",
+  "rrls.configuration.rgbProgress": "Каляровы радок прагрэсу",
+  "rrls.configuration.rgbProgress.tooltip": "§cМОЖА ВЫКЛІКАЦЬ ЭПІЛЕПСІЮ",
+  "rrls.configuration.miniRender": "Адлюстраванне прагрэссу перазагрузкі пакетаў рэсурсаў",
+  "rrls.configuration.resetResources": "Скідваць пакеты рэсурсаў, калі не атрымалася загрузіць",
+  "rrls.configuration.reInitScreen": "Рэініцыялізацыя бягучага экрана пасля перазагрузкі",
+  "rrls.configuration.reInitScreen.tooltip": "Адключэнне гэтай функцыі можа выклікаць праблемы пасля сканчэння перазагрузкі"
 }

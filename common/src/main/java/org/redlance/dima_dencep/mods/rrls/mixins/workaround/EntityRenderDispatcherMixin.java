@@ -19,8 +19,8 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.world.entity.Entity;
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,7 +43,7 @@ public class EntityRenderDispatcherMixin {
         try {
             return original.call(instance, entityrenderer);
         } catch (Throwable th) {
-            if (ConfigExpectPlatform.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
+            if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
                 return null;
             }
 
@@ -60,7 +60,7 @@ public class EntityRenderDispatcherMixin {
             cancellable = true
     )
     public <E extends Entity, S extends EntityRenderState> void rrls$workaroundEntityCrash(E entity, double d, double e, double f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, EntityRenderer<? super E, S> entityRenderer, CallbackInfo ci) {
-        if (ConfigExpectPlatform.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
+        if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
             Rrls.LOGGER.warn("Preverting entity ({}) crash.", entity);
 
             ci.cancel();

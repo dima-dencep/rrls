@@ -10,17 +10,17 @@
 
 package org.redlance.dima_dencep.mods.rrls.utils;
 
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.Screen;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 
 public class OverlayHelper {
     public static State lookupState(Screen screen, boolean reloading) {
-        if (!ConfigExpectPlatform.hideType().canHide(reloading))
+        if (!RrlsConfig.hideType().canHide(reloading))
             return State.DEFAULT;
 
-        if (reloading || ConfigExpectPlatform.hideType().forceClose())
+        if (reloading || RrlsConfig.hideType().forceClose())
             return State.HIDE;
 
         if (screen instanceof GenericMessageScreen) // Loading Minecraft

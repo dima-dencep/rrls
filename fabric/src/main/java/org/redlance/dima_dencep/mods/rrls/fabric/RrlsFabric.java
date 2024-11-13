@@ -10,18 +10,23 @@
 
 package org.redlance.dima_dencep.mods.rrls.fabric;
 
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 
 public class RrlsFabric extends Rrls implements ClientModInitializer {
-    public static final ConfigExpectPlatformImpl MOD_CONFIG = AutoConfig.register(
-            ConfigExpectPlatformImpl.class, Toml4jConfigSerializer::new
-    ).get();
-
     @Override
     public void onInitializeClient() {
-        // no-op
+        NeoForgeConfigRegistry.INSTANCE.register(Rrls.MOD_ID, ModConfig.Type.CLIENT,
+                RrlsConfig.CONFIG_SPEC_PAIR.getRight(), "rrls.toml"
+        );
+        ConfigScreenFactoryRegistry.INSTANCE.register(Rrls.MOD_ID, ConfigurationScreen::new);
+
+        // After loading config, we load the future stuff
+        super.onInitializeClient();
     }
 }

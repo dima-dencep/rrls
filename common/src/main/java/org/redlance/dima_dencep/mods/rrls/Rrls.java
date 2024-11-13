@@ -16,4 +16,8 @@ import org.apache.logging.log4j.Logger;
 public class Rrls {
     public static final String MOD_ID = "rrls";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
+    protected void onInitializeClient() {
+        // no-op
+    }
 }

@@ -1,10 +1,10 @@
 {
-  "text.autoconfig.rrls.title": "移除重新加载屏幕(RemoveReloadingScreen)",
-  "text.autoconfig.rrls.option.hideOverlays": "隐藏重新加载屏幕",
-  "text.autoconfig.rrls.option.rgbProgress": "彩色进度条",
-  "text.autoconfig.rrls.option.rgbProgress.@Tooltip": "§c可能引起癫痫",
-  "text.autoconfig.rrls.option.miniRender": "资源包重新加载过程显示",
-  "text.autoconfig.rrls.option.resetResources": "加载失败时重置资源包",
-  "text.autoconfig.rrls.option.reInitScreen": "重新加载后重新初始化当前屏幕",
-  "text.autoconfig.rrls.option.reInitScreen.@Tooltip": "禁用此功能可能会消除重新加载完成后的挂起"
+  "rrls.configuration.title": "移除重新加载屏幕(RemoveReloadingScreen)",
+  "rrls.configuration.hideOverlays": "隐藏重新加载屏幕",
+  "rrls.configuration.rgbProgress": "彩色进度条",
+  "rrls.configuration.rgbProgress.tooltip": "§c可能引起癫痫",
+  "rrls.configuration.miniRender": "资源包重新加载过程显示",
+  "rrls.configuration.resetResources": "加载失败时重置资源包",
+  "rrls.configuration.reInitScreen": "重新加载后重新初始化当前屏幕",
+  "rrls.configuration.reInitScreen.tooltip": "禁用此功能可能会消除重新加载完成后的挂起"
 }

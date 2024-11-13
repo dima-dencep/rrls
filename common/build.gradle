@@ -8,6 +8,7 @@ loom {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${rootProject.fcapip_version}"
 }
 
 jar {

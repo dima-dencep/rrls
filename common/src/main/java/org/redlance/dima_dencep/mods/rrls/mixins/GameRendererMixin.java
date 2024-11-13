@@ -11,8 +11,8 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import net.minecraft.client.DeltaTracker;
-import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
+import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -51,7 +51,7 @@ public class GameRendererMixin {
                         DummyGuiGraphics.INSTANCE, 0, 0, deltaTracker.getGameTimeDeltaTicks()
                 ));
 
-                if (ConfigExpectPlatform.miniRender())
+                if (RrlsConfig.miniRender())
                     overlay.rrls$miniRender(graphics);
             }
 
@@ -62,7 +62,7 @@ public class GameRendererMixin {
 
     @Unique
     private static void rrls$enableScissor(GuiGraphics graphics, Runnable runnable) {
-        if (ConfigExpectPlatform.enableScissor()) {
+        if (RrlsConfig.enableScissor()) {
             graphics.pose().pushPose();
             graphics.enableScissor(0, 0, 0, 0);
 
