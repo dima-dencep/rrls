@@ -212,15 +212,21 @@ public abstract class LoadingOverlayMixin extends Overlay {
 
     @ModifyConstant(
             method = "render",
-            constant = @Constant(
-                    floatValue = 1000.0F,
-                    ordinal = 0
-            ),
+            constant = {
+                    @Constant(
+                            floatValue = 1000.0F,
+                            ordinal = 0
+                    ),
+                    @Constant(
+                            floatValue = 500.0F,
+                            ordinal = 0
+                    )
+            },
             require = 0
     )
     public float rrls$changeAnimationSpeed(float instance) {
         if (!rrls$getState().isRendering()) {
-            return ConfigExpectPlatform.animationSpeed();
+            return instance == 1000.0F ? RrlsConfig.animationSpeed() : RrlsConfig.animationSpeed() / 2;
         }
 
         return instance;
