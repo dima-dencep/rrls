@@ -118,8 +118,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
             )
     )
-    public void rrls$onLoadDone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci)
-    {
+    public void rrls$onLoadDone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         this.rrls$textWidget = null;
     }
 
@@ -176,10 +175,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     remap = false
             )
     )
-    public void rrls$_clear(int i, Operation<Void> original) {
-        if (!rrls$getState().isRendering()) {
-            original.call(i);
+    public void rrls$_clear(int i, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
+        if (graphics instanceof DummyGuiGraphics) {
+            return;
         }
+        original.call(i);
     }
 
     @WrapOperation(
@@ -190,10 +190,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     remap = false
             )
     )
-    public void rrls$_clearColor(float red, float green, float blue, float alpha, Operation<Void> original) {
-        if (!rrls$getState().isRendering()) {
-            original.call(red, green, blue, alpha);
+    public void rrls$_clearColor(float red, float green, float blue, float alpha, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
+        if (graphics instanceof DummyGuiGraphics) {
+            return;
         }
+        original.call(red, green, blue, alpha);
     }
 
     @WrapOperation(

@@ -37,3 +37,5 @@ accessible field net/minecraft/client/resources/SplashManager splashes Ljava/uti
 accessible field net/minecraft/client/renderer/ShaderManager compilationCache Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;
 accessible field net/minecraft/client/renderer/ShaderManager$CompilationCache configs Lnet/minecraft/client/renderer/ShaderManager$Configs;
 accessible class net/minecraft/client/renderer/ShaderManager$CompilationCache
+accessible method net/minecraft/client/renderer/texture/TextureManager scheduleLoad (Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/texture/ReloadableTexture;Ljava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/TextureManager$PendingReload;
+accessible class net/minecraft/client/renderer/texture/TextureManager$PendingReload

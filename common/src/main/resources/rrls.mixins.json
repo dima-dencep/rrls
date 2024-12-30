@@ -14,7 +14,8 @@
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
     "workaround.GuiGraphicsMixin",
-    "workaround.ReloadableResourceManagerMixin"
+    "workaround.ReloadableResourceManagerMixin",
+    "workaround.TextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
