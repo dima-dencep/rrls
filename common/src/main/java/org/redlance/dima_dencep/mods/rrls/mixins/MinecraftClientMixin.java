@@ -40,6 +40,8 @@ public abstract class MinecraftClientMixin {
     protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
     @Shadow
     protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    @Shadow
+    private boolean gameLoadFinished;
 
     @Inject(
             method = "<init>",
@@ -50,8 +52,15 @@ public abstract class MinecraftClientMixin {
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
-        if (RrlsConfig.hideType().forceClose()) {
+        if (!RrlsConfig.hideType().forceClose()) {
+            return;
+        }
+
+        try {
             onResourceLoadFinished(gameLoadCookie);
+        } catch (Throwable th) {
+            Rrls.LOGGER.error("Failed to complete load early!", th);
+            this.gameLoadFinished = false;
         }
     }
 
