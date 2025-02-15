@@ -23,7 +23,7 @@ import org.redlance.dima_dencep.mods.rrls.screens.ConfigurationSectionScreenProx
 @Mod(value = Rrls.MOD_ID, dist = Dist.CLIENT)
 public class RrlsForge extends Rrls {
     public RrlsForge(ModContainer container) {
-        container.registerConfig(ModConfig.Type.CLIENT, RrlsConfig.CONFIG_SPEC_PAIR.getValue(), "rrls.toml");
+        container.registerConfig(ModConfig.Type.STARTUP, RrlsConfig.CONFIG_SPEC_PAIR.getValue(), "rrls.toml");
         container.registerExtensionPoint(IConfigScreenFactory.class, (modContainer, screen) ->
                 new ConfigurationScreen(modContainer, screen, ConfigurationSectionScreenProxy::new)
         );
