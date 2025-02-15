@@ -128,7 +128,7 @@ public class ReloadableResourceManagerMixin {
 
             listener.reload(
                     CompletableFuture::completedFuture, (ReloadableResourceManager) (Object) this, Util.backgroundExecutor(), gameExecutor
-            ).whenCompleteAsync(action, Util.backgroundExecutor());
+            ).whenCompleteAsync(action, RRLS$MINECRAFT);
 
         } catch (Throwable th) {
             this.rrls$listeners.add(listener);
