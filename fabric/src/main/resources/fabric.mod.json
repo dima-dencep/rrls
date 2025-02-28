@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "rrls",
-  "version": "${project.version}",
+  "version": "${version}",
   "name": "Remove Reloading Screen",
   "description": "Makes resource packs load in the background, allowing you to do other things while waiting!",
   "authors": [
@@ -39,9 +39,9 @@
     "rrls.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${project.loader_version}",
-    "minecraft": ">=${project.minecraft_version}",
-    "forgeconfigapiport": ">=${project.fcapip_version}"
+    "fabricloader": ">=${fabric_version}",
+    "minecraft": ">=${minecraft_version}",
+    "forgeconfigapiport": ">=${fcapip_version}"
   },
   "conflicts": {
     "dynamicfps": "*"

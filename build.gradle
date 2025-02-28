@@ -46,10 +46,18 @@ subprojects {
     }
 
     processResources {
-        inputs.property "version", project.version
+        inputs.property "version", version
+        inputs.property "minecraft_version", minecraft_version
+        inputs.property "fabric_version", loader_version
+        inputs.property "neo_version", forge_version
+        inputs.property "fcapip_version", fcapip_version
 
         filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
-            expand "project": project
+            expand "version": version,
+                    "minecraft_version": minecraft_version,
+                    "fabric_version": loader_version,
+                    "neo_version": forge_version,
+                    "fcapip_version": fcapip_version
         }
     }
 }
@@ -59,25 +67,25 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
+    base.archivesName = rootProject.archives_base_name
     version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-${project.name}"
     group = rootProject.maven_group
 
     repositories {
         maven {
-            name "NeoForged"
-            url "https://maven.neoforged.net/releases"
+            name = "NeoForged"
+            url = "https://maven.neoforged.net/releases"
             content {
                 excludeGroupByRegex "org.parchmentmc"
             }
         }
         maven {
-            name "ParchmentMC"
-            url "https://maven.parchmentmc.org"
+            name = "ParchmentMC"
+            url = "https://maven.parchmentmc.org"
         }
         maven {
-            name "Fuzs Mod Resources"
-            url "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
         }
     }
 

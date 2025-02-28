@@ -20,13 +20,13 @@ configurations {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-    modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.fcapip_version}") {
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modApi("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive = false }
 }
 
 shadowJar {
