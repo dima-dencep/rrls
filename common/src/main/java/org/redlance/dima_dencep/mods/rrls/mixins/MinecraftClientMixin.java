@@ -11,6 +11,7 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
@@ -62,6 +63,18 @@ public abstract class MinecraftClientMixin {
             Rrls.LOGGER.error("Failed to complete load early!", th);
             this.gameLoadFinished = false;
         }
+    }
+
+    @WrapWithCondition(
+            method = "onGameLoadFinished",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/lang/Runnable;run()V"
+            )
+    )
+    public boolean rrls$fixDH(Runnable instance) {
+        instance.run(); // Forbid DH from redirecting the method.
+        return false;
     }
 
     @Inject(
