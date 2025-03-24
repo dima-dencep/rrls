@@ -40,5 +40,6 @@
   "rrls.configuration.hide.reloading": "Лише перезавантаження",
   "rrls.configuration.doubleload.force": "Примусове завантаження",
   "rrls.configuration.doubleload.load": "Завантажити",
-  "rrls.configuration.hide_doubleload.none": "Нічого"
+  "rrls.configuration.hide_doubleload.none": "Нічого",
+  "modmenu.descriptionTranslation.rrls": "Змушує завантажувати пакети ресурсів у фоновому режимі, дозволяючи вам робити інші речі під час очікування"
 }
