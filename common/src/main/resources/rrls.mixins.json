@@ -11,6 +11,7 @@
     "compat.RendererKeyboardMouseMixin",
     "compat.OverlayMixin",
     "compat.ServerPackManagerMixin",
+    "compat.ItemRendererMixin",
     "workaround.GuiGraphicsMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.VertexBufferMixin",
