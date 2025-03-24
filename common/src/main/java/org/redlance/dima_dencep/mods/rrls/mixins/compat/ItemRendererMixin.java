@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 - 2024 dima_dencep.
+ * Copyright 2023 - 2025 dima_dencep.
  *
  * Licensed under the Open Software License, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,25 +10,15 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Cancellable;
-import net.minecraft.client.renderer.ItemModelShaper;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * fix for create
  */
 @Mixin(ItemRenderer.class)
 public class ItemRendererMixin {
-    @Shadow
+    /*@Shadow
     @Final
     private ItemModelShaper itemModelShaper;
 
@@ -46,5 +36,5 @@ public class ItemRendererMixin {
         } else {
             return original.call(instance);
         }
-    }
+    }*/
 }

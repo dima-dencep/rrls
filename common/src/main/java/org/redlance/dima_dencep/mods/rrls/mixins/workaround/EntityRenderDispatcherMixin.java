@@ -39,7 +39,7 @@ public class EntityRenderDispatcherMixin {
                     target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;getRenderer(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"
             )
     )
-    public <E extends Entity> EntityRenderer<? super E, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, E entityrenderer, Operation<EntityRenderer<? super E, ?>> original) {
+    public EntityRenderer<? super Entity, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, Entity entityrenderer, Operation<EntityRenderer<? super Entity, ?>> original) {
         try {
             return original.call(instance, entityrenderer);
         } catch (Throwable th) {
