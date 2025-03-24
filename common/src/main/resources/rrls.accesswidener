@@ -35,3 +35,4 @@ accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/M
 accessible field net/minecraft/client/resources/TextureAtlasHolder textureAtlas Lnet/minecraft/client/renderer/texture/TextureAtlas;
 accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
 accessible field net/minecraft/client/resources/SplashManager splashes Ljava/util/List;
+accessible method net/minecraft/client/Minecraft buildInitialScreens (Lnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/lang/Runnable;

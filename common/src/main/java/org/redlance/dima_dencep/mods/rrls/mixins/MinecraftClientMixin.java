@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.ConfigExpectPlatform;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -40,6 +41,8 @@ public abstract class MinecraftClientMixin {
     protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
     @Shadow
     protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    @Shadow
+    private boolean gameLoadFinished;
 
     @Inject(
             method = "<init>",
@@ -48,9 +51,28 @@ public abstract class MinecraftClientMixin {
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
-        if (ConfigExpectPlatform.hideType().forceClose()) {
-            onResourceLoadFinished(gameLoadCookie);
+        if (!ConfigExpectPlatform.hideType().forceClose()) {
+            return;
         }
+
+        try {
+            onResourceLoadFinished(gameLoadCookie);
+        } catch (Throwable th) {
+            Rrls.LOGGER.error("Failed to complete load early!", th);
+            this.gameLoadFinished = false;
+        }
+    }
+
+    @WrapWithCondition(
+            method = "onGameLoadFinished",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/lang/Runnable;run()V"
+            )
+    )
+    public boolean rrls$fixDH(Runnable instance) {
+        instance.run(); // Forbid DH from redirecting the method.
+        return false;
     }
 
     @Inject(
