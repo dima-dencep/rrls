@@ -11,6 +11,8 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.systems.CommandEncoder;
+import com.mojang.blaze3d.textures.GpuTexture;
 import net.minecraft.Util;
 import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.network.chat.Component;
@@ -188,30 +190,15 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clear(I)V",
+                    target = "Lcom/mojang/blaze3d/systems/CommandEncoder;clearColorTexture(Lcom/mojang/blaze3d/textures/GpuTexture;I)V",
                     remap = false
             )
     )
-    public void rrls$_clear(int i, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
+    public void rrls$_clearColor(CommandEncoder instance, GpuTexture gpuTexture, int i, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
         if (graphics instanceof DummyGuiGraphics) {
             return;
         }
-        original.call(i);
-    }
-
-    @WrapOperation(
-            method = "render",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clearColor(FFFF)V",
-                    remap = false
-            )
-    )
-    public void rrls$_clearColor(float red, float green, float blue, float alpha, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
-        if (graphics instanceof DummyGuiGraphics) {
-            return;
-        }
-        original.call(red, green, blue, alpha);
+        original.call(instance, gpuTexture, i);
     }
 
     @WrapOperation(

@@ -13,6 +13,7 @@
     "compat.ServerPackManagerMixin",
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
+    "workaround.GlCommandEncoderMixin",
     "workaround.GuiGraphicsMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin"
