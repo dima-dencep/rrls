@@ -10,8 +10,8 @@
 
 package org.redlance.dima_dencep.mods.rrls.fabric;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.client.ConfigScreenFactoryRegistry;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
@@ -22,7 +22,7 @@ import org.redlance.dima_dencep.mods.rrls.screens.ConfigurationSectionScreenProx
 public class RrlsFabric extends Rrls implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        NeoForgeConfigRegistry.INSTANCE.register(Rrls.MOD_ID, ModConfig.Type.CLIENT,
+        ConfigRegistry.INSTANCE.register(Rrls.MOD_ID, ModConfig.Type.CLIENT,
                 RrlsConfig.CONFIG_SPEC_PAIR.getRight(), "rrls.toml"
         );
         ConfigScreenFactoryRegistry.INSTANCE.register(Rrls.MOD_ID, (modContainer, screen) ->
