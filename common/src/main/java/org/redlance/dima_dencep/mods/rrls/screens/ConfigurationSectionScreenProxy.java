@@ -25,6 +25,7 @@ public class ConfigurationSectionScreenProxy extends ConfigurationScreen.Configu
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected @Nullable Element createSection(@NotNull String key, @NotNull UnmodifiableConfig subconfig, @NotNull UnmodifiableConfig subsection) {
         ConfigurationScreen.ConfigurationSectionScreen currentSection = this.sectionCache.get(key);
         if (currentSection instanceof ConfigurationSectionScreenWithOverlay) {

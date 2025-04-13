@@ -195,9 +195,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     public void rrls$_clearColor(CommandEncoder instance, GpuTexture gpuTexture, int i, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
-        if (graphics instanceof DummyGuiGraphics) {
-            return;
-        }
+        if (graphics instanceof DummyGuiGraphics) return;
         original.call(instance, gpuTexture, i);
     }
 
@@ -240,6 +238,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     public long rrls$interpolateAtEnd(LoadingOverlay instance, Operation<Long> original) {
+        if (rrls$getState() == OverlayHelper.State.DEFAULT) return original.call(instance);
         if (this.fadeOutStart == -1L && this.currentProgress >= 0.999F) {
             this.fadeOutStart = Util.getMillis();
         }
@@ -259,7 +258,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     )
     public void rrls$(LoadingOverlay instance, long value, Operation<Void> original) {
         this.rrls$isFinished = true;
-        if (!RrlsConfig.interpolateAtEnd()) {
+        if (rrls$getState() == OverlayHelper.State.DEFAULT || !RrlsConfig.interpolateAtEnd()) {
             original.call(instance, value);
         }
     }
