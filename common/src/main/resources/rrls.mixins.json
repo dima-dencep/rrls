@@ -13,6 +13,7 @@
     "compat.ServerPackManagerMixin",
     "compat.ItemRendererMixin",
     "workaround.GuiGraphicsMixin",
+    "workaround.NativeImageMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.VertexBufferMixin",
     "workaround.EntityRenderDispatcherMixin"
