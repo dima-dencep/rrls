@@ -11,6 +11,7 @@
     "compat.OverlayMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.ServerPackManagerMixin",
+    "workaround.textures.AbstractTextureMixin",
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
     "workaround.GlCommandEncoderMixin",

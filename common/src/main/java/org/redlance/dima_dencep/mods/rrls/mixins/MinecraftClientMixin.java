@@ -43,19 +43,20 @@ public abstract class MinecraftClientMixin {
     protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
     @Shadow
     private boolean gameLoadFinished;
+    @Shadow
+    @Nullable
+    public Overlay overlay;
 
     @Inject(
             method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/quickplay/QuickPlayLog;of(Ljava/lang/String;)Lnet/minecraft/client/quickplay/QuickPlayLog;",
+                    target = "Lcom/mojang/jtracy/TracyClient;isAvailable()Z",
                     shift = At.Shift.AFTER
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
-        if (!RrlsConfig.hideType().forceClose()) {
-            return;
-        }
+        if (!RrlsConfig.hideType().forceClose()) return;
 
         try {
             onResourceLoadFinished(gameLoadCookie);
@@ -154,7 +155,17 @@ public abstract class MinecraftClientMixin {
     public Overlay rrls$blockOverlay(Overlay original) {
         if (RrlsConfig.blockOverlay() && OverlayHelper.isRenderingState(original))
             return null;
-
         return original;
+    }
+
+    @WrapOperation(
+            method = "forceSetScreen",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/Minecraft;runTick(Z)V"
+            )
+    )
+    public void rrls$removeTick(Minecraft instance, boolean renderLevel, Operation<Void> original) {
+        if (!OverlayHelper.isRenderingState(overlay)) original.call(instance, renderLevel);
     }
 }
