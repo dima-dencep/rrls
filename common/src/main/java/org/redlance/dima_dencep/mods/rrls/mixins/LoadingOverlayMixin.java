@@ -123,12 +123,12 @@ public abstract class LoadingOverlayMixin extends Overlay {
                         rrls$textWidget.setColor(RainbowUtils.rainbowColor(easeAlpha));
 
                     // This will make sure the widget is rendered above other widgets in Pause screen
-                    graphics.pose().pushPose();
-                    graphics.pose().translate(0, 0, 255);
+                    graphics.pose().pushMatrix();
+                    // todo graphics.pose().translate(0, 0, 255);
 
                     rrls$textWidget.render(graphics, 0, 0, partialTick);
 
-                    graphics.pose().popPose();
+                    graphics.pose().popMatrix();
                 }
             }
             case NONE -> {}
@@ -157,7 +157,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/Screen;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
+                    target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltip(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
             )
     )
     public boolean rrls$screenrender(Screen instance, GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {

@@ -52,7 +52,8 @@ public abstract class MinecraftClientMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lcom/mojang/jtracy/TracyClient;isAvailable()Z",
-                    shift = At.Shift.AFTER
+                    shift = At.Shift.AFTER,
+                    remap = false
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {

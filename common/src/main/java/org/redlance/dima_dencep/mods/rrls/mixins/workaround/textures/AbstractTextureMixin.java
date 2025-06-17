@@ -14,6 +14,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
@@ -59,6 +60,20 @@ public class AbstractTextureMixin {
         if (this.texture == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
                 .getTexture(MissingTextureAtlasSprite.getLocation())
                 .getTexture()
+        );
+    }
+
+    @Inject(
+            method = "getTextureView",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    public void rrls$useMissingTextureView(CallbackInfoReturnable<GpuTextureView> cir) {
+        if (this.texture == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
+                .getTexture(MissingTextureAtlasSprite.getLocation())
+                .getTextureView()
         );
     }
 }

@@ -24,8 +24,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class GuiGraphicsMixin {
     @WrapOperation(
             method = {
-                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
-                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIIIIII)V"
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V"
             },
             at = @At(
                     value = "INVOKE",
@@ -42,8 +42,8 @@ public abstract class GuiGraphicsMixin {
 
     @WrapOperation(
             method = {
-                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
-                    "blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIIIIIII)V"
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V"
             },
             at = @At(
                     value = "INVOKE",
@@ -51,10 +51,7 @@ public abstract class GuiGraphicsMixin {
             )
     )
     public GuiSpriteScaling rrls$fixSpriteCrash(GuiSpriteManager instance, TextureAtlasSprite sprite, Operation<GuiSpriteScaling> original) {
-        if (sprite == null) {
-            return null;
-        }
-
+        if (sprite == null) return null;
         return original.call(instance, sprite);
     }
 }

@@ -38,8 +38,7 @@ public class GameRendererMixin {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;flush()V",
-                    ordinal = 1
+                    target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;render(Lnet/minecraft/client/gui/GuiGraphics;)V" // TODO fix
             )
     )
     public void rrls$miniRender(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
@@ -63,13 +62,13 @@ public class GameRendererMixin {
     @Unique
     private static void rrls$enableScissor(GuiGraphics graphics, Runnable runnable) {
         if (RrlsConfig.enableScissor()) {
-            graphics.pose().pushPose();
+            graphics.pose().pushMatrix();
             graphics.enableScissor(0, 0, 0, 0);
 
             runnable.run();
 
             graphics.disableScissor();
-            graphics.pose().popPose();
+            graphics.pose().popMatrix();
         } else {
             runnable.run();
         }
