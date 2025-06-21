@@ -17,3 +17,5 @@ classes/
 .vscode
 .settings
 *.launch
+.DS_Store
+/.architectury-transformer

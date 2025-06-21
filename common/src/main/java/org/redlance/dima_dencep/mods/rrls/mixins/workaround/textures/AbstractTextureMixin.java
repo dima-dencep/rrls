@@ -33,11 +33,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AbstractTextureMixin {
     @Shadow
     protected GpuTexture texture;
+    @Shadow
+    protected GpuTextureView textureView;
 
     @WrapOperation(
             method = {
                     "setClamp",
-                    "setFilter(ZZ)V"
+                    "setFilter",
+                    "setUseMipmaps"
             },
             at = @At(
                     value = "NEW",
@@ -71,7 +74,7 @@ public class AbstractTextureMixin {
             cancellable = true
     )
     public void rrls$useMissingTextureView(CallbackInfoReturnable<GpuTextureView> cir) {
-        if (this.texture == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
+        if (this.textureView == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
                 .getTexture(MissingTextureAtlasSprite.getLocation())
                 .getTextureView()
         );
