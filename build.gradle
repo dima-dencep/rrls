@@ -1,5 +1,5 @@
 plugins {
-    id "com.gradleup.shadow" version "8.3.6" apply false
+    id "com.gradleup.shadow" version "9.0.1" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.10-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.5" apply false
@@ -23,7 +23,7 @@ subprojects {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-1.21.6-pre1:${rootProject.parchment_version}@zip")
+            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
         }
     }
 

@@ -36,7 +36,7 @@ public class RendererKeyboardMouseMixin {
                     target = "Lnet/minecraft/client/Minecraft;getOverlay()Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
-    public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {
+    public Overlay rrls$checkRenderingState(Minecraft instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
         if (OverlayHelper.isRenderingState(overlay))
