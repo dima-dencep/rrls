@@ -142,16 +142,17 @@ public abstract class LoadingOverlayMixin extends Overlay {
         this.fadeInStart = -1L;
     }
 
-    @Inject(
+    /*@Inject(
             method = "render",
             at = @At(
                     value = "HEAD"
             )
     )
     public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (rrls$getState() != OverlayHelper.State.DEFAULT) // Update attach (Optifine ❤️)
+        if (rrls$getState() != OverlayHelper.State.DEFAULT) { // Update attach (Optifine ❤️)
             rrls$setState(OverlayHelper.lookupState(minecraft.screen, rrls$getState() != OverlayHelper.State.WAIT));
-    }
+        }
+    }*/
 
     @WrapWithCondition(
             method = "render",
