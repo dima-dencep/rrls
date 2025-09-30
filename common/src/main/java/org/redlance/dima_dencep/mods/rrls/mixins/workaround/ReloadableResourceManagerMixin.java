@@ -10,14 +10,14 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiSpriteManager;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.client.resources.language.LanguageManager;
+import net.minecraft.client.resources.model.AtlasManager;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.CloseableResourceManager;
@@ -37,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.BiConsumer;
@@ -50,7 +51,7 @@ public class ReloadableResourceManagerMixin {
     private static final Minecraft RRLS$MINECRAFT = Minecraft.getInstance();
 
     @Unique
-    private final List<PreparableReloadListener> rrls$listeners = Lists.newArrayList();
+    private final Set<PreparableReloadListener> rrls$listeners = Sets.newConcurrentHashSet();
 
     @Inject(
             method = "registerReloadListener",
@@ -85,10 +86,10 @@ public class ReloadableResourceManagerMixin {
             );
         }
 
-        if (listener instanceof GuiSpriteManager spriteManager &&
-                spriteManager.textureAtlas.texturesByName.isEmpty()
+        if (listener instanceof AtlasManager atlasManager &&
+                atlasManager.materialLookup.isEmpty()
         ) {
-            rrls$reloadListener(spriteManager, RRLS$MINECRAFT, (unused, throwable) -> {});
+            rrls$reloadListener(atlasManager, RRLS$MINECRAFT, (unused, throwable) -> {});
         }
 
         if (listener instanceof ShaderManager shaderManager &&
@@ -126,10 +127,11 @@ public class ReloadableResourceManagerMixin {
 
             Rrls.LOGGER.info("Quick reload listener '{}'", listener.getName());
 
-            listener.reload(
-                    CompletableFuture::completedFuture, (ReloadableResourceManager) (Object) this, Util.backgroundExecutor(), gameExecutor
-            ).whenCompleteAsync(action, RRLS$MINECRAFT);
+            PreparableReloadListener.SharedState sharedState = new PreparableReloadListener.SharedState((ReloadableResourceManager) (Object) this);
+            listener.prepareSharedState(sharedState);
 
+            listener.reload(sharedState, Util.backgroundExecutor(), CompletableFuture::completedFuture, gameExecutor)
+                    .whenCompleteAsync(action, RRLS$MINECRAFT);
         } catch (Throwable th) {
             this.rrls$listeners.add(listener);
             Rrls.LOGGER.warn("Failed to reload {}!", listener.getName(), th);

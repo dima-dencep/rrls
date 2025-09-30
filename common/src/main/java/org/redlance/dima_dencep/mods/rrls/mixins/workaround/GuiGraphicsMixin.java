@@ -12,13 +12,18 @@ package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.GuiSpriteManager;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GuiGraphics.class)
 public abstract class GuiGraphicsMixin {
@@ -29,10 +34,10 @@ public abstract class GuiGraphicsMixin {
             },
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
+                    target = "Lnet/minecraft/client/renderer/texture/TextureAtlas;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
             )
     )
-    public TextureAtlasSprite rrls$fixSpriteCrash(GuiSpriteManager instance, ResourceLocation location, Operation<TextureAtlasSprite> original) {
+    public TextureAtlasSprite rrls$fixSpriteCrash(TextureAtlas instance, ResourceLocation location, Operation<TextureAtlasSprite> original) {
         try {
             return original.call(instance, location);
         } catch (Throwable th) {
@@ -40,18 +45,28 @@ public abstract class GuiGraphicsMixin {
         }
     }
 
-    @WrapOperation(
+    @Inject(
             method = {
-                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
-                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V"
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V"
             },
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiSpriteManager;getSpriteScaling(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)Lnet/minecraft/client/resources/metadata/gui/GuiSpriteScaling;"
-            )
+                    target = "Ljava/util/Objects;requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;"
+            ),
+            cancellable = true
     )
-    public GuiSpriteScaling rrls$fixSpriteCrash(GuiSpriteManager instance, TextureAtlasSprite sprite, Operation<GuiSpriteScaling> original) {
-        if (sprite == null) return null;
-        return original.call(instance, sprite);
+    public void rrls$fixSpriteCrash(RenderPipeline pipeline, ResourceLocation sprite, int x, int y, int width, int height, int color, CallbackInfo ci, @Local GuiSpriteScaling scaling) {
+        if (scaling == null) ci.cancel();
+    }
+
+    @Inject(
+            method = "getSpriteScaling",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    private static void rrls$fixSpriteScalingCrash(TextureAtlasSprite sprite, CallbackInfoReturnable<GuiSpriteScaling> cir) {
+        if (sprite == null) cir.setReturnValue(null);
     }
 }

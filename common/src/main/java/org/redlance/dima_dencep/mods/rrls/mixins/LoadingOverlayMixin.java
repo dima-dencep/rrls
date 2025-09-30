@@ -158,7 +158,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltip(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
+                    target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltipAndSubtitles(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
             )
     )
     public boolean rrls$screenrender(Screen instance, GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
@@ -177,7 +177,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @WrapWithCondition(
-            method = "render",
+            method = "tick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/screens/Screen;init(Lnet/minecraft/client/Minecraft;II)V"
@@ -231,11 +231,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @WrapOperation(
-            method = "render",
+            method = "tick",
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;fadeOutStart:J",
-                    ordinal = 2
+                    ordinal = 0
             )
     )
     public long rrls$interpolateAtEnd(LoadingOverlay instance, Operation<Long> original) {
@@ -250,7 +250,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @WrapOperation(
-            method = "render",
+            method = "tick",
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;fadeOutStart:J",

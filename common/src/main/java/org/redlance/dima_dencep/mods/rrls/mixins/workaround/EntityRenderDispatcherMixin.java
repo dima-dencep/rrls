@@ -18,7 +18,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.world.entity.Entity;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,34 +34,15 @@ public class EntityRenderDispatcherMixin {
     private static final Minecraft RRLS$MINECRAFT = Minecraft.getInstance();
 
     @WrapOperation(
-            method = "render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;getRenderer(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"
-            )
-    )
-    public EntityRenderer<?, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, Entity entityrenderer, Operation<EntityRenderer<?, ?>> original) {
-        try {
-            return original.call(instance, entityrenderer);
-        } catch (Throwable th) {
-            if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
-                return null;
-            }
-
-            throw th;
-        }
-    }
-
-    @WrapOperation(
-            method = "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+            method = "submit",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;getRenderer(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"
             )
     )
-    public EntityRenderer<?, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, EntityRenderState entityrenderer, Operation<EntityRenderer<?, ?>> original) {
+    public EntityRenderer<?, ?> rrls$workaroundEntityCrash(EntityRenderDispatcher instance, EntityRenderState renderState, Operation<EntityRenderer<?, ?>> original) {
         try {
-            return original.call(instance, entityrenderer);
+            return original.call(instance, renderState);
         } catch (Throwable th) {
             if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
                 return null;
@@ -74,8 +54,7 @@ public class EntityRenderDispatcherMixin {
 
     @WrapOperation(
             method = {
-                    "render(Lnet/minecraft/world/entity/Entity;DDDFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V",
-                    "render(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/renderer/entity/EntityRenderer;)V"
+                    "submit"
             },
             at = @At(
                     value = "INVOKE",

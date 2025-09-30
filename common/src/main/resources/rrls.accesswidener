@@ -23,13 +23,15 @@ accessible method net/minecraft/client/gui/GuiGraphics renderItemCount (Lnet/min
 extendable method net/minecraft/client/gui/GuiGraphics renderItemCount (Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V
 accessible method net/minecraft/client/gui/GuiGraphics renderItemCooldown (Lnet/minecraft/world/item/ItemStack;II)V
 extendable method net/minecraft/client/gui/GuiGraphics renderItemCooldown (Lnet/minecraft/world/item/ItemStack;II)V
+accessible method net/minecraft/client/gui/GuiGraphics submitTiledBlit (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lcom/mojang/blaze3d/textures/GpuTextureView;IIIIIIFFFFI)V
+extendable method net/minecraft/client/gui/GuiGraphics submitTiledBlit (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lcom/mojang/blaze3d/textures/GpuTextureView;IIIIIIFFFFI)V
 accessible field net/minecraft/client/Minecraft overlay Lnet/minecraft/client/gui/screens/Overlay;
 accessible class net/minecraft/client/resources/server/ServerPackManager$ServerPackData
 accessible method net/minecraft/client/gui/screens/LoadingOverlay drawProgressBar (Lnet/minecraft/client/gui/GuiGraphics;IIIIF)V
 accessible field net/minecraft/client/gui/screens/LoadingOverlay currentProgress F
 accessible class net/minecraft/client/Minecraft$GameLoadCookie
 accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/Map;
-accessible field net/minecraft/client/resources/TextureAtlasHolder textureAtlas Lnet/minecraft/client/renderer/texture/TextureAtlas;
+accessible field net/minecraft/client/resources/model/AtlasManager materialLookup Ljava/util/Map;
 accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
 accessible field net/minecraft/client/resources/SplashManager splashes Ljava/util/List;
 accessible field net/minecraft/client/renderer/ShaderManager compilationCache Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;

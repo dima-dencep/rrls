@@ -128,11 +128,7 @@ public abstract class MinecraftClientMixin {
     }
 
     @WrapOperation(
-            method = {
-                    "tick",
-                    "handleKeybinds",
-                    "doWorldLoad"
-            },
+            method = "handleKeybinds",
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;"
@@ -140,11 +136,32 @@ public abstract class MinecraftClientMixin {
     )
     public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
-
-        if (OverlayHelper.isRenderingState(overlay))
-            return null;
-
+        if (OverlayHelper.isRenderingState(overlay)) return null;
         return overlay;
+    }
+
+    @WrapOperation(
+            method = "tick",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;",
+                    ordinal = 2
+            )
+    )
+    public Overlay rrls$miniRenderTick(Minecraft instance, Operation<Overlay> original) {
+        return rrls$miniRender(instance, original);
+    }
+
+    @WrapOperation(
+            method = "doWorldLoad",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;",
+                    ordinal = 0
+            )
+    )
+    public Overlay rrls$miniRenderWorldLoad(Minecraft instance, Operation<Overlay> original) {
+        return rrls$miniRender(instance, original);
     }
 
     @ModifyReturnValue(
@@ -154,13 +171,12 @@ public abstract class MinecraftClientMixin {
             )
     )
     public Overlay rrls$blockOverlay(Overlay original) {
-        if (RrlsConfig.blockOverlay() && OverlayHelper.isRenderingState(original))
-            return null;
+        if (RrlsConfig.blockOverlay() && OverlayHelper.isRenderingState(original)) return null;
         return original;
     }
 
     @WrapOperation(
-            method = "forceSetScreen",
+            method = "setScreenAndShow",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/Minecraft;runTick(Z)V"

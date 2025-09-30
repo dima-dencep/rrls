@@ -38,7 +38,7 @@ public class GameRendererMixin {
             method = "render",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;render(Lnet/minecraft/client/gui/GuiGraphics;)V" // TODO fix
+                    target = "Lnet/minecraft/client/gui/Gui;renderDeferredSubtitles()V"
             )
     )
     public void rrls$miniRender(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {

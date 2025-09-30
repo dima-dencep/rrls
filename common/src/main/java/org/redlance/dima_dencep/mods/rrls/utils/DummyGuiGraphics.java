@@ -11,17 +11,21 @@
 package org.redlance.dima_dencep.mods.rrls.utils;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.platform.cursor.CursorType;
 import com.mojang.blaze3d.textures.GpuTextureView;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
+import net.minecraft.client.model.BannerFlagModel;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -43,15 +47,19 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.util.List;
-import java.util.Optional;
-
-@SuppressWarnings("unused")
 public class DummyGuiGraphics extends GuiGraphics {
     public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
     private DummyGuiGraphics() {
         super(Minecraft.getInstance(), null);
+    }
+
+    @Override
+    public void requestCursor(CursorType cursorType) {
+    }
+
+    @Override
+    public void applyCursor(Window window) {
     }
 
     @Override
@@ -149,10 +157,6 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     public void drawStringWithBackdrop(Font font, Component component, int i, int j, int k, int l) {
-    }
-
-    @Override
-    public void renderOutline(int x, int y, int width, int height, int color) {
     }
 
     @Override
@@ -316,10 +320,6 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void renderDeferredTooltip() {
-    }
-
-    @Override
     public void renderItemBar(ItemStack stack, int x, int y) {
     }
 
@@ -352,14 +352,30 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void submitBannerPatternRenderState(ModelPart modelPart, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, int i, int j, int k, int l) {
-    }
-
-    @Override
-    public void submitSignRenderState(Model model, float f, WoodType woodType, int i, int j, int k, int l) {
-    }
-
-    @Override
     public void submitProfilerChartRenderState(List<ResultField> list, int i, int j, int k, int l) {
+    }
+
+    @Override
+    public void textHighlight(int minX, int minY, int maxX, int maxY) {
+    }
+
+    @Override
+    public void submitOutline(int i, int j, int k, int l, int m) {
+    }
+
+    @Override
+    public void submitTiledBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, int i, int j, int k, int l, int m, int n, float f, float g, float h, float o, int p) {
+    }
+
+    @Override
+    public void renderDeferredElements() {
+    }
+
+    @Override
+    public void submitBannerPatternRenderState(BannerFlagModel bannerFlagModel, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, int i, int j, int k, int l) {
+    }
+
+    @Override
+    public void submitSignRenderState(Model.Simple simple, float f, WoodType woodType, int i, int j, int k, int l) {
     }
 }
