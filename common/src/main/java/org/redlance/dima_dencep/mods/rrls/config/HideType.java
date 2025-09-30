@@ -34,6 +34,7 @@ public enum HideType implements TranslatableEnum {
         };
     }
 
+    @Deprecated(forRemoval = true)
     public boolean forceClose() {
         return this == LOADING || this == ALL;
     }

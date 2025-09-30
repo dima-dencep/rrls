@@ -268,11 +268,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "render",
             constant = {
                     @Constant(
-                            floatValue = 1000.0F,
+                            floatValue = LoadingOverlay.FADE_OUT_TIME,
                             ordinal = 0
                     ),
                     @Constant(
-                            floatValue = 500.0F,
+                            floatValue = LoadingOverlay.FADE_IN_TIME,
                             ordinal = 0
                     )
             },
@@ -280,7 +280,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     )
     public float rrls$changeAnimationSpeed(float instance) {
         if (!rrls$getState().isRendering()) {
-            return instance == 1000.0F ? RrlsConfig.animationSpeed() : RrlsConfig.animationSpeed() / 2;
+            return instance == LoadingOverlay.FADE_OUT_TIME ? RrlsConfig.animationSpeed() : RrlsConfig.animationSpeed() / 2;
         }
 
         return instance;
