@@ -75,13 +75,6 @@ allprojects {
         maven {
             name = "NeoForged"
             url = "https://maven.neoforged.net/releases"
-            content {
-                excludeGroupByRegex "org.parchmentmc"
-            }
-        }
-        maven {
-            name = "ParchmentMC"
-            url = "https://maven.parchmentmc.org"
         }
         maven {
             name = "Fuzs Mod Resources"

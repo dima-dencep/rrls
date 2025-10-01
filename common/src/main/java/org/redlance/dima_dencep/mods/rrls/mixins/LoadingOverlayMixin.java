@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
-import org.objectweb.asm.Opcodes;
+import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
@@ -63,6 +63,8 @@ public abstract class LoadingOverlayMixin extends Overlay {
     @Unique
     private FocusableTextWidget rrls$textWidget;
     @Unique
+    private long rrls$atEndStart = -1L;
+    @Unique
     private boolean rrls$isFinished;
 
     @Inject(
@@ -83,18 +85,18 @@ public abstract class LoadingOverlayMixin extends Overlay {
         int i = graphics.guiWidth();
         int j = graphics.guiHeight();
 
+        long fadeTime = RrlsConfig.interpolateAtEnd() ? this.rrls$atEndStart : this.fadeOutStart;
+
         float ease = 1.0F;
         if (RrlsConfig.interpolateProgress()) {
             ease -= RrlsConfig.easing().invoke(this.currentProgress, RrlsConfig.easingArg());
 
-        } else if (this.fadeOutStart > -1L) {
-            float f = (float)(Util.getMillis() - this.fadeOutStart) / RrlsConfig.animationSpeed();
+        } else if (fadeTime > -1L) {
+            float f = (float)(Util.getMillis() - fadeTime) / RrlsConfig.animationSpeed();
             ease -= RrlsConfig.easing().invoke(Mth.clamp(f, 0.0F, 1.0F), RrlsConfig.easingArg());
         }
 
-        if (this.rrls$isFinished && ease <= 0.0F) {
-            this.minecraft.setOverlay(null);
-        }
+        if (ease <= 0.0F) this.rrls$isFinished = true;
 
         int easeAlpha = Mth.ceil(Mth.lerp(ease, 4.0F /* Fuck Font#adjustColor */, 255.0F));
         int easeColor = ARGB.color(easeAlpha, 255, 255, 255);
@@ -137,7 +139,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
 
     @Override
     public void rrls$resetProgress() {
+        this.rrls$isFinished = false;
         this.currentProgress = 0;
+        this.rrls$atEndStart = -1L;
         this.fadeOutStart = -1L;
         this.fadeInStart = -1L;
     }
@@ -173,7 +177,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     public boolean rrls$reinitScreen(Minecraft instance, Overlay loadingGui) {
-        return rrls$getState() == OverlayHelper.State.DEFAULT || this.currentProgress >= 0.999F;
+        boolean isRemoved = rrls$getState() == OverlayHelper.State.DEFAULT || this.rrls$isFinished;
+        if (isRemoved) Rrls.LOGGER.info("Overlay is removed!");
+
+        return isRemoved;
     }
 
     @WrapWithCondition(
@@ -230,7 +237,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
         return original.call(alpha, red, green, blue);
     }
 
-    @WrapOperation(
+    @Inject(
             method = "tick",
             at = @At(
                     value = "FIELD",
@@ -238,29 +245,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     ordinal = 0
             )
     )
-    public long rrls$interpolateAtEnd(LoadingOverlay instance, Operation<Long> original) {
-        if (rrls$getState() == OverlayHelper.State.DEFAULT) return original.call(instance);
-        if (this.fadeOutStart == -1L && this.currentProgress >= 0.999F) {
-            this.fadeOutStart = Util.getMillis();
-        }
-        if (RrlsConfig.interpolateAtEnd()) {
-            return this.rrls$isFinished ? 1L : -1L;
-        }
-        return original.call(instance);
-    }
-
-    @WrapOperation(
-            method = "tick",
-            at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;fadeOutStart:J",
-                    opcode = Opcodes.PUTFIELD
-            )
-    )
-    public void rrls$(LoadingOverlay instance, long value, Operation<Void> original) {
-        this.rrls$isFinished = true;
-        if (rrls$getState() == OverlayHelper.State.DEFAULT || !RrlsConfig.interpolateAtEnd()) {
-            original.call(instance, value);
+    public void rrls$interpolateAtEnd(CallbackInfo ci) {
+        if (this.rrls$atEndStart == -1L && this.currentProgress >= 0.99999F) {
+            this.rrls$atEndStart = Util.getMillis();
         }
     }
 
