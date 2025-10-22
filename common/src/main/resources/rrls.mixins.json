@@ -8,16 +8,17 @@
     "LoadingOverlayMixin",
     "MinecraftClientMixin",
     "TitleScreenMixin",
+    "compat.CubeMapMixin",
     "compat.OverlayMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.ServerPackManagerMixin",
-    "workaround.textures.AbstractTextureMixin",
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
     "workaround.GlCommandEncoderMixin",
     "workaround.GuiGraphicsMixin",
     "workaround.ReloadableResourceManagerMixin",
-    "workaround.TextureManagerMixin"
+    "workaround.TextureManagerMixin",
+    "workaround.textures.AbstractTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

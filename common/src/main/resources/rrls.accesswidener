@@ -40,3 +40,4 @@ accessible class net/minecraft/client/renderer/ShaderManager$CompilationCache
 accessible method net/minecraft/client/renderer/texture/TextureManager scheduleLoad (Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/texture/ReloadableTexture;Ljava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/TextureManager$PendingReload;
 accessible class net/minecraft/client/renderer/texture/TextureManager$PendingReload
 accessible method net/minecraft/client/Minecraft buildInitialScreens (Lnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/lang/Runnable;
+accessible field net/minecraft/client/renderer/texture/TextureManager resourceManager Lnet/minecraft/server/packs/resources/ResourceManager;

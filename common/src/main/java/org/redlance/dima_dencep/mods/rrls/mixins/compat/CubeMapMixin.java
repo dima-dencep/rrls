@@ -8,30 +8,24 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
+package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.ReloadableTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.redlance.dima_dencep.mods.rrls.utils.TextureUtils;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(TextureManager.class)
-public abstract class TextureManagerMixin {
-    @Shadow
-    @Final
-    private ResourceManager resourceManager;
-
+@Mixin(CubeMap.class)
+public class CubeMapMixin {
     @WrapOperation(
-            method = "registerForNextReload",
+            method = "registerTextures",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/renderer/texture/TextureManager;register(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/texture/AbstractTexture;)V"
@@ -41,7 +35,7 @@ public abstract class TextureManagerMixin {
         original.call(instance, path, texture);
 
         if (OverlayHelper.isCurrentRenderingState() && texture instanceof ReloadableTexture reloadableTexture) {
-            TextureUtils.reloadTexture(this.resourceManager, path, reloadableTexture);
+            TextureUtils.reloadTexture(instance.resourceManager, path, reloadableTexture);
         }
     }
 }
