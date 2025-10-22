@@ -76,6 +76,7 @@ jobs:
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
+            1.21.10
 
           java: |
             21
@@ -105,6 +106,7 @@ jobs:
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
+            1.21.10
 
           dependencies: |
             forge-config-api-port{modrinth:ohNO6lps}{curseforge:547434}
