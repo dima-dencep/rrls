@@ -57,7 +57,7 @@ public abstract class MinecraftClientMixin {
             )
     )
     public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
-        if (!RrlsConfig.hideType().forceClose()) return;
+        if (!OverlayHelper.isCurrentRenderingState()) return;
 
         try {
             onResourceLoadFinished(gameLoadCookie);

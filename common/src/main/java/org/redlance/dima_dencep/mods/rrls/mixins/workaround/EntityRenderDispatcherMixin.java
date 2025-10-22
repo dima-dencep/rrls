@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,7 +44,7 @@ public class EntityRenderDispatcherMixin {
         try {
             return original.call(instance, renderState);
         } catch (Throwable th) {
-            if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
+            if (OverlayHelper.isCurrentRenderingState() && RRLS$MINECRAFT.level == null) {
                 return null;
             }
 
@@ -62,7 +62,7 @@ public class EntityRenderDispatcherMixin {
             )
     )
     public CrashReport rrls$workaroundEntityCrash(Throwable crashreport, String reportedexception, Operation<CrashReport> original, @Cancellable CallbackInfo ci) {
-        if (RrlsConfig.hideType().forceClose() && RRLS$MINECRAFT.level == null) {
+        if (OverlayHelper.isCurrentRenderingState() && RRLS$MINECRAFT.level == null) {
             Rrls.LOGGER.warn("Preventing: {}", reportedexception, crashreport);
             ci.cancel();
             return null;

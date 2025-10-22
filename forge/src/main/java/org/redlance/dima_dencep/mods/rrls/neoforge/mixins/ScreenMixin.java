@@ -17,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.fml.loading.FMLLoader;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Screen.class)
 public class ScreenMixin {
     @Unique
-    private static final boolean HAS_TWFOREST = LoadingModList.get().getModFileById("twilightforest") != null;
+    private static final boolean HAS_TWFOREST = FMLLoader.getCurrent().getLoadingModList().getModFileById("twilightforest") != null;
 
     @WrapOperation(
             method = "init(Lnet/minecraft/client/Minecraft;II)V",

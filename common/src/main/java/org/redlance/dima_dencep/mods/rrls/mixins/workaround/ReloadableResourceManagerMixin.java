@@ -28,6 +28,7 @@ import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.util.Unit;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -60,7 +61,7 @@ public class ReloadableResourceManagerMixin {
             )
     )
     public void rrls$initReloader(PreparableReloadListener listener, CallbackInfo ci) {
-        if (!RrlsConfig.hideType().forceClose()) {
+        if (!OverlayHelper.isCurrentRenderingState()) {
             return;
         }
 

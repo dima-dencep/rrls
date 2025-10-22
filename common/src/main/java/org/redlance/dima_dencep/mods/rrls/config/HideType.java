@@ -14,15 +14,17 @@ import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.TranslatableEnum;
 
 public enum HideType implements TranslatableEnum {
-    ALL(Component.translatable("rrls.configuration.hide.all")),
-    LOADING(Component.translatable("rrls.configuration.hide.loading")),
-    RELOADING(Component.translatable("rrls.configuration.hide.reloading")),
-    NONE(Component.translatable("rrls.configuration.hide_doubleload.none"));
+    ALL(Component.translatable("rrls.configuration.hide.all"), true),
+    LOADING(Component.translatable("rrls.configuration.hide.loading"), true),
+    RELOADING(Component.translatable("rrls.configuration.hide.reloading"), false),
+    NONE(Component.translatable("rrls.configuration.hide_doubleload.none"), false);
 
     private final Component translatedName;
+    public final boolean affectInitial;
 
-    HideType(Component translatedName) {
+    HideType(Component translatedName, boolean affectInitial) {
         this.translatedName = translatedName;
+        this.affectInitial = affectInitial;
     }
 
     public boolean canHide(boolean reloading) {
@@ -32,11 +34,6 @@ public enum HideType implements TranslatableEnum {
             case RELOADING -> reloading;
             case NONE -> false;
         };
-    }
-
-    @Deprecated(forRemoval = true)
-    public boolean forceClose() {
-        return this == LOADING || this == ALL;
     }
 
     @Override

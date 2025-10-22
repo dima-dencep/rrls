@@ -15,7 +15,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.mojang.blaze3d.opengl.GlCommandEncoder;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -31,7 +31,7 @@ public class GlCommandEncoderMixin {
     )
     public IllegalStateException rrls$safeSetup(String s, Operation<IllegalStateException> original, @Cancellable CallbackInfoReturnable<Boolean> cir) {
         IllegalStateException exc = original.call(s);
-        if (RrlsConfig.hideType().forceClose()) {
+        if (OverlayHelper.isCurrentRenderingState()) {
             Rrls.LOGGER.warn("Failed to setup!", exc);
             cir.setReturnValue(false);
 

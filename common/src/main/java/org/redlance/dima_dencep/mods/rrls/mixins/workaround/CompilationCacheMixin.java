@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.resources.ResourceLocation;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
-import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -39,7 +39,7 @@ public class CompilationCacheMixin {
     private PostChain rrls$supressMissingCache(ShaderManager.CompilationCache instance, ResourceLocation name, Set<ResourceLocation> externalTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
         PostChain postChain = original.call(instance, name, externalTargets);
 
-        if (postChain == null && RrlsConfig.hideType().forceClose()) {
+        if (postChain == null && OverlayHelper.isCurrentRenderingState()) {
             cir.setReturnValue(null);
         }
 
@@ -57,7 +57,7 @@ public class CompilationCacheMixin {
     )
     private ShaderManager.CompilationException rrls$supressMissingCache(String s, Operation<ShaderManager.CompilationException> original, @Cancellable CallbackInfoReturnable<Boolean> cir) {
         ShaderManager.CompilationException exc = original.call(s);
-        if (RrlsConfig.hideType().forceClose()) {
+        if (OverlayHelper.isCurrentRenderingState()) {
             Rrls.LOGGER.warn("Failed to compile!", exc);
             cir.setReturnValue(null);
             return null;
