@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
@@ -39,5 +40,19 @@ public class GlCommandEncoderMixin {
         } else {
             return exc;
         }
+    }
+
+    @ModifyExpressionValue(
+            method = {
+                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V",
+                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V"
+            },
+            at = @At(
+                    value = "FIELD",
+                    target = "Lcom/mojang/blaze3d/opengl/GlCommandEncoder;inRenderPass:Z"
+            )
+    )
+    private boolean rrls$exitRenderPass(boolean original) {
+        return !OverlayHelper.isCurrentRenderingState() && original;
     }
 }

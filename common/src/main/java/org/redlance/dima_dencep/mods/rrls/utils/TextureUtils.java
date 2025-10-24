@@ -19,11 +19,22 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 
 public class TextureUtils {
+    public static void reloadTextureSync(TextureManager manager, ReloadableTexture texture) {
+        Rrls.LOGGER.warn("Force-reloading texture: {}!", texture.resourceId());
+
+        try {
+            texture.apply(manager.loadContentsSafe(texture.resourceId(), texture));
+        } catch (Throwable th) {
+            Rrls.LOGGER.error("Failed to force-reload texture!", th);
+        }
+    }
+
     public static void reloadTexture(ResourceManager manager, ResourceLocation rl, ReloadableTexture texture) {
         TextureManager.PendingReload reload = TextureManager.scheduleLoad(manager, rl, texture, Util.backgroundExecutor());
         Rrls.LOGGER.info("Reloading texture '{}'!", rl);
 
-        reload.newContents().thenAcceptAsync(textureContents -> reload.texture()
-                .apply(textureContents),Minecraft.getInstance());
+        reload.newContents().thenAcceptAsync(textureContents ->
+                reload.texture().apply(textureContents), Minecraft.getInstance()
+        );
     }
 }

@@ -18,6 +18,8 @@ import com.mojang.blaze3d.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.ReloadableTexture;
+import org.redlance.dima_dencep.mods.rrls.utils.TextureUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,10 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * I could probably upload the texture right here,
- * but I'm too lazy to figure out what mojang did with the renderer
- */
+@SuppressWarnings("ConstantConditions")
 @Mixin(AbstractTexture.class)
 public class AbstractTextureMixin {
     @Shadow
@@ -60,6 +59,10 @@ public class AbstractTextureMixin {
             cancellable = true
     )
     public void rrls$useMissingTexture(CallbackInfoReturnable<GpuTexture> cir) {
+        if (this.texture == null && (Object) this instanceof ReloadableTexture reloadable) {
+            TextureUtils.reloadTextureSync(Minecraft.getInstance().getTextureManager(), reloadable);
+        }
+
         if (this.texture == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
                 .getTexture(MissingTextureAtlasSprite.getLocation())
                 .getTexture()
@@ -74,6 +77,10 @@ public class AbstractTextureMixin {
             cancellable = true
     )
     public void rrls$useMissingTextureView(CallbackInfoReturnable<GpuTextureView> cir) {
+        if (this.textureView == null && (Object) this instanceof ReloadableTexture reloadable) {
+            TextureUtils.reloadTextureSync(Minecraft.getInstance().getTextureManager(), reloadable);
+        }
+
         if (this.textureView == null) cir.setReturnValue(Minecraft.getInstance().getTextureManager()
                 .getTexture(MissingTextureAtlasSprite.getLocation())
                 .getTextureView()

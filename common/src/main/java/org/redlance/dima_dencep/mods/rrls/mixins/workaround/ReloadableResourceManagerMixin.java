@@ -115,6 +115,7 @@ public class ReloadableResourceManagerMixin {
     }
 
     @Unique
+    @SuppressWarnings("ConstantConditions")
     private void rrls$reloadListener(PreparableReloadListener listener, Executor gameExecutor, BiConsumer<Void, Throwable> action) {
         try {
             if (this.resources.getNamespaces().isEmpty() || this.resources.getNamespaces().size() < 2 /* EBE workaround */) {
