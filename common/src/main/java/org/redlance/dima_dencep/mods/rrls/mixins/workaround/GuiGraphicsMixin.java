@@ -18,7 +18,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,15 +29,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class GuiGraphicsMixin {
     @WrapOperation(
             method = {
-                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
-                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIIIIIII)V"
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIIIIII)V"
             },
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/texture/TextureAtlas;getSprite(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
+                    target = "Lnet/minecraft/client/renderer/texture/TextureAtlas;getSprite(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;"
             )
     )
-    public TextureAtlasSprite rrls$fixSpriteCrash(TextureAtlas instance, ResourceLocation location, Operation<TextureAtlasSprite> original) {
+    public TextureAtlasSprite rrls$fixSpriteCrash(TextureAtlas instance, Identifier location, Operation<TextureAtlasSprite> original) {
         try {
             return original.call(instance, location);
         } catch (Throwable th) {
@@ -47,7 +47,7 @@ public abstract class GuiGraphicsMixin {
 
     @Inject(
             method = {
-                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V"
+                    "blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V"
             },
             at = @At(
                     value = "INVOKE",
@@ -55,7 +55,7 @@ public abstract class GuiGraphicsMixin {
             ),
             cancellable = true
     )
-    public void rrls$fixSpriteCrash(RenderPipeline pipeline, ResourceLocation sprite, int x, int y, int width, int height, int color, CallbackInfo ci, @Local GuiSpriteScaling scaling) {
+    public void rrls$fixSpriteCrash(RenderPipeline pipeline, Identifier sprite, int x, int y, int width, int height, int color, CallbackInfo ci, @Local GuiSpriteScaling scaling) {
         if (scaling == null) ci.cancel();
     }
 

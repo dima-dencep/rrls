@@ -15,7 +15,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.ReloadableTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.redlance.dima_dencep.mods.rrls.utils.TextureUtils;
@@ -34,10 +34,10 @@ public abstract class TextureManagerMixin {
             method = "registerForNextReload",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/texture/TextureManager;register(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/renderer/texture/AbstractTexture;)V"
+                    target = "Lnet/minecraft/client/renderer/texture/TextureManager;register(Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/texture/AbstractTexture;)V"
             )
     )
-    public void rrls$earlyRegister(TextureManager instance, ResourceLocation path, AbstractTexture texture, Operation<Void> original) {
+    public void rrls$earlyRegister(TextureManager instance, Identifier path, AbstractTexture texture, Operation<Void> original) {
         original.call(instance, path, texture);
 
         if (OverlayHelper.isCurrentRenderingState() && texture instanceof ReloadableTexture reloadableTexture) {

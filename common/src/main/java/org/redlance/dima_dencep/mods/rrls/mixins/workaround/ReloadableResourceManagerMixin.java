@@ -11,7 +11,7 @@
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
 import com.google.common.collect.Sets;
-import net.minecraft.Util;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.ShaderManager;
@@ -26,6 +26,7 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.util.Unit;
+import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
@@ -143,9 +144,8 @@ public class ReloadableResourceManagerMixin {
     @Unique
     private void rrls$refreshScreen() {
         if (RrlsConfig.reInitScreen() && RRLS$MINECRAFT.screen != null) {
-            RRLS$MINECRAFT.screen.init(RRLS$MINECRAFT,
-                    RRLS$MINECRAFT.getWindow().getGuiScaledWidth(), RRLS$MINECRAFT.getWindow().getGuiScaledHeight()
-            );
+            Window window = RRLS$MINECRAFT.getWindow();
+            RRLS$MINECRAFT.screen.init(window.getGuiScaledWidth(), window.getGuiScaledHeight());
         }
     }
 }

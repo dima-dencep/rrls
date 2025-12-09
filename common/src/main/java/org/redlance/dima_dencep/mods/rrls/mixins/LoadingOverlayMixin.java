@@ -13,11 +13,12 @@ package org.redlance.dima_dencep.mods.rrls.mixins;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.textures.GpuTexture;
-import net.minecraft.Util;
 import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
@@ -76,8 +77,12 @@ public abstract class LoadingOverlayMixin extends Overlay {
     private void rrls$init(Minecraft client, ReloadInstance reload, Consumer<Optional<Throwable>> onFinish, boolean fadeIn, CallbackInfo ci) {
         rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
 
-        if (RrlsConfig.type() == Type.TEXT_WITH_BACKGROUND)
-            rrls$textWidget = new FocusableTextWidget(1, Component.literal(RrlsConfig.reloadText()), minecraft.font, 12);
+        if (RrlsConfig.type() == Type.TEXT_WITH_BACKGROUND) {
+            this.rrls$textWidget = FocusableTextWidget.builder(Component.literal(RrlsConfig.reloadText()), minecraft.font)
+                    .maxWidth(1)
+                    .backgroundFill(FocusableTextWidget.BackgroundFill.ON_FOCUS)
+                    .build();
+        }
     }
 
     @Override
@@ -119,10 +124,11 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     rrls$textWidget.setMaxWidth(i);
                     rrls$textWidget.setX(i / 2 - rrls$textWidget.getWidth() / 2);
                     rrls$textWidget.setY(j - j / 3);
-                    rrls$textWidget.setColor(easeColor);
+                    rrls$textWidget.setAlpha(easeAlpha);
 
-                    if (RrlsConfig.rgbProgress())
-                        rrls$textWidget.setColor(RainbowUtils.rainbowColor(easeAlpha));
+                    if (rrls$textWidget.getMessage() instanceof MutableComponent mutable && RrlsConfig.rgbProgress()) {
+                        mutable.withColor(RainbowUtils.rainbowColor(easeAlpha));
+                    }
 
                     // This will make sure the widget is rendered above other widgets in Pause screen
                     graphics.pose().pushMatrix();
@@ -187,10 +193,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "tick",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/Screen;init(Lnet/minecraft/client/Minecraft;II)V"
+                    target = "Lnet/minecraft/client/gui/screens/Screen;init(II)V"
             )
     )
-    public boolean rrls$reinitScreen(Screen instance, Minecraft minecraft, int width, int height) {
+    public boolean rrls$reinitScreen(Screen instance, int width, int height) {
         return RrlsConfig.reInitScreen();
     }
 

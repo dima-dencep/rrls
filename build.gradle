@@ -1,7 +1,9 @@
+import org.apache.commons.lang3.StringUtils
+
 plugins {
-    id "com.gradleup.shadow" version "9.2.2" apply false
+    id "com.gradleup.shadow" version "9.3.0" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.5" apply false
     id "io.github.p03w.machete" version "2.0.1" apply false
 }
@@ -23,7 +25,7 @@ subprojects {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
+            parchment("org.parchmentmc.data:parchment-1.21.10:${rootProject.parchment_version}@zip")
         }
     }
 
@@ -67,8 +69,8 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    base.archivesName = rootProject.archives_base_name
-    version = "${rootProject.mod_version}+mc${rootProject.minecraft_version}-${project.name}"
+    base.archivesName = "${rootProject.archives_base_name}${StringUtils.capitalize(project.name)}"
+    version = "${rootProject.mod_version}+mc.${rootProject.minecraft_version}"
     group = rootProject.maven_group
 
     repositories {

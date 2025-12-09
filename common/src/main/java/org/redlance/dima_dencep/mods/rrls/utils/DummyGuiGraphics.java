@@ -13,19 +13,24 @@ package org.redlance.dima_dencep.mods.rrls.utils;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.platform.cursor.CursorType;
+import com.mojang.blaze3d.textures.GpuSampler;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.minecraft.client.model.BannerFlagModel;
-import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.Model;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.object.banner.BannerFlagModel;
+import net.minecraft.client.model.object.book.BookModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -33,7 +38,7 @@ import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.profiling.ResultField;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,15 +48,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.jspecify.annotations.Nullable;
 
 public class DummyGuiGraphics extends GuiGraphics {
     public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
     private DummyGuiGraphics() {
-        super(Minecraft.getInstance(), null);
+        super(Minecraft.getInstance(), null, 0, 0);
     }
 
     @Override
@@ -160,23 +165,23 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l, float f) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, float f) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l, int m) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p, int q) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p, int q) {
     }
 
     @Override
@@ -204,31 +209,23 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o) {
+    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n) {
+    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p) {
+    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p, int q) {
+    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p, int q) {
     }
 
     @Override
-    public void blit(ResourceLocation resourceLocation, int i, int j, int k, int l, float f, float g, float h, float m) {
-    }
-
-    @Override
-    public void innerBlit(RenderPipeline renderPipeline, ResourceLocation resourceLocation, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
-    }
-
-    @Override
-    public void submitBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
+    public void blit(Identifier resourceLocation, int i, int j, int k, int l, float f, float g, float h, float m) {
     }
 
     @Override
@@ -280,7 +277,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<Component> list, Optional<TooltipComponent> optional, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    public void setTooltipForNextFrame(Font font, List<Component> list, Optional<TooltipComponent> optional, int i, int j, @Nullable Identifier resourceLocation) {
     }
 
     @Override
@@ -288,7 +285,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, Component component, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    public void setTooltipForNextFrame(Font font, Component component, int i, int j, @Nullable Identifier resourceLocation) {
     }
 
     @Override
@@ -296,7 +293,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setComponentTooltipForNextFrame(Font font, List<Component> list, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    public void setComponentTooltipForNextFrame(Font font, List<Component> list, int i, int j, @Nullable Identifier resourceLocation) {
     }
 
     @Override
@@ -304,7 +301,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> list, int i, int j, @Nullable ResourceLocation resourceLocation) {
+    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> list, int i, int j, @Nullable Identifier resourceLocation) {
     }
 
     @Override
@@ -312,11 +309,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable ResourceLocation resourceLocation, boolean bl) {
-    }
-
-    @Override
-    public void renderTooltip(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable ResourceLocation resourceLocation) {
+    public void renderTooltip(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable Identifier resourceLocation) {
     }
 
     @Override
@@ -344,27 +337,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void submitSkinRenderState(PlayerModel playerModel, ResourceLocation resourceLocation, float f, float g, float h, float i, int j, int k, int l, int m) {
-    }
-
-    @Override
-    public void submitBookModelRenderState(BookModel bookModel, ResourceLocation resourceLocation, float f, float g, float h, int i, int j, int k, int l) {
-    }
-
-    @Override
     public void submitProfilerChartRenderState(List<ResultField> list, int i, int j, int k, int l) {
-    }
-
-    @Override
-    public void textHighlight(int minX, int minY, int maxX, int maxY) {
-    }
-
-    @Override
-    public void submitOutline(int i, int j, int k, int l, int m) {
-    }
-
-    @Override
-    public void submitTiledBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, int i, int j, int k, int l, int m, int n, float f, float g, float h, float o, int p) {
     }
 
     @Override
@@ -372,10 +345,67 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
+    public void submitSignRenderState(Model.Simple simple, float f, WoodType woodType, int i, int j, int k, int l) {
+    }
+
+    @Override
+    public void textHighlight(int i, int j, int k, int l, boolean bl) {
+    }
+
+    @Override
+    public void renderOutline(int i, int j, int k, int l, int m) {
+    }
+
+    @Override
+    public void innerBlit(RenderPipeline renderPipeline, Identifier identifier, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
+    }
+
+    @Override
+    public void submitBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, GpuSampler gpuSampler, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
+    }
+
+    @Override
+    public void submitTiledBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, GpuSampler gpuSampler, int i, int j, int k, int l, int m, int n, float f, float g, float h, float o, int p) {
+    }
+
+    @Override
+    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @org.jspecify.annotations.Nullable Identifier identifier, boolean bl) {
+    }
+
+    @Override
+    public void submitSkinRenderState(PlayerModel playerModel, Identifier identifier, float f, float g, float h, float i, int j, int k, int l, int m) {
+    }
+
+    @Override
+    public void submitBookModelRenderState(BookModel bookModel, Identifier identifier, float f, float g, float h, int i, int j, int k, int l) {
+    }
+
+    @Override
     public void submitBannerPatternRenderState(BannerFlagModel bannerFlagModel, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, int i, int j, int k, int l) {
     }
 
     @Override
-    public void submitSignRenderState(Model.Simple simple, float f, WoodType woodType, int i, int j, int k, int l) {
+    public ActiveTextCollector textRendererForWidget(AbstractWidget abstractWidget, GuiGraphics.HoveredTextEffects hoveredTextEffects) {
+        return null;
+    }
+
+    @Override
+    public ActiveTextCollector textRenderer() {
+        return null;
+    }
+
+    @Override
+    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects) {
+        return null;
+    }
+
+    @Override
+    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, @org.jspecify.annotations.Nullable Consumer<Style> consumer) {
+        return null;
+    }
+
+    @Override
+    public ActiveTextCollector.Parameters createDefaultTextParameters(float f) {
+        return null;
     }
 }

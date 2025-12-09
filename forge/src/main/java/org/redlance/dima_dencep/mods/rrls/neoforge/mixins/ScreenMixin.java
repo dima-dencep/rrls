@@ -12,7 +12,6 @@ package org.redlance.dima_dencep.mods.rrls.neoforge.mixins;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.neoforged.bus.api.Event;
@@ -20,25 +19,31 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.loading.FMLLoader;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Screen.class)
 public class ScreenMixin {
+    @Shadow
+    @Final
+    protected Minecraft minecraft;
+
     @Unique
     private static final boolean HAS_TWFOREST = FMLLoader.getCurrent().getLoadingModList().getModFileById("twilightforest") != null;
 
     @WrapOperation(
-            method = "init(Lnet/minecraft/client/Minecraft;II)V",
+            method = "init(II)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/neoforged/bus/api/IEventBus;post(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;",
                     ordinal = 1
             )
     )
-    private Event rrls$fixTWForest(IEventBus instance, Event t, Operation<Event> original, @Local(argsOnly = true) Minecraft mc) {
-        if (HAS_TWFOREST && OverlayHelper.isRenderingState(mc.overlay)) {
+    private Event rrls$fixTWForest(IEventBus instance, Event t, Operation<Event> original) {
+        if (HAS_TWFOREST && OverlayHelper.isRenderingState(this.minecraft.overlay)) {
             Rrls.LOGGER.warn("Canceling '{}' firing because twilightforest is present!", t.getClass().getSimpleName());
             return t;
         }

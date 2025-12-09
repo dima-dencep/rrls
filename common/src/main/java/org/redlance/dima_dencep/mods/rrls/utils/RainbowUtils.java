@@ -10,9 +10,9 @@
 
 package org.redlance.dima_dencep.mods.rrls.utils;
 
-import net.minecraft.Util;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 
 public class RainbowUtils {
     private static float makeChannel(float speed, float shift, int offset) {

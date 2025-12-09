@@ -15,7 +15,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Cancellable;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,10 +33,10 @@ public class CompilationCacheMixin {
             method = "getOrLoadPostChain",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;loadPostChain(Lnet/minecraft/resources/ResourceLocation;Ljava/util/Set;)Lnet/minecraft/client/renderer/PostChain;"
+                    target = "Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;loadPostChain(Lnet/minecraft/resources/Identifier;Ljava/util/Set;)Lnet/minecraft/client/renderer/PostChain;"
             )
     )
-    private PostChain rrls$supressMissingCache(ShaderManager.CompilationCache instance, ResourceLocation name, Set<ResourceLocation> externalTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
+    private PostChain rrls$supressMissingCache(ShaderManager.CompilationCache instance, Identifier name, Set<Identifier> externalTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
         PostChain postChain = original.call(instance, name, externalTargets);
 
         if (postChain == null && OverlayHelper.isCurrentRenderingState()) {

@@ -10,9 +10,6 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround.textures;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.mojang.blaze3d.textures.GpuTexture;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
@@ -24,7 +21,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
@@ -34,22 +30,6 @@ public class AbstractTextureMixin {
     protected GpuTexture texture;
     @Shadow
     protected GpuTextureView textureView;
-
-    @WrapOperation(
-            method = {
-                    "setClamp",
-                    "setFilter",
-                    "setUseMipmaps"
-            },
-            at = @At(
-                    value = "NEW",
-                    target = "(Ljava/lang/String;)Ljava/lang/IllegalStateException;"
-            )
-    )
-    private IllegalStateException rrls$supress(String s, Operation<IllegalStateException> original, @Cancellable CallbackInfo ci) {
-        ci.cancel();
-        return null;
-    }
 
     @Inject(
             method = "getTexture",
