@@ -119,7 +119,7 @@ jobs:
 
           github-tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
 
-          files: []
+          files: |
 
           name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
