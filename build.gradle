@@ -1,6 +1,8 @@
+import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
 import org.apache.commons.lang3.StringUtils
 
 plugins {
+    id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.3"
     id "com.gradleup.shadow" version "9.3.0" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false
@@ -97,4 +99,22 @@ allprojects {
         repositories {
         }
     }
+}
+
+tasks.register("publishToDiscord", PublishDiscordTask) {
+    url.set(providers.environmentVariable("DISCORD_WEBHOOK"))
+
+    container {
+        it.title = "Remove Reloading Screen v${version} is out!"
+        it.description = "### What's new:\n${providers.environmentVariable("MOD_CHANGELOG").orElse("").get()}"
+
+        it.thumbnail("https://raw.githubusercontent.com/dima-dencep/rrls/refs/heads/1.21.x/dev/common/src/main/resources/icon.png")
+        it.timestamp(System.currentTimeMillis())
+    }
+
+    links {
+        it.fromEnvHack()
+    }
+
+    footer = "||<@&1136395468809707642>||"
 }
