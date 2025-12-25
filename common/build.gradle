@@ -1,13 +1,9 @@
-architectury {
-    common("neoforge", "fabric")
-}
-
 loom {
     accessWidenerPath = file("src/main/resources/rrls.accesswidener")
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modCompileOnly "net.fabricmc:fabric-loader:${loader_version}"
 
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fcapip_version}"
     modCompileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
