@@ -30,6 +30,7 @@ import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
+import org.redlance.dima_dencep.mods.rrls.utils.WaitingSharedState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -130,7 +131,7 @@ public class ReloadableResourceManagerMixin {
 
             Rrls.LOGGER.info("Quick reload listener '{}'", listener.getName());
 
-            PreparableReloadListener.SharedState sharedState = new PreparableReloadListener.SharedState((ReloadableResourceManager) (Object) this);
+            PreparableReloadListener.SharedState sharedState = new WaitingSharedState((ReloadableResourceManager) (Object) this);
             listener.prepareSharedState(sharedState);
 
             listener.reload(sharedState, Util.backgroundExecutor(), CompletableFuture::completedFuture, gameExecutor)
