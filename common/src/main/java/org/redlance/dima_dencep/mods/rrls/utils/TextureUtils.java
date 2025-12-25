@@ -20,12 +20,12 @@ import org.redlance.dima_dencep.mods.rrls.Rrls;
 
 public class TextureUtils {
     public static void reloadTextureSync(TextureManager manager, ReloadableTexture texture) {
-        Rrls.LOGGER.warn("Force-reloading texture: {}!", texture.resourceId());
+        Rrls.LOGGER.warn("Force-reloading texture: '{}'!", texture.resourceId());
 
         try {
             texture.apply(manager.loadContentsSafe(texture.resourceId(), texture));
         } catch (Throwable th) {
-            Rrls.LOGGER.error("Failed to force-reload texture!", th);
+            exceptionally(th);
         }
     }
 
@@ -35,6 +35,11 @@ public class TextureUtils {
 
         reload.newContents().thenAcceptAsync(textureContents ->
                 reload.texture().apply(textureContents), Minecraft.getInstance()
-        );
+        ).exceptionally(TextureUtils::exceptionally);
+    }
+
+    private static Void exceptionally(Throwable th) {
+        Rrls.LOGGER.error("Failed to force-reload texture!", th);
+        return null;
     }
 }
