@@ -79,8 +79,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
 
         if (RrlsConfig.type() == Type.TEXT_WITH_BACKGROUND) {
             this.rrls$textWidget = FocusableTextWidget.builder(Component.literal(RrlsConfig.reloadText()), minecraft.font)
-                    .maxWidth(1)
-                    .backgroundFill(FocusableTextWidget.BackgroundFill.ON_FOCUS)
+                    .backgroundFill(FocusableTextWidget.BackgroundFill.ALWAYS)
                     .build();
         }
     }
@@ -124,19 +123,13 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     rrls$textWidget.setMaxWidth(i);
                     rrls$textWidget.setX(i / 2 - rrls$textWidget.getWidth() / 2);
                     rrls$textWidget.setY(j - j / 3);
-                    rrls$textWidget.setAlpha(easeAlpha);
+                    rrls$textWidget.setAlpha(ARGB.from8BitChannel(easeAlpha));
 
                     if (rrls$textWidget.getMessage() instanceof MutableComponent mutable && RrlsConfig.rgbProgress()) {
                         mutable.withColor(RainbowUtils.rainbowColor(easeAlpha));
                     }
 
-                    // This will make sure the widget is rendered above other widgets in Pause screen
-                    graphics.pose().pushMatrix();
-                    // todo graphics.pose().translate(0, 0, 255);
-
                     rrls$textWidget.render(graphics, 0, 0, partialTick);
-
-                    graphics.pose().popMatrix();
                 }
             }
             case NONE -> {}

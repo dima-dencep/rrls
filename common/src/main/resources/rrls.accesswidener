@@ -44,3 +44,4 @@ accessible class net/minecraft/client/renderer/texture/TextureManager$PendingRel
 accessible method net/minecraft/client/Minecraft buildInitialScreens (Lnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/lang/Runnable;
 accessible field net/minecraft/client/renderer/texture/TextureManager resourceManager Lnet/minecraft/server/packs/resources/ResourceManager;
 accessible method net/minecraft/client/renderer/texture/TextureManager loadContentsSafe (Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/texture/ReloadableTexture;)Lnet/minecraft/client/renderer/texture/TextureContents;
+accessible method net/minecraft/util/ARGB from8BitChannel (I)F
