@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
@@ -90,7 +91,7 @@ public abstract class MinecraftClientMixin {
         if (!RrlsConfig.resetResources()) {
             ci.cancel();
 
-            Rrls.LOGGER.error("Caught error loading resourcepacks!", throwable);
+            Rrls.LOGGER.error("Caught error loading resource packs!", throwable);
 
             if (RrlsConfig.doubleLoad().isLoad()) {
                 reloadResourcePacks(RrlsConfig.doubleLoad() == DoubleLoad.FORCE_LOAD, gameLoadCookie)
