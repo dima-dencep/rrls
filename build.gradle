@@ -2,8 +2,8 @@ import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
 import org.apache.commons.lang3.StringUtils
 
 plugins {
-    id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.3"
-    id "com.gradleup.shadow" version "9.3.0" apply false
+    id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.6"
+    id "com.gradleup.shadow" version "9.3.1" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false
     id "net.neoforged.licenser" version "0.7.5" apply false
@@ -107,7 +107,7 @@ tasks.register("publishToDiscord", PublishDiscordTask) {
     avatar.set("https://raw.githubusercontent.com/dima-dencep/rrls/HEAD/common/src/main/resources/icon.png")
 
     container {
-        it.title = "Remove Reloading Screen v${version} is out!"
+        it.title = "## ✨ Remove Reloading Screen\n### v${version} is out!"
         it.description = "### What's new:\n${providers.environmentVariable("MOD_CHANGELOG").orElse("").get()}"
 
         it.thumbnail("https://raw.githubusercontent.com/dima-dencep/rrls/HEAD/common/src/main/resources/icon.png")
