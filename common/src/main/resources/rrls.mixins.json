@@ -9,6 +9,7 @@
     "MinecraftClientMixin",
     "TitleScreenMixin",
     "compat.CubeMapMixin",
+    "compat.ItemModelResolverMixin",
     "compat.OverlayMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.ServerPackManagerMixin",
