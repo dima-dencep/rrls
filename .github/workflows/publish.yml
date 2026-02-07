@@ -17,11 +17,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 21
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 21
+          java-version: 25
 
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
@@ -79,7 +79,7 @@ jobs:
             ${{ steps.read_property.outputs.minecraft_version }}
 
           java: |
-            21
+            25
 
       - name: Publish Fabric to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3.0
@@ -112,7 +112,7 @@ jobs:
             forge-config-api-port{modrinth:ohNO6lps}{curseforge:547434}
 
           java: |
-            21
+            25
 
       - name: Publish Fabric & Forge to Github
         uses: Kir-Antipov/mc-publish@v3.3.0

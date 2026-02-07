@@ -1,103 +1,159 @@
 import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
-import org.apache.commons.lang3.StringUtils
 
 plugins {
     id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.6"
-    id "com.gradleup.shadow" version "9.3.1" apply false
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false
-    id "net.neoforged.licenser" version "0.7.5" apply false
-    id "io.github.p03w.machete" version "2.0.1" apply false
+    id "com.gradleup.shadow" version "9.3.1"
+    id "xyz.wagyourtail.unimined" version "1.4.2"
+    id "net.neoforged.licenser" version "0.7.5"
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
-}
+license {
+    header = rootProject.file('HEADER')
+    skipExistingHeaders = false
 
-subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.p03w.machete"
-    apply plugin: "net.neoforged.licenser"
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
-        }
-    }
-
-    machete {
-        ignoredTasks.add("shadowJar")
-        ignoredTasks.add("jar")
-    }
-
-    license {
-        header = rootProject.file('HEADER')
-        skipExistingHeaders = false
-
-        tasks {
-            rrls {
-                files.from rootProject.fileTree("src", {
-                    include "**/*.java"
-                })
-            }
-        }
-    }
-
-    processResources {
-        inputs.property "version", version
-        inputs.property "minecraft_version", minecraft_version
-        inputs.property "fabric_version", loader_version
-        inputs.property "neo_version", forge_version
-        inputs.property "fcapip_version", fcapip_version
-
-        filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
-            expand "version": version,
-                    "minecraft_version": minecraft_version,
-                    "fabric_version": loader_version,
-                    "neo_version": forge_version,
-                    "fcapip_version": fcapip_version
+    tasks {
+        rrls {
+            files.from rootProject.fileTree("src", {
+                include "**/*.java"
+            })
         }
     }
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
+base.archivesName = rootProject.archives_base_name
+version = "${rootProject.mod_version}+mc.${rootProject.minecraft_version}"
+group = rootProject.maven_group
 
-    base.archivesName = "${rootProject.archives_base_name}${StringUtils.capitalize(project.name)}"
-    version = "${rootProject.mod_version}+mc.${rootProject.minecraft_version}"
-    group = rootProject.maven_group
+sourceSets {
+    fabric
+    neoforge
+}
 
-    repositories {
-        maven {
-            name = "NeoForged"
-            url = "https://maven.neoforged.net/releases"
-        }
-        maven {
-            name = "Fuzs Mod Resources"
-            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+repositories {
+    mavenLocal()
+    maven {
+        name = "RedlancePublic"
+        url = "https://repo.redlance.org/public"
+    }
+    maven {
+        name = "NeoForged"
+        url = "https://maven.neoforged.net/releases"
+    }
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
+    maven {
+        name = "Maven for PR #2879" // https://github.com/neoforged/NeoForge/pull/2879
+        url = uri("https://prmaven.neoforged.net/NeoForge/pr2879")
+        content {
+            includeModule("net.neoforged", "neoforge")
+            includeModule("net.neoforged", "testframework")
         }
     }
+}
 
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = "UTF-8"
-        options.release.set 21
+configurations {
+    shadow
+}
+
+unimined.minecraft(sourceSets.main) {
+    version minecraft_version
+
+    fabric {
+        loader fabric_loader_version
+        accessWidener file("src/main/resources/rrls.classtweaker")
     }
 
-    java {
-        withSourcesJar()
+    defaultRemapJar = false
+}
+
+unimined.minecraft(sourceSets.fabric) {
+    combineWith(sourceSets.main)
+
+    fabric {
+        loader fabric_loader_version
+        accessWidener file("src/main/resources/rrls.classtweaker")
+    }
+    defaultRemapJar = true
+}
+
+unimined.minecraft(sourceSets.neoforge) {
+    combineWith(sourceSets.main)
+
+    neoForge {
+        loader("net.neoforged:neoforge:$neoforge_version:universal")
+        mixinConfig("rrls.mixins.json", "rrls-forge.mixins.json")
+
+        // accessTransformer aw2at(file("src/main/resources/rrls.classtweaker"))
+        accessTransformer file("src/neoforge/resources/META-INF/accesstransformer.cfg")
+    }
+    defaultRemapJar = true
+}
+
+dependencies {
+    // Core
+    shadow("org.redlance.common-utils:services:$commonutils_version") {
+        transitive = false
+
+        neoforgeImplementation it
+        fabricImplementation it
+        implementation it
     }
 
-    publishing {
-        repositories {
-        }
+    // Common
+    /*implementation("fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fcapip_version}")
+    compileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
+        transitive = false
+    }*/
+    compileOnly("net.neoforged:neoforge:$neoforge_version:universal") { transitive = false }
+    compileOnly("net.neoforged.fancymodloader:loader:11.0.0")
+
+    // Fabric
+    fabricImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    fabricCompileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    // Neoforge
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+    relocate "org.redlance.common", "org.redlance.dima_dencep.mods.rrls"
+
+    from(tasks.named("remapFabricJar").map { zipTree(it.archiveFile) })
+    from(tasks.named("remapNeoforgeJar").map { zipTree(it.archiveFile) })
+
+    archiveClassifier.set null
+
+    // Services
+    filesMatching('META-INF/services/**') {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+    mergeServiceFiles()
+
+    // Fix fabric jij
+    exclude 'META-INF/jarjar/*.jar'
+    filesMatching('META-INF/jarjar/metadata.json') {
+        filter { it.replace('META-INF/jarjar/', 'META-INF/jars/') }
+    }
+
+    // Workaround
+    filesMatching('*.classtweaker') {
+        filter { it.replace('named', 'official') }
+    }
+}
+
+[tasks.processResources, tasks.processFabricResources, tasks.processNeoforgeResources].each {
+    def buildProps = rootProject.properties.clone()
+    buildProps.put("version", version)
+
+    // Another workaround
+    buildProps.put("fabric_minecraft_version", minecraft_version.replace('-snapshot-', '-alpha.'))
+
+    it.filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
+        expand buildProps
     }
 }
 
@@ -119,4 +175,13 @@ tasks.register("publishToDiscord", PublishDiscordTask) {
     }
 
     footer = "||<@&1136395468809707642>||"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release.set 25
+}
+
+jar {
+    archiveClassifier.set "dev"
 }
