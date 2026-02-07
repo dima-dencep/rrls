@@ -369,7 +369,7 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @org.jspecify.annotations.Nullable Identifier identifier, boolean bl) {
+    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable Identifier identifier, boolean bl) {
     }
 
     @Override
@@ -400,12 +400,20 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, @org.jspecify.annotations.Nullable Consumer<Style> consumer) {
+    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, @Nullable Consumer<Style> consumer) {
         return null;
     }
 
     @Override
     public ActiveTextCollector.Parameters createDefaultTextParameters(float f) {
         return null;
+    }
+
+    @Override
+    public void blit(final GpuTextureView textureView, final GpuSampler sampler, final int x0, final int y0, final int x1, final int y1, final float u0, final float u1, final float v0, final float v1) {
+    }
+
+    @Override
+    public void setTooltipForNextFrame(final Font font, final List<FormattedCharSequence> tooltip, final Optional<TooltipComponent> component, final ClientTooltipPositioner positioner, final int xo, final int yo, final boolean replaceExisting, final @Nullable Identifier style) {
     }
 }

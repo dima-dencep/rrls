@@ -45,15 +45,15 @@ jobs:
           path: './gradle.properties'
           properties: 'mod_version minecraft_version'
 
-      - name: Upload assets to releases
+      - name: Build
         run: ./gradlew build
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
 
-      - name: Publish Forge to Modrinth & CurseForge
+      - name: Publish to Modrinth & CurseForge
         uses: Kir-Antipov/mc-publish@v3.3.0
-        id: publish_forge
+        id: publish_merged
         with:
           modrinth-id: ZP7xHXtw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -61,75 +61,32 @@ jobs:
           curseforge-id: 833233
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-          files: |
-            forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+          github-tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          name: "[NeoForge ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
+          files: |
+            build/libs/!(*-@(dev|sources|javadoc|shadow|fabric|neoforge)*).jar
+
+          name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
 
-          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-forge"
-          version-type: beta
+          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}"
+          version-type: alpha
 
           loaders: |
+            fabric
             neoforge
 
           game-version-filter: none
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
 
-          java: |
-            25
-
-      - name: Publish Fabric to Modrinth & CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3.0
-        id: publish_fabric
-        with:
-          modrinth-id: ZP7xHXtw
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-
-          curseforge-id: 833233
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          
-          files: |
-            fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-
-          name: "[Fabric ${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
-
-          changelog: ${{steps.build_changelog.outputs.changelog}}
-
-          version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}-fabric"
-          version-type: beta
-
-          loaders: |
-            fabric
-
-          game-version-filter: none
-          game-versions: |
-            ${{ steps.read_property.outputs.minecraft_version }}
-
           dependencies: |
-            forge-config-api-port{modrinth:ohNO6lps}{curseforge:547434}
+            forge-config-api-port(optional){modrinth:ohNO6lps}{curseforge:547434}
 
           java: |
             25
-
-      - name: Publish Fabric & Forge to Github
-        uses: Kir-Antipov/mc-publish@v3.3.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-          github-tag: "${{ steps.read_property.outputs.minecraft_version }}-${{ steps.read_property.outputs.mod_version }}"
-
-          files: |
-            forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-            fabric/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
-
-          name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
-
-          changelog: ${{steps.build_changelog.outputs.changelog}}
-
-          version-type: release
 
       - name: Build P2D_LINKS
         shell: bash
@@ -137,22 +94,11 @@ jobs:
           {
             echo 'P2D_LINKS<<EOF'
 
-            # --- Fabric ---
-            if [ -n "${{ steps.publish_fabric.outputs.modrinth-url }}" ]; then
-              echo "Fabric (Modrinth)|${{ steps.publish_fabric.outputs.modrinth-url }}|MODRINTH"
+            if [ -n "${{ steps.publish_merged.outputs.modrinth-url }}" ]; then
+              echo "Modrinth|${{ steps.publish_merged.outputs.modrinth-url }}|MODRINTH"
             fi
-            if [ -n "${{ steps.publish_fabric.outputs.curseforge-url }}" ]; then
-              echo "Fabric (CurseForge)|${{ steps.publish_fabric.outputs.curseforge-url }}|CURSEFORGE"
-            fi
-
-            echo ""
-
-            # --- NeoForge ---
-            if [ -n "${{ steps.publish_forge.outputs.modrinth-url }}" ]; then
-              echo "NeoForge (Modrinth)|${{ steps.publish_forge.outputs.modrinth-url }}|MODRINTH"
-            fi
-            if [ -n "${{ steps.publish_forge.outputs.curseforge-url }}" ]; then
-              echo "NeoForge (CurseForge)|${{ steps.publish_forge.outputs.curseforge-url }}|CURSEFORGE"
+            if [ -n "${{ steps.publish_merged.outputs.curseforge-url }}" ]; then
+              echo "CurseForge|${{ steps.publish_merged.outputs.curseforge-url }}|CURSEFORGE"
             fi
 
             echo 'EOF'
