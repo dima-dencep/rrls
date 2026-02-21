@@ -24,6 +24,7 @@ import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
@@ -35,6 +36,7 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
+import net.minecraft.client.resources.model.SpriteId;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -50,8 +52,8 @@ import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
-import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("all")
 public class DummyGuiGraphics extends GuiGraphics {
     public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
@@ -76,15 +78,15 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void hLine(int minX, int maxX, int y, int color) {
+    public void hLine(int x0, int x1, int y, int col) {
     }
 
     @Override
-    public void vLine(int x, int minY, int maxY, int color) {
+    public void vLine(int x, int y0, int y1, int col) {
     }
 
     @Override
-    public void enableScissor(int minX, int minY, int maxX, int maxY) {
+    public void enableScissor(int x0, int y0, int x1, int y1) {
     }
 
     @Override
@@ -97,27 +99,31 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void fill(int minX, int minY, int maxX, int maxY, int color) {
+    public void fill(int x0, int y0, int x1, int y1, int col) {
     }
 
     @Override
-    public void fill(RenderPipeline renderPipeline, int i, int j, int k, int l, int m) {
+    public void fill(RenderPipeline pipeline, int x0, int y0, int x1, int y1, int col) {
     }
 
     @Override
-    public void fillGradient(int x1, int y1, int x2, int y2, int colorFrom, int colorTo) {
+    public void fillGradient(int x0, int y0, int x1, int y1, int col1, int col2) {
     }
 
     @Override
-    public void fill(RenderPipeline renderPipeline, TextureSetup textureSetup, int i, int j, int k, int l) {
+    public void fill(RenderPipeline renderPipeline, TextureSetup textureSetup, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void submitColoredRectangle(RenderPipeline renderPipeline, TextureSetup textureSetup, int i, int j, int k, int l, int m, @Nullable Integer integer) {
+    public void submitColoredRectangle(RenderPipeline renderPipeline, TextureSetup textureSetup, int x0, int y0, int x1, int y1, int color1, Integer color2) {
     }
 
     @Override
-    public void drawCenteredString(Font font, String text, int x, int y, int color) {
+    public void textHighlight(int x0, int y0, int x1, int y1, boolean invertText) {
+    }
+
+    @Override
+    public void drawCenteredString(Font font, String str, int x, int y, int color) {
     }
 
     @Override
@@ -129,203 +135,239 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void drawString(Font font, @Nullable String string, int i, int j, int k) {
+    public void drawString(Font font, String str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, @Nullable String string, int i, int j, int k, boolean bl) {
+    public void drawString(Font font, String str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawString(Font font, FormattedCharSequence formattedCharSequence, int i, int j, int k) {
+    public void drawString(Font font, FormattedCharSequence str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, FormattedCharSequence formattedCharSequence, int i, int j, int k, boolean bl) {
+    public void drawString(Font font, FormattedCharSequence str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawString(Font font, Component component, int i, int j, int k) {
+    public void drawString(Font font, Component str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, Component component, int i, int j, int k, boolean bl) {
+    public void drawString(Font font, Component str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawWordWrap(Font font, FormattedText text, int x, int y, int lineWidth, int color) {
+    public void drawWordWrap(Font font, FormattedText string, int x, int y, int w, int col) {
     }
 
     @Override
-    public void drawWordWrap(Font font, FormattedText text, int x, int y, int lineWidth, int color, boolean dropShadow) {
+    public void drawWordWrap(Font font, FormattedText string, int x, int y, int w, int col, boolean dropShadow) {
     }
 
     @Override
-    public void drawStringWithBackdrop(Font font, Component component, int i, int j, int k, int l) {
+    public void drawStringWithBackdrop(Font font, Component str, int textX, int textY, int textWidth, int textColor) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l) {
+    public void renderOutline(int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, float f) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier location, int x, int y, int width, int height) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier location, int x, int y, int width, int height, float alpha) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier location, int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, int k, int l, int m, int n, int o, int p, int q) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier location, int spriteWidth, int spriteHeight, int textureX, int textureY, int x, int y, int width, int height) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l) {
+    public void blitSprite(RenderPipeline renderPipeline, Identifier location, int spriteWidth, int spriteHeight, int textureX, int textureY, int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m) {
+    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite sprite, int x, int y, int width, int height) {
     }
 
     @Override
-    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q) {
+    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite sprite, int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitNineSlicedSprite(RenderPipeline renderPipeline, TextureAtlasSprite textureAtlasSprite, GuiSpriteScaling.NineSlice nineSlice, int i, int j, int k, int l, int m) {
+    public void blitSprite(RenderPipeline renderPipeline, TextureAtlasSprite sprite, int spriteWidth, int spriteHeight, int textureX, int textureY, int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitNineSliceInnerSegment(RenderPipeline renderPipeline, GuiSpriteScaling.NineSlice nineSlice, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, int s) {
+    public void blitNineSlicedSprite(RenderPipeline renderPipeline, TextureAtlasSprite sprite, GuiSpriteScaling.NineSlice nineSlice, int x, int y, int width, int height, int color) {
     }
 
     @Override
-    public void blitTiledSprite(RenderPipeline renderPipeline, TextureAtlasSprite textureAtlasSprite, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, int s) {
+    public void blitNineSliceInnerSegment(RenderPipeline renderPipeline, GuiSpriteScaling.NineSlice nineSlice, TextureAtlasSprite sprite, int x, int y, int width, int height, int textureX, int textureY, int textureWidth, int textureHeight, int spriteWidth, int spriteHeight, int color) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o) {
+    public void blitTiledSprite(RenderPipeline renderPipeline, TextureAtlasSprite sprite, int x, int y, int width, int height, int textureX, int textureY, int tileWidth, int tileHeight, int spriteWidth, int spriteHeight, int color) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n) {
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight, int color) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p) {
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, Identifier resourceLocation, int i, int j, float f, float g, int k, int l, int m, int n, int o, int p, int q) {
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight) {
     }
 
     @Override
-    public void blit(Identifier resourceLocation, int i, int j, int k, int l, float f, float g, float h, float m) {
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight, int color) {
     }
 
     @Override
-    public void renderItem(ItemStack stack, int x, int y) {
+    public void blit(Identifier location, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
     }
 
     @Override
-    public void renderItem(ItemStack stack, int x, int y, int seed) {
+    public void blit(GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
     }
 
     @Override
-    public void renderFakeItem(ItemStack stack, int x, int y) {
+    public void innerBlit(RenderPipeline renderPipeline, Identifier location, int x0, int x1, int y0, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void renderFakeItem(ItemStack stack, int x, int y, int seed) {
+    public void submitBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void renderItem(LivingEntity entity, ItemStack stack, int x, int y, int seed) {
+    public void submitTiledBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int tileWidth, int tileHeight, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void renderItem(@Nullable LivingEntity entity, @Nullable Level level, ItemStack stack, int x, int y, int seed) {
+    public void renderItem(ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void renderItemDecorations(Font font, ItemStack stack, int x, int y) {
+    public void renderItem(ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderItemDecorations(Font font, ItemStack stack, int x, int y, @Nullable String text) {
+    public void renderFakeItem(ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Component component, int i, int j) {
+    public void renderFakeItem(ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void setTooltipForNextFrame(List<FormattedCharSequence> list, int i, int j) {
+    public void renderItem(LivingEntity owner, ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, ItemStack itemStack, int i, int j) {
+    public void renderItem(LivingEntity owner, Level level, ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<Component> list, Optional<TooltipComponent> optional, int i, int j) {
+    public void renderItemDecorations(Font font, ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<Component> list, Optional<TooltipComponent> optional, int i, int j, @Nullable Identifier resourceLocation) {
+    public void renderItemDecorations(Font font, ItemStack itemStack, int x, int y, String countText) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, Component component, int i, int j) {
+    public void setTooltipForNextFrame(Component component, int x, int y) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, Component component, int i, int j, @Nullable Identifier resourceLocation) {
+    public void setTooltipForNextFrame(List<FormattedCharSequence> formattedCharSequences, int x, int y) {
     }
 
     @Override
-    public void setComponentTooltipForNextFrame(Font font, List<Component> list, int i, int j) {
+    public void setTooltipForNextFrame(Font font, ItemStack itemStack, int xo, int yo) {
     }
 
     @Override
-    public void setComponentTooltipForNextFrame(Font font, List<Component> list, int i, int j, @Nullable Identifier resourceLocation) {
+    public void setTooltipForNextFrame(Font font, List<Component> texts, Optional<TooltipComponent> optionalImage, int xo, int yo) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> list, int i, int j) {
+    public void setTooltipForNextFrame(Font font, List<Component> texts, Optional<TooltipComponent> optionalImage, int xo, int yo, Identifier style) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> list, int i, int j, @Nullable Identifier resourceLocation) {
+    public void setTooltipForNextFrame(Font font, List<FormattedCharSequence> tooltip, Optional<TooltipComponent> component, ClientTooltipPositioner positioner, int xo, int yo, boolean replaceExisting, Identifier style) {
     }
 
     @Override
-    public void setTooltipForNextFrame(Font font, List<FormattedCharSequence> list, ClientTooltipPositioner clientTooltipPositioner, int i, int j, boolean bl) {
+    public void setTooltipForNextFrame(Font font, Component text, int xo, int yo) {
     }
 
     @Override
-    public void renderTooltip(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable Identifier resourceLocation) {
+    public void setTooltipForNextFrame(Font font, Component text, int xo, int yo, Identifier style) {
     }
 
     @Override
-    public void renderItemBar(ItemStack stack, int x, int y) {
+    public void setComponentTooltipForNextFrame(Font font, List<Component> lines, int xo, int yo) {
     }
 
     @Override
-    public void renderItemCount(Font font, ItemStack stack, int x, int y, @Nullable String text) {
+    public void setComponentTooltipForNextFrame(Font font, List<Component> lines, int xo, int yo, Identifier style) {
     }
 
     @Override
-    public void renderItemCooldown(ItemStack stack, int x, int y) {
+    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> lines, int xo, int yo) {
     }
 
     @Override
-    public void renderComponentHoverEffect(Font font, @Nullable Style style, int mouseX, int mouseY) {
+    public void setTooltipForNextFrame(Font font, List<? extends FormattedCharSequence> lines, int xo, int yo, Identifier style) {
+    }
+
+    @Override
+    public void setTooltipForNextFrame(Font font, List<FormattedCharSequence> tooltip, ClientTooltipPositioner positioner, int xo, int yo, boolean replaceExisting) {
+    }
+
+    @Override
+    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style, boolean replaceExisting) {
+    }
+
+    @Override
+    public void setPreeditOverlay(Renderable preeditOverlay) {
+    }
+
+    @Override
+    public void renderTooltip(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style) {
+    }
+
+    @Override
+    public void renderDeferredElements(int mouseX, int mouseY, float a) {
+    }
+
+    @Override
+    public void renderItemBar(ItemStack itemStack, int x, int y) {
+    }
+
+    @Override
+    public void renderItemCount(Font font, ItemStack itemStack, int x, int y, String countText) {
+    }
+
+    @Override
+    public void renderItemCooldown(ItemStack itemStack, int x, int y) {
+    }
+
+    @Override
+    public void renderComponentHoverEffect(Font font, Style hoveredStyle, int xMouse, int yMouse) {
     }
 
     @Override
@@ -333,59 +375,36 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void submitEntityRenderState(EntityRenderState entityRenderState, float f, Vector3f vector3f, Quaternionf quaternionf, @Nullable Quaternionf quaternionf2, int i, int j, int k, int l) {
+    public void submitEntityRenderState(EntityRenderState renderState, float scale, Vector3f translation, Quaternionf rotation, Quaternionf overrideCameraAngle, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void submitProfilerChartRenderState(List<ResultField> list, int i, int j, int k, int l) {
+    public void submitSkinRenderState(PlayerModel playerModel, Identifier texture, float scale, float rotationX, float rotationY, float pivotY, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void renderDeferredElements() {
+    public void submitBookModelRenderState(BookModel bookModel, Identifier texture, float scale, float open, float flip, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void submitSignRenderState(Model.Simple simple, float f, WoodType woodType, int i, int j, int k, int l) {
+    public void submitBannerPatternRenderState(BannerFlagModel flag, DyeColor baseColor, BannerPatternLayers resultBannerPatterns, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void textHighlight(int i, int j, int k, int l, boolean bl) {
+    public void submitSignRenderState(Model.Simple signModel, float scale, WoodType woodType, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void renderOutline(int i, int j, int k, int l, int m) {
+    public void submitProfilerChartRenderState(List<ResultField> chartData, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void innerBlit(RenderPipeline renderPipeline, Identifier identifier, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
+    public TextureAtlasSprite getSprite(SpriteId sprite) {
+        return null;
     }
 
     @Override
-    public void submitBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, GpuSampler gpuSampler, int i, int j, int k, int l, float f, float g, float h, float m, int n) {
-    }
-
-    @Override
-    public void submitTiledBlit(RenderPipeline renderPipeline, GpuTextureView gpuTextureView, GpuSampler gpuSampler, int i, int j, int k, int l, int m, int n, float f, float g, float h, float o, int p) {
-    }
-
-    @Override
-    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> list, int i, int j, ClientTooltipPositioner clientTooltipPositioner, @Nullable Identifier identifier, boolean bl) {
-    }
-
-    @Override
-    public void submitSkinRenderState(PlayerModel playerModel, Identifier identifier, float f, float g, float h, float i, int j, int k, int l, int m) {
-    }
-
-    @Override
-    public void submitBookModelRenderState(BookModel bookModel, Identifier identifier, float f, float g, float h, int i, int j, int k, int l) {
-    }
-
-    @Override
-    public void submitBannerPatternRenderState(BannerFlagModel bannerFlagModel, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, int i, int j, int k, int l) {
-    }
-
-    @Override
-    public ActiveTextCollector textRendererForWidget(AbstractWidget abstractWidget, GuiGraphics.HoveredTextEffects hoveredTextEffects) {
+    public ActiveTextCollector textRendererForWidget(AbstractWidget owner, GuiGraphics.HoveredTextEffects hoveredTextEffects) {
         return null;
     }
 
@@ -400,20 +419,12 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, @Nullable Consumer<Style> consumer) {
+    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, Consumer<Style> additionalHoverStyleConsumer) {
         return null;
     }
 
     @Override
-    public ActiveTextCollector.Parameters createDefaultTextParameters(float f) {
+    public ActiveTextCollector.Parameters createDefaultTextParameters(float opacity) {
         return null;
-    }
-
-    @Override
-    public void blit(final GpuTextureView textureView, final GpuSampler sampler, final int x0, final int y0, final int x1, final int y1, final float u0, final float u1, final float v0, final float v1) {
-    }
-
-    @Override
-    public void setTooltipForNextFrame(final Font font, final List<FormattedCharSequence> tooltip, final Optional<TooltipComponent> component, final ClientTooltipPositioner positioner, final int xo, final int yo, final boolean replaceExisting, final @Nullable Identifier style) {
     }
 }

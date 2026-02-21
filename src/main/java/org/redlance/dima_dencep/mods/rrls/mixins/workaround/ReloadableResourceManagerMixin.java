@@ -71,34 +71,34 @@ public class ReloadableResourceManagerMixin {
                 !fontManager.fontSets.containsKey(Minecraft.DEFAULT_FONT)
         ) {
             rrls$reloadListener(fontManager, RRLS$MINECRAFT,
-                    (unused, throwable) -> rrls$refreshScreen()
+                    (_, _) -> rrls$refreshScreen()
             );
         }
 
         if (listener instanceof LanguageManager languageManager &&
                 languageManager.getLanguages().size() <= 1
         ) {
-            rrls$reloadListener(languageManager, Util.backgroundExecutor(), (unused, throwable) -> {});
+            rrls$reloadListener(languageManager, Util.backgroundExecutor(), (_, _) -> {});
         }
 
         if (listener instanceof SplashManager splashManager &&
                 splashManager.splashes.isEmpty()
         ) {
             rrls$reloadListener(splashManager, Util.backgroundExecutor(),
-                    (unused, throwable) -> rrls$refreshScreen()
+                    (_, _) -> rrls$refreshScreen()
             );
         }
 
         if (listener instanceof AtlasManager atlasManager &&
-                atlasManager.materialLookup.isEmpty()
+                atlasManager.spriteLookup.isEmpty()
         ) {
-            rrls$reloadListener(atlasManager, RRLS$MINECRAFT, (unused, throwable) -> {});
+            rrls$reloadListener(atlasManager, RRLS$MINECRAFT, (_, _) -> {});
         }
 
         if (listener instanceof ShaderManager shaderManager &&
                 shaderManager.compilationCache.configs == ShaderManager.Configs.EMPTY
         ) {
-            rrls$reloadListener(shaderManager, RRLS$MINECRAFT, (unused, throwable) -> {});
+            rrls$reloadListener(shaderManager, RRLS$MINECRAFT, (_, _) -> {});
         }
     }
 
@@ -111,7 +111,7 @@ public class ReloadableResourceManagerMixin {
     )
     private void rrls$initReloaders(Executor backgroundExecutor, Executor gameExecutor, CompletableFuture<Unit> waitingFor, List<PackResources> resourcePacks, CallbackInfoReturnable<ReloadInstance> cir) {
         for (PreparableReloadListener listener : this.rrls$listeners) {
-            rrls$reloadListener(listener, RRLS$MINECRAFT, (unused, throwable) -> {});
+            rrls$reloadListener(listener, RRLS$MINECRAFT, (_, _) -> {});
         }
         this.rrls$listeners.clear();
     }

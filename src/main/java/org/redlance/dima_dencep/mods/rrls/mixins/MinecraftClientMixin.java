@@ -179,10 +179,10 @@ public abstract class MinecraftClientMixin {
             method = "setScreenAndShow",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;renderFrame(ZZ)V"
+                    target = "Lnet/minecraft/client/Minecraft;renderFrame(Z)V"
             )
     )
-    public void rrls$removeTick(Minecraft instance, boolean recordGpuUtilization, boolean renderLevel, Operation<Void> original) {
-        if (!OverlayHelper.isRenderingState(overlay)) original.call(instance, recordGpuUtilization, renderLevel);
+    public void rrls$removeTick(Minecraft instance, boolean renderLevel, Operation<Void> original) {
+        if (!OverlayHelper.isRenderingState(overlay)) original.call(instance, renderLevel);
     }
 }

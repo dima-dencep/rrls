@@ -1,4 +1,4 @@
-classTweaker v1 named
+classTweaker v1 official
 transitive-inject-interface net/minecraft/client/gui/screens/Overlay org/redlance/dima_dencep/mods/rrls/duck/OverlayExtender
 accessible method net/minecraft/client/gui/GuiGraphics submitColoredRectangle (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/gui/render/TextureSetup;IIIIILjava/lang/Integer;)V
 extendable method net/minecraft/client/gui/GuiGraphics submitColoredRectangle (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/gui/render/TextureSetup;IIIIILjava/lang/Integer;)V
@@ -34,7 +34,7 @@ accessible method net/minecraft/client/gui/screens/LoadingOverlay drawProgressBa
 accessible field net/minecraft/client/gui/screens/LoadingOverlay currentProgress F
 accessible class net/minecraft/client/Minecraft$GameLoadCookie
 accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/Map;
-accessible field net/minecraft/client/resources/model/AtlasManager materialLookup Ljava/util/Map;
+accessible field net/minecraft/client/resources/model/AtlasManager spriteLookup Ljava/util/Map;
 accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
 accessible field net/minecraft/client/resources/SplashManager splashes Ljava/util/List;
 accessible field net/minecraft/client/renderer/ShaderManager compilationCache Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;
