@@ -4,10 +4,15 @@
     "config:recommended"
   ],
   "baseBranchPatterns": ["/.*\\/dev$/"],
+  "ignoreDeps": ["com.mojang:minecraft"],
   "packageRules": [
     {
       "matchBaseBranches": ["/^1\\.20\\./"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["net.fabricmc:**"],
+      "registryUrls": ["https://maven.fabricmc.net/"]
     }
   ]
 }
