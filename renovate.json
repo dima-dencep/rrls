@@ -3,5 +3,11 @@
   "extends": [
     "config:recommended"
   ],
-  "baseBranchPatterns": ["/.*\\/dev$/", "!/^1\\.20\\./"]
+  "baseBranchPatterns": ["/.*\\/dev$/"],
+  "packageRules": [
+    {
+      "matchBaseBranches": ["/^1\\.20\\./"],
+      "enabled": false
+    }
+  ]
 }
