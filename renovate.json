@@ -3,5 +3,5 @@
   "extends": [
     "config:recommended"
   ],
-  "baseBranchPatterns": ["/.*\\/dev$/"]
+  "baseBranchPatterns": ["/.*\\/dev$/", "!/^1\\.20\\./"]
 }
