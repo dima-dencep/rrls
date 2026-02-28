@@ -10,12 +10,11 @@
       "enabled": false
     },
     {
-      "matchPackageNames": ["com.mojang:minecraft"],
-      "enabled": false
-    },
-    {
       "matchPackageNames": ["net.fabricmc:*"],
-      "registryUrls": ["https://maven.fabricmc.net/"]
+      "registryUrls": [
+        "https://repo.maven.apache.org/maven2",
+        "https://maven.fabricmc.net/"
+      ]
     }
   ]
 }
