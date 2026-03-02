@@ -2,7 +2,7 @@ import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
 import org.apache.commons.lang3.StringUtils
 
 plugins {
-    id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.6"
+    id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.7"
     id "com.gradleup.shadow" version "9.3.2" apply false
     id "architectury-plugin" version "3.4.162"
     id "dev.architectury.loom" version "1.13.467" apply false
