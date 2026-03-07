@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "org.redlance.dima_dencep.mods.rrls.mixins",
   "compatibilityLevel": "JAVA_21",
+  "plugin": "org.redlance.dima_dencep.mods.rrls.RrlsMixinPlugin",
   "client": [
+    "TranslatableEnumMixin",
     "GameRendererMixin",
     "LoadingOverlayMixin",
     "MinecraftClientMixin",

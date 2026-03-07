@@ -11,9 +11,8 @@
 package org.redlance.dima_dencep.mods.rrls.config;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.common.TranslatableEnum;
 
-public enum Type implements TranslatableEnum {
+public enum Type {
     PROGRESS(Component.translatable("rrls.configuration.type.progress")),
     TEXT(Component.translatable("rrls.configuration.type.text")),
     TEXT_WITH_BACKGROUND(Component.translatable("rrls.configuration.type.textbg")),
@@ -25,7 +24,6 @@ public enum Type implements TranslatableEnum {
         this.translatedName = translatedName;
     }
 
-    @Override
     public Component getTranslatedName() {
         return this.translatedName;
     }

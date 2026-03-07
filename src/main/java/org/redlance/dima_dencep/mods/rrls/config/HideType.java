@@ -11,9 +11,8 @@
 package org.redlance.dima_dencep.mods.rrls.config;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.common.TranslatableEnum;
 
-public enum HideType implements TranslatableEnum {
+public enum HideType {
     ALL(Component.translatable("rrls.configuration.hide.all"), true),
     LOADING(Component.translatable("rrls.configuration.hide.loading"), true),
     RELOADING(Component.translatable("rrls.configuration.hide.reloading"), false),
@@ -36,7 +35,6 @@ public enum HideType implements TranslatableEnum {
         };
     }
 
-    @Override
     public Component getTranslatedName() {
         return this.translatedName;
     }

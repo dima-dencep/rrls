@@ -11,9 +11,8 @@
 package org.redlance.dima_dencep.mods.rrls.config;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.common.TranslatableEnum;
 
-public enum DoubleLoad implements TranslatableEnum {
+public enum DoubleLoad {
     FORCE_LOAD(Component.translatable("rrls.configuration.doubleload.force")),
     LOAD(Component.translatable("rrls.configuration.doubleload.load")),
     NONE(Component.translatable("rrls.configuration.hide_doubleload.none"));
@@ -31,7 +30,6 @@ public enum DoubleLoad implements TranslatableEnum {
         };
     }
 
-    @Override
     public Component getTranslatedName() {
         return this.translatedName;
     }
