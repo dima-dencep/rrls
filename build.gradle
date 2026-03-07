@@ -5,6 +5,7 @@ plugins {
     id "com.gradleup.shadow" version "9.3.2"
     id "xyz.wagyourtail.unimined" version "1.4.2+redlance.2"
     id "net.neoforged.licenser" version "0.7.5"
+    id("org.redlance.dima_dencep.gradle.machete") version "1.0.2"
 }
 
 license {
@@ -44,8 +45,8 @@ repositories {
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
     maven {
-        name = "Maven for PR #2975" // https://github.com/neoforged/NeoForge/pull/2975
-        url = uri("https://prmaven.neoforged.net/NeoForge/pr2975")
+        name = "Maven for PR #2988" // https://github.com/neoforged/NeoForge/pull/2988
+        url = uri("https://prmaven.neoforged.net/NeoForge/pr2988")
         content {
             includeModule("net.neoforged", "neoforge")
             includeModule("net.neoforged", "testframework")
@@ -107,7 +108,7 @@ dependencies {
         transitive = false
     }*/
     compileOnly("net.neoforged:neoforge:$neoforge_version:universal") { transitive = false }
-    compileOnly("net.neoforged.fancymodloader:loader:47.2.3")
+    compileOnly("net.neoforged.fancymodloader:loader:11.0.0")
 
     // Fabric
     fabricImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
@@ -153,6 +154,15 @@ shadowJar {
     it.filesMatching(["META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
         expand buildProps
     }
+}
+
+machete {
+    tasks.set(Collections.singleton("shadowJar"))
+    sourceFileStriping.enabled = true
+
+    png.compressionLevel.set(9)
+    png.compressorIterations.set(32)
+    png.enabled = false
 }
 
 tasks.register("publishToDiscord", PublishDiscordTask) {

@@ -34,7 +34,7 @@ accessible method net/minecraft/client/gui/screens/LoadingOverlay drawProgressBa
 accessible field net/minecraft/client/gui/screens/LoadingOverlay currentProgress F
 accessible class net/minecraft/client/Minecraft$GameLoadCookie
 accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/Map;
-accessible field net/minecraft/client/resources/model/AtlasManager spriteLookup Ljava/util/Map;
+accessible field net/minecraft/client/resources/model/sprite/AtlasManager spriteLookup Ljava/util/Map;
 accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
 accessible field net/minecraft/client/resources/SplashManager splashes Ljava/util/List;
 accessible field net/minecraft/client/renderer/ShaderManager compilationCache Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;

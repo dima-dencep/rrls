@@ -13,11 +13,11 @@ package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.renderer.item.EmptyModel;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-
-import java.util.function.Function;
 
 @Mixin(ItemModelResolver.class)
 public class ItemModelResolverMixin {
@@ -25,13 +25,12 @@ public class ItemModelResolverMixin {
             method = "appendItemLayers",
             at = @At(
                     value = "INVOKE",
-                    target = "Ljava/util/function/Function;apply(Ljava/lang/Object;)Ljava/lang/Object;",
-                    ordinal = 1
+                    target = "Lnet/minecraft/client/renderer/item/ItemModelResolver;getItemModel(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/item/ItemModel;"
             )
     )
-    public Object rrls$fixItemsInMenu(Function<?, ?> instance, Object t, Operation<Object> original) {
+    public ItemModel rrls$fixItemsInMenu(ItemModelResolver instance, Identifier modelId, Operation<ItemModel> original) {
         try {
-            return original.call(instance, t);
+            return original.call(instance, modelId);
         } catch (Exception ex) {
             return EmptyModel.INSTANCE;
         }

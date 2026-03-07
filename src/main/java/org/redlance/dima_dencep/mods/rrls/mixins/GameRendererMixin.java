@@ -35,13 +35,13 @@ public class GameRendererMixin {
     private Minecraft minecraft;
 
     @Inject(
-            method = "render",
+            method = "extractGui",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/Gui;renderDeferredSubtitles()V"
             )
     )
-    public void rrls$miniRender(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
+    public void rrls$miniRender(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
         try {
             Overlay overlay = this.minecraft.overlay;
 

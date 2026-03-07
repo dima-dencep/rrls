@@ -18,7 +18,6 @@ import com.mojang.blaze3d.textures.GpuTextureView;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.Font;
@@ -36,7 +35,7 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
-import net.minecraft.client.resources.model.SpriteId;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -399,11 +398,6 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public TextureAtlasSprite getSprite(SpriteId sprite) {
-        return null;
-    }
-
-    @Override
     public ActiveTextCollector textRendererForWidget(AbstractWidget owner, GuiGraphics.HoveredTextEffects hoveredTextEffects) {
         return null;
     }
@@ -425,6 +419,11 @@ public class DummyGuiGraphics extends GuiGraphics {
 
     @Override
     public ActiveTextCollector.Parameters createDefaultTextParameters(float opacity) {
+        return null;
+    }
+
+    @Override
+    public TextureAtlasSprite getSprite(SpriteId sprite) {
         return null;
     }
 }

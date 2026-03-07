@@ -17,7 +17,7 @@ import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.client.resources.language.LanguageManager;
-import net.minecraft.client.resources.model.AtlasManager;
+import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.CloseableResourceManager;
