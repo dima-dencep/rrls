@@ -10,18 +10,12 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.TranslatableEnum;
-import org.jspecify.annotations.NonNull;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin({DoubleLoad.class, HideType.class, Type.class})
 public abstract class TranslatableEnumMixin implements TranslatableEnum {
-    @Shadow
-    @Override
-    public abstract @NonNull Component getTranslatedName();
 }
