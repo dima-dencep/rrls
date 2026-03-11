@@ -108,7 +108,7 @@ dependencies {
         transitive = false
     }*/
     compileOnly("net.neoforged:neoforge:$neoforge_version:universal") { transitive = false }
-    compileOnly("net.neoforged.fancymodloader:loader:11.0.0")
+    compileOnly("net.neoforged.fancymodloader:loader:47.2.3")
 
     // Fabric
     fabricImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
