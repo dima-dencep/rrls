@@ -10,12 +10,12 @@
 
 package org.redlance.dima_dencep.mods.rrls.neoforge.mixins;
 
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.duck.OverlayExtender;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.neoforged.fml.earlydisplay.DisplayWindow;
@@ -53,13 +53,13 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     }
 
     @Inject(
-            method = "render",
+            method = "extractRenderState",
             at = @At(
                     value = "HEAD"
             ),
             cancellable = true
     )
-    public void rrls$render(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void rrls$render(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         boolean earlyLoadingScreenClosed = !StartupNotificationManager.getCurrentProgress().contains(progressMeter);
 
         if (context instanceof DummyGuiGraphics || RrlsConfig.INSTANCE.skipForgeOverlay() || earlyLoadingScreenClosed) {
@@ -73,7 +73,7 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
                 currentProgress = super.currentProgress; // Sync progress (For mod compat?)
             }
 
-            super.render(context, mouseX, mouseY, delta);
+            super.extractRenderState(context, mouseX, mouseY, delta);
 
             ci.cancel();
         } else {
@@ -82,7 +82,7 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
     }
 
     @ModifyConstant(
-            method = "render",
+            method = "extractRenderState",
             constant = @Constant(
                     floatValue = 1000.0F,
                     ordinal = 0

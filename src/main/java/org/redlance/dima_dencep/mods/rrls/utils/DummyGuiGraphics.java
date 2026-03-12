@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -49,11 +49,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import org.joml.Matrix3x2fStack;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 @SuppressWarnings("all")
-public class DummyGuiGraphics extends GuiGraphics {
+public class DummyGuiGraphics extends GuiGraphicsExtractor {
     public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();
 
     private DummyGuiGraphics() {
@@ -69,19 +70,26 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
+    public int guiWidth() {
+        return 0;
+    }
+
+    @Override
+    public int guiHeight() {
+        return 0;
+    }
+
+    @Override
+    public Matrix3x2fStack pose() {
+        return null;
+    }
+
+    @Override
     public void nextStratum() {
     }
 
     @Override
     public void blurBeforeThisStratum() {
-    }
-
-    @Override
-    public void hLine(int x0, int x1, int y, int col) {
-    }
-
-    @Override
-    public void vLine(int x, int y0, int y1, int col) {
     }
 
     @Override
@@ -95,6 +103,14 @@ public class DummyGuiGraphics extends GuiGraphics {
     @Override
     public boolean containsPointInScissor(int x, int y) {
         return false;
+    }
+
+    @Override
+    public void horizontalLine(int x0, int x1, int y, int col) {
+    }
+
+    @Override
+    public void verticalLine(int x, int y0, int y1, int col) {
     }
 
     @Override
@@ -114,7 +130,11 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void submitColoredRectangle(RenderPipeline renderPipeline, TextureSetup textureSetup, int x0, int y0, int x1, int y1, int color1, Integer color2) {
+    public void outline(int x, int y, int width, int height, int color) {
+    }
+
+    @Override
+    public void innerFill(RenderPipeline renderPipeline, TextureSetup textureSetup, int x0, int y0, int x1, int y1, int color1, Integer color2) {
     }
 
     @Override
@@ -122,55 +142,75 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void drawCenteredString(Font font, String str, int x, int y, int color) {
+    public void text(Font font, String str, int x, int y, int color) {
     }
 
     @Override
-    public void drawCenteredString(Font font, Component text, int x, int y, int color) {
+    public void text(Font font, String str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawCenteredString(Font font, FormattedCharSequence text, int x, int y, int color) {
+    public void text(Font font, FormattedCharSequence str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, String str, int x, int y, int color) {
+    public void text(Font font, FormattedCharSequence str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawString(Font font, String str, int x, int y, int color, boolean dropShadow) {
+    public void text(Font font, Component str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, FormattedCharSequence str, int x, int y, int color) {
+    public void text(Font font, Component str, int x, int y, int color, boolean dropShadow) {
     }
 
     @Override
-    public void drawString(Font font, FormattedCharSequence str, int x, int y, int color, boolean dropShadow) {
+    public void centeredText(Font font, String str, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, Component str, int x, int y, int color) {
+    public void centeredText(Font font, Component text, int x, int y, int color) {
     }
 
     @Override
-    public void drawString(Font font, Component str, int x, int y, int color, boolean dropShadow) {
+    public void centeredText(Font font, FormattedCharSequence text, int x, int y, int color) {
     }
 
     @Override
-    public void drawWordWrap(Font font, FormattedText string, int x, int y, int w, int col) {
+    public void textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col) {
     }
 
     @Override
-    public void drawWordWrap(Font font, FormattedText string, int x, int y, int w, int col, boolean dropShadow) {
+    public void textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col, boolean dropShadow) {
     }
 
     @Override
-    public void drawStringWithBackdrop(Font font, Component str, int textX, int textY, int textWidth, int textColor) {
+    public void textWithBackdrop(Font font, Component str, int textX, int textY, int textWidth, int textColor) {
     }
 
     @Override
-    public void renderOutline(int x, int y, int width, int height, int color) {
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight, int color) {
+    }
+
+    @Override
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
+    }
+
+    @Override
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight) {
+    }
+
+    @Override
+    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight, int color) {
+    }
+
+    @Override
+    public void blit(Identifier location, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
+    }
+
+    @Override
+    public void blit(GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
     }
 
     @Override
@@ -218,71 +258,87 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight, int color) {
-    }
-
-    @Override
-    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
-    }
-
-    @Override
-    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight) {
-    }
-
-    @Override
-    public void blit(RenderPipeline renderPipeline, Identifier texture, int x, int y, float u, float v, int width, int height, int srcWidth, int srcHeight, int textureWidth, int textureHeight, int color) {
-    }
-
-    @Override
-    public void blit(Identifier location, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
-    }
-
-    @Override
-    public void blit(GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1) {
-    }
-
-    @Override
     public void innerBlit(RenderPipeline renderPipeline, Identifier location, int x0, int x1, int y0, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void submitBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
+    public void innerBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void submitTiledBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int tileWidth, int tileHeight, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
+    public void innerTiledBlit(RenderPipeline pipeline, GpuTextureView textureView, GpuSampler sampler, int tileWidth, int tileHeight, int x0, int y0, int x1, int y1, float u0, float u1, float v0, float v1, int color) {
     }
 
     @Override
-    public void renderItem(ItemStack itemStack, int x, int y) {
+    public void item(ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void renderItem(ItemStack itemStack, int x, int y, int seed) {
+    public void item(ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderFakeItem(ItemStack itemStack, int x, int y) {
+    public void item(LivingEntity owner, ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderFakeItem(ItemStack itemStack, int x, int y, int seed) {
+    public void item(LivingEntity owner, Level level, ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderItem(LivingEntity owner, ItemStack itemStack, int x, int y, int seed) {
+    public void fakeItem(ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void renderItem(LivingEntity owner, Level level, ItemStack itemStack, int x, int y, int seed) {
+    public void fakeItem(ItemStack itemStack, int x, int y, int seed) {
     }
 
     @Override
-    public void renderItemDecorations(Font font, ItemStack itemStack, int x, int y) {
+    public void itemDecorations(Font font, ItemStack itemStack, int x, int y) {
     }
 
     @Override
-    public void renderItemDecorations(Font font, ItemStack itemStack, int x, int y, String countText) {
+    public void itemDecorations(Font font, ItemStack itemStack, int x, int y, String countText) {
+    }
+
+    @Override
+    public void itemBar(ItemStack itemStack, int x, int y) {
+    }
+
+    @Override
+    public void itemCount(Font font, ItemStack itemStack, int x, int y, String countText) {
+    }
+
+    @Override
+    public void itemCooldown(ItemStack itemStack, int x, int y) {
+    }
+
+    @Override
+    public void map(MapRenderState mapRenderState) {
+    }
+
+    @Override
+    public void entity(EntityRenderState renderState, float scale, Vector3f translation, Quaternionf rotation, Quaternionf overrideCameraAngle, int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void skin(PlayerModel playerModel, Identifier texture, float scale, float rotationX, float rotationY, float pivotY, int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void book(BookModel bookModel, Identifier texture, float scale, float open, float flip, int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void bannerPattern(BannerFlagModel flag, DyeColor baseColor, BannerPatternLayers resultBannerPatterns, int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void sign(Model.Simple signModel, float scale, WoodType woodType, int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void profilerChart(List<ResultField> chartData, int x0, int y0, int x1, int y1) {
     }
 
     @Override
@@ -342,63 +398,28 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
+    public void tooltip(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style) {
+    }
+
+    @Override
     public void setPreeditOverlay(Renderable preeditOverlay) {
     }
 
     @Override
-    public void renderTooltip(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style) {
+    public void extractDeferredElements(int mouseX, int mouseY, float a) {
     }
 
     @Override
-    public void renderDeferredElements(int mouseX, int mouseY, float a) {
+    public void componentHoverEffect(Font font, Style hoveredStyle, int xMouse, int yMouse) {
     }
 
     @Override
-    public void renderItemBar(ItemStack itemStack, int x, int y) {
+    public TextureAtlasSprite getSprite(SpriteId sprite) {
+        return null;
     }
 
     @Override
-    public void renderItemCount(Font font, ItemStack itemStack, int x, int y, String countText) {
-    }
-
-    @Override
-    public void renderItemCooldown(ItemStack itemStack, int x, int y) {
-    }
-
-    @Override
-    public void renderComponentHoverEffect(Font font, Style hoveredStyle, int xMouse, int yMouse) {
-    }
-
-    @Override
-    public void submitMapRenderState(MapRenderState mapRenderState) {
-    }
-
-    @Override
-    public void submitEntityRenderState(EntityRenderState renderState, float scale, Vector3f translation, Quaternionf rotation, Quaternionf overrideCameraAngle, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void submitSkinRenderState(PlayerModel playerModel, Identifier texture, float scale, float rotationX, float rotationY, float pivotY, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void submitBookModelRenderState(BookModel bookModel, Identifier texture, float scale, float open, float flip, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void submitBannerPatternRenderState(BannerFlagModel flag, DyeColor baseColor, BannerPatternLayers resultBannerPatterns, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void submitSignRenderState(Model.Simple signModel, float scale, WoodType woodType, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void submitProfilerChartRenderState(List<ResultField> chartData, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public ActiveTextCollector textRendererForWidget(AbstractWidget owner, GuiGraphics.HoveredTextEffects hoveredTextEffects) {
+    public ActiveTextCollector textRendererForWidget(AbstractWidget owner, GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects) {
         return null;
     }
 
@@ -408,22 +429,17 @@ public class DummyGuiGraphics extends GuiGraphics {
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects) {
+    public ActiveTextCollector textRenderer(GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects) {
         return null;
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphics.HoveredTextEffects hoveredTextEffects, Consumer<Style> additionalHoverStyleConsumer) {
+    public ActiveTextCollector textRenderer(GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects, Consumer<Style> additionalHoverStyleConsumer) {
         return null;
     }
 
     @Override
     public ActiveTextCollector.Parameters createDefaultTextParameters(float opacity) {
-        return null;
-    }
-
-    @Override
-    public TextureAtlasSprite getSprite(SpriteId sprite) {
         return null;
     }
 }

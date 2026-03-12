@@ -11,6 +11,7 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.network.chat.Component;
@@ -41,7 +42,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.Screen;
@@ -59,7 +59,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     @Shadow
     private long fadeInStart;
     @Shadow
-    public abstract void drawProgressBar(GuiGraphics guiGraphics, int minX, int minY, int maxX, int maxY, float partialTick);
+    protected abstract void extractProgressBar(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, float fade);
 
     @Unique
     private FocusableTextWidget rrls$textWidget;
@@ -85,7 +85,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @Override
-    public void rrls$miniRender(GuiGraphics graphics, float partialTick) {
+    public void rrls$miniRender(GuiGraphicsExtractor graphics, float partialTick) {
         int i = graphics.guiWidth();
         int j = graphics.guiHeight();
 
@@ -110,10 +110,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
                 int s = (int) ((double) j * 0.8325);
                 int r = (int) (Math.min(i * 0.75, j) * 0.5);
 
-                this.drawProgressBar(graphics, i / 2 - r, s - 5, i / 2 + r, s + 5, ease);
+                this.extractProgressBar(graphics, i / 2 - r, s - 5, i / 2 + r, s + 5, ease);
             }
 
-            case Type.TEXT -> graphics.drawCenteredString(
+            case Type.TEXT -> graphics.centeredText(
                     minecraft.font, RrlsConfig.INSTANCE.reloadText(), i / 2, 70,
                     RrlsConfig.INSTANCE.rgbProgress() ? RainbowUtils.rainbowColor(easeAlpha) : easeColor
             );
@@ -129,7 +129,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
                         mutable.withColor(RainbowUtils.rainbowColor(easeAlpha));
                     }
 
-                    rrls$textWidget.render(graphics, 0, 0, partialTick);
+                    rrls$textWidget.extractRenderState(graphics, 0, 0, partialTick);
                 }
             }
             case NONE -> {}
@@ -158,18 +158,18 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }*/
 
     @WrapWithCondition(
-            method = "render",
+            method = "extractRenderState",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/Screen;renderWithTooltipAndSubtitles(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
+                    target = "Lnet/minecraft/client/gui/screens/Screen;extractRenderStateWithTooltipAndSubtitles(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V"
             )
     )
-    public boolean rrls$screenrender(Screen instance, GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public boolean rrls$screenrender(Screen instance, GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         return !(graphics instanceof DummyGuiGraphics);
     }
 
     @WrapWithCondition(
-            method = "render",
+            method = "extractRenderState",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
@@ -194,20 +194,20 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @WrapOperation(
-            method = "render",
+            method = "extractRenderState",
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/client/renderer/state/gui/GuiRenderState;clearColorOverride:I",
                     opcode = Opcodes.PUTFIELD
             )
     )
-    public void rrls$_clearColor(GuiRenderState instance, int value, Operation<Void> original, @Local(argsOnly = true) GuiGraphics graphics) {
+    public void rrls$_clearColor(GuiRenderState instance, int value, Operation<Void> original, @Local(argsOnly = true) GuiGraphicsExtractor graphics) {
         if (graphics instanceof DummyGuiGraphics) return;
         original.call(instance, value);
     }
 
     @WrapOperation(
-            method = "drawProgressBar",
+            method = "extractProgressBar",
             at = @At(
                     value = "INVOKE",
                     target = "Ljava/lang/Math;round(F)I"
@@ -222,7 +222,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @WrapOperation(
-            method = "drawProgressBar",
+            method = "extractProgressBar",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/util/ARGB;color(IIII)I"
@@ -251,7 +251,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @ModifyConstant(
-            method = "render",
+            method = "extractRenderState",
             constant = {
                     @Constant(
                             floatValue = LoadingOverlay.FADE_OUT_TIME,

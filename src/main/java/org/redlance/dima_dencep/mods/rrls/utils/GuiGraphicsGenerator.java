@@ -10,7 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.utils;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -72,10 +72,10 @@ public class GuiGraphicsGenerator extends ClassVisitor {
         boolean isFinal = (access & Opcodes.ACC_FINAL) != 0;
 
         if (isPrivate) {
-            this.accessWidenerEntries.add("accessible\tmethod\t" + this.ownerName + "\t" + name + "\t" + descriptor);
-            this.accessWidenerEntries.add("extendable\tmethod\t" + this.ownerName + "\t" + name + "\t" + descriptor);
+            this.accessWidenerEntries.add("accessible method " + this.ownerName + " " + name + " " + descriptor);
+            this.accessWidenerEntries.add("extendable method " + this.ownerName + " " + name + " " + descriptor);
         } else if (isFinal) {
-            this.accessWidenerEntries.add("extendable\tmethod\t" + this.ownerName + "\t" + name + "\t" + descriptor);
+            this.accessWidenerEntries.add("extendable method " + this.ownerName + " " + name + " " + descriptor);
         }
 
         Rrls.LOGGER.info("Adding {}{}...", name, descriptor);
@@ -85,7 +85,7 @@ public class GuiGraphicsGenerator extends ClassVisitor {
     }
 
     public static void main(String... args) throws IOException {
-        ClassNode guiGraphicsNode = GuiGraphicsGenerator.readClassNode(GuiGraphics.class, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
+        ClassNode guiGraphicsNode = GuiGraphicsGenerator.readClassNode(GuiGraphicsExtractor.class, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
         ClassNode dummyGuiGraphics = GuiGraphicsGenerator.readClassNode(DummyGuiGraphics.class, ClassReader.EXPAND_FRAMES);
 
         GuiGraphicsGenerator generator = new GuiGraphicsGenerator(dummyGuiGraphics, guiGraphicsNode.name);
@@ -154,7 +154,7 @@ public class GuiGraphicsGenerator extends ClassVisitor {
 
         // Class declaration
         sb.append("@SuppressWarnings(\"all\")\n");
-        sb.append("public class DummyGuiGraphics extends GuiGraphics {\n");
+        sb.append("public class DummyGuiGraphics extends GuiGraphicsExtractor {\n");
         sb.append("    public static final DummyGuiGraphics INSTANCE = new DummyGuiGraphics();\n\n");
 
         // Constructor

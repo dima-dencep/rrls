@@ -11,13 +11,13 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import org.redlance.dima_dencep.mods.rrls.utils.DummyGuiGraphics;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Final;
@@ -38,15 +38,15 @@ public class GameRendererMixin {
             method = "extractGui",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Gui;renderDeferredSubtitles()V"
+                    target = "Lnet/minecraft/client/gui/Gui;extractDeferredSubtitles()V"
             )
     )
-    public void rrls$miniRender(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci, @Local(ordinal = 0) GuiGraphics graphics) {
+    public void rrls$miniRender(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci, @Local(ordinal = 0) GuiGraphicsExtractor graphics) {
         try {
             Overlay overlay = this.minecraft.overlay;
 
             if (OverlayHelper.isRenderingState(overlay)) {
-                rrls$enableScissor(graphics, () -> overlay.render(
+                rrls$enableScissor(graphics, () -> overlay.extractRenderState(
                         DummyGuiGraphics.INSTANCE, 0, 0, deltaTracker.getGameTimeDeltaTicks()
                 ));
 
@@ -60,7 +60,7 @@ public class GameRendererMixin {
     }
 
     @Unique
-    private static void rrls$enableScissor(GuiGraphics graphics, Runnable runnable) {
+    private static void rrls$enableScissor(GuiGraphicsExtractor graphics, Runnable runnable) {
         if (RrlsConfig.INSTANCE.enableScissor()) {
             graphics.pose().pushMatrix();
             graphics.enableScissor(0, 0, 0, 0);

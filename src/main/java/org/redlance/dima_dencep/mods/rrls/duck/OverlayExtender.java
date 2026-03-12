@@ -10,15 +10,15 @@
 
 package org.redlance.dima_dencep.mods.rrls.duck;
 
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
-import net.minecraft.client.gui.GuiGraphics;
 
 @SuppressWarnings("unused")
 public interface OverlayExtender {
     OverlayHelper.State rrls$getState();
     void rrls$setState(OverlayHelper.State state);
 
-    default void rrls$miniRender(GuiGraphics graphics, float partialTick) {
+    default void rrls$miniRender(GuiGraphicsExtractor graphics, float partialTick) {
         throw new UnsupportedOperationException("The '" + getClass().getCanonicalName() + "' overlay doesn't have a mini-render!");
     }
 
