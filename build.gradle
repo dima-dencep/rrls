@@ -3,7 +3,7 @@ import org.apache.commons.lang3.StringUtils
 
 plugins {
     id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.8"
-    id "com.gradleup.shadow" version "9.3.2" apply false
+    id "com.gradleup.shadow" version "9.4.0" apply false
     id "architectury-plugin" version "3.4.162"
     id "dev.architectury.loom" version "1.13.467" apply false
     id "net.neoforged.licenser" version "0.7.5" apply false
