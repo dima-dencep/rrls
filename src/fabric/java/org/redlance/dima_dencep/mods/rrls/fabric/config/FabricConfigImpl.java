@@ -10,8 +10,12 @@
 
 package org.redlance.dima_dencep.mods.rrls.fabric.config;
 
+import fuzs.forgeconfigapiport.fabric.api.v5.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.config.impl.ForgeLikeConfigImpl;
+import org.redlance.dima_dencep.mods.rrls.screens.ConfigurationSectionScreenProxy;
 
 public class FabricConfigImpl extends ForgeLikeConfigImpl {
     public FabricConfigImpl() {}
@@ -19,5 +23,11 @@ public class FabricConfigImpl extends ForgeLikeConfigImpl {
     @Override
     public boolean isActive() {
         return FabricLoader.getInstance().isModLoaded("forgeconfigapiport");
+    }
+
+    public void registerConfigScreen() {
+        ConfigScreenFactoryRegistry.INSTANCE.register(Rrls.MOD_ID, (modContainer, screen) ->
+                new ConfigurationScreen(modContainer, screen, ConfigurationSectionScreenProxy::new)
+        );
     }
 }

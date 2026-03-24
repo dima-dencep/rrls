@@ -24,9 +24,7 @@ public class RrlsFabric extends Rrls implements ClientModInitializer {
             ConfigRegistry.INSTANCE.register(Rrls.MOD_ID, ModConfig.Type.CLIENT,
                     impl.configSpec, "rrls.toml"
             );
-            /*ConfigScreenFactoryRegistry.INSTANCE.register(Rrls.MOD_ID, (modContainer, screen) ->
-                    new ConfigurationScreen(modContainer, screen, ConfigurationSectionScreenProxy::new)
-            );*/
+            impl.registerConfigScreen();
         }
 
         // After loading config, we load the future stuff

@@ -44,14 +44,6 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
-    maven {
-        name = "Maven for PR #2993" // https://github.com/neoforged/NeoForge/pull/2993
-        url = uri("https://prmaven.neoforged.net/NeoForge/pr2993")
-        content {
-            includeModule("net.neoforged", "neoforge")
-            includeModule("net.neoforged", "testframework")
-        }
-    }
 }
 
 configurations {
@@ -103,12 +95,10 @@ dependencies {
     }
 
     // Common
-    /*implementation("fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fcapip_version}")
+    implementation("fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fcapip_version}")
     compileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
         transitive = false
-    }*/
-    compileOnly("net.neoforged:neoforge:$neoforge_version:universal") { transitive = false }
-    compileOnly("net.neoforged.fancymodloader:loader:11.0.0")
+    }
 
     // Fabric
     fabricImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
