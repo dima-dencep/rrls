@@ -78,8 +78,24 @@ unimined.minecraft(sourceSets.neoforge) {
         loader("net.neoforged:neoforge:$neoforge_version:universal")
         mixinConfig("rrls.mixins.json", "rrls-forge.mixins.json")
 
-        // accessTransformer aw2at(file("src/main/resources/rrls.classtweaker"))
-        accessTransformer file("src/neoforge/resources/META-INF/accesstransformer.cfg")
+        accessTransformer(provider {
+            def transformed = file("src/main/resources/rrls.classtweaker").text
+                    .replaceFirst(/classTweaker\s+v\d+\s+(\S+)/, 'accessWidener v2 $1')
+                    .readLines()
+                    .findAll { line ->
+                        !line.trim().startsWith("transitive-inject-interface") && !line.trim().startsWith("inject-interface")
+                    }
+                    .join("\n")
+
+            def out = layout.buildDirectory.file("generated/rrls.classtweaker").get().asFile
+            try {
+                out.parentFile.mkdirs()
+                out.write(transformed)
+                return aw2at(out)
+            } finally {
+                out.delete()
+            }
+        }.get())
     }
     defaultRemapJar = true
 }
