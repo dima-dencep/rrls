@@ -21,7 +21,7 @@ public class FabricConfigImpl extends ForgeLikeConfigImpl {
     public FabricConfigImpl() {}
 
     @Override
-    public boolean isActive() {
+    public boolean isServiceActive() {
         return FabricLoader.getInstance().isModLoaded("forgeconfigapiport");
     }
 

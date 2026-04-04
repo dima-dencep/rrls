@@ -16,7 +16,7 @@ public class NeoForgeConfigImpl extends ForgeLikeConfigImpl {
     public NeoForgeConfigImpl() {}
 
     @Override
-    public boolean isActive() {
+    public boolean isServiceActive() {
         return true;
     }
 }

@@ -199,7 +199,7 @@ public abstract class ForgeLikeConfigImpl extends FallbackConfigImpl {
     }
 
     @Override
-    public abstract boolean isActive();
+    public abstract boolean isServiceActive();
     @Override
     public int getPriority() {
         return ServiceUtils.HIGHEST_PRIORITY;
