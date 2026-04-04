@@ -46,7 +46,7 @@ public abstract class TitleScreenMixin extends Screen {
     }
 
     @ModifyConstant(
-            method = "render",
+            method = "extractRenderState",
             constant = @Constant(
                     floatValue = FADE_IN_TIME,
                     ordinal = 0
