@@ -104,7 +104,7 @@ public class FallbackConfigImpl implements RrlsConfig {
     }
 
     @Override
-    public boolean isActive() {
+    public boolean isServiceActive() {
         return true;
     }
 
