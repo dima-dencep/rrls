@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.CloseableResourceManager;
@@ -29,6 +30,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.utils.AtlasUtils;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.redlance.dima_dencep.mods.rrls.utils.WaitingSharedState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -67,6 +69,15 @@ public class ReloadableResourceManagerMixin {
             return;
         }
 
+        if (this.resources.getNamespaces().isEmpty() || this.resources.getNamespaces().size() < 2 /* EBE workaround */) {
+            this.resources.close();
+
+            Rrls.LOGGER.info("Creating new resource manager!");
+            this.resources = new MultiPackResourceManager(PackType.CLIENT_RESOURCES,
+                    RRLS$MINECRAFT.getResourcePackRepository().openAllSelected()
+            );
+        }
+
         if (listener instanceof FontManager fontManager &&
                 !fontManager.fontSets.containsKey(Minecraft.DEFAULT_FONT)
         ) {
@@ -92,7 +103,7 @@ public class ReloadableResourceManagerMixin {
         if (listener instanceof AtlasManager atlasManager &&
                 atlasManager.spriteLookup.isEmpty()
         ) {
-            rrls$reloadListener(atlasManager, RRLS$MINECRAFT, (_, _) -> {});
+            AtlasUtils.reloadAtlas(atlasManager, (ReloadableResourceManager) (Object) this, atlasManager.atlasById.get(AtlasIds.GUI));
         }
 
         if (listener instanceof ShaderManager shaderManager &&
@@ -120,15 +131,6 @@ public class ReloadableResourceManagerMixin {
     @SuppressWarnings("ConstantConditions")
     private void rrls$reloadListener(PreparableReloadListener listener, Executor gameExecutor, BiConsumer<Void, Throwable> action) {
         try {
-            if (this.resources.getNamespaces().isEmpty() || this.resources.getNamespaces().size() < 2 /* EBE workaround */) {
-                this.resources.close();
-
-                Rrls.LOGGER.info("Creating new resource manager!");
-                this.resources = new MultiPackResourceManager(PackType.CLIENT_RESOURCES,
-                        RRLS$MINECRAFT.getResourcePackRepository().openAllSelected()
-                );
-            }
-
             Rrls.LOGGER.info("Quick reload listener '{}'", listener.getName());
 
             PreparableReloadListener.SharedState sharedState = new WaitingSharedState((ReloadableResourceManager) (Object) this);

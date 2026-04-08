@@ -12,34 +12,44 @@ package org.redlance.dima_dencep.mods.rrls.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ReloadableTexture;
+import net.minecraft.client.renderer.texture.TextureContents;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 
-public class TextureUtils {
-    public static void reloadTextureSync(TextureManager manager, ReloadableTexture texture) {
-        Rrls.LOGGER.warn("Force-reloading texture: '{}'!", texture.resourceId());
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
-        try {
-            texture.apply(manager.loadContentsSafe(texture.resourceId(), texture));
-        } catch (Throwable th) {
-            exceptionally(th);
-        }
+public class TextureUtils {
+    private static final Map<Identifier, CompletableFuture<TextureContents>> PENDING_TEXTURES = new ConcurrentHashMap<>();
+
+    public static void reloadTextureSync(TextureManager manager, ReloadableTexture texture) {
+        Identifier rl = texture.resourceId();
+        Rrls.LOGGER.warn("Force-reloading texture: '{}'!", rl);
+
+        CompletableFuture<TextureContents> future = reloadTexture(manager.resourceManager, rl, texture);
+        Minecraft.getInstance().managedBlock(future::isDone);
     }
 
-    public static void reloadTexture(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
+    public static CompletableFuture<TextureContents> reloadTexture(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
+        return PENDING_TEXTURES.computeIfAbsent(rl, _ -> reloadTextureInternal(manager, rl, texture));
+    }
+
+    private static CompletableFuture<TextureContents> reloadTextureInternal(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
         TextureManager.PendingReload reload = TextureManager.scheduleLoad(manager, rl, texture, Util.backgroundExecutor());
         Rrls.LOGGER.info("Reloading texture '{}'!", rl);
 
-        reload.newContents().thenAcceptAsync(textureContents ->
-                reload.texture().apply(textureContents), Minecraft.getInstance()
-        ).exceptionally(TextureUtils::exceptionally);
-    }
-
-    private static Void exceptionally(Throwable th) {
-        Rrls.LOGGER.error("Failed to force-reload texture!", th);
-        return null;
+        return reload.newContents().thenApplyAsync(textureContents -> {
+            reload.texture().apply(textureContents);
+            PENDING_TEXTURES.remove(rl);
+            return textureContents;
+        }, Minecraft.getInstance()).exceptionally(th -> {
+            Rrls.LOGGER.error("Failed to force-reload texture!", th);
+            PENDING_TEXTURES.remove(rl);
+            return null;
+        });
     }
 }

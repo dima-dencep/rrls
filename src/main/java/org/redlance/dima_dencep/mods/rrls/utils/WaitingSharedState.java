@@ -23,7 +23,7 @@ public class WaitingSharedState extends PreparableReloadListener.SharedState {
     }
 
     @Override
-    public <T> T get(PreparableReloadListener.@NonNull StateKey<T> key) {
+    public <T> @NonNull T get(PreparableReloadListener.@NonNull StateKey<T> key) {
         try {
             return super.get(key);
         } catch (Throwable th) {

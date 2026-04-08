@@ -10,6 +10,10 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import net.minecraft.client.gui.screens.GenericMessageScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.TextureManager;
+import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
@@ -20,6 +24,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,6 +51,25 @@ public abstract class MinecraftClientMixin {
     @Shadow
     @Nullable
     public Overlay overlay;
+
+    @Shadow
+    @Final
+    public GameRenderer gameRenderer;
+
+    @Shadow
+    @Final
+    private TextureManager textureManager;
+
+    @WrapOperation(
+            method = "<init>",
+            at = @At(
+                    value = "NEW",
+                    target = "(Lnet/minecraft/network/chat/Component;)Lnet/minecraft/client/gui/screens/GenericMessageScreen;"
+            )
+    )
+    public GenericMessageScreen rrls$screen(Component component, Operation<GenericMessageScreen> original) {
+        return OverlayHelper.isCurrentRenderingState() ? null : original.call(component);
+    }
 
     @Inject(
             method = "<init>",
@@ -184,5 +208,30 @@ public abstract class MinecraftClientMixin {
     )
     public void rrls$removeTick(Minecraft instance, boolean renderLevel, Operation<Void> original) {
         if (!OverlayHelper.isRenderingState(overlay)) original.call(instance, renderLevel);
+    }
+
+    @WrapWithCondition(
+            method = "<init>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/GameRenderer;registerPanoramaTextures(Lnet/minecraft/client/renderer/texture/TextureManager;)V"
+            )
+    )
+    public boolean rrls$fixPanorama(GameRenderer instance, TextureManager textureManager) {
+        return !OverlayHelper.isCurrentRenderingState();
+    }
+
+    @Inject(
+            method = "<init>",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/Minecraft;gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;",
+                    opcode = Opcodes.PUTFIELD,
+                    shift = At.Shift.AFTER
+            )
+    )
+    public void rrls$fixPanorama(GameConfig gameConfig, CallbackInfo ci) {
+        if (!OverlayHelper.isCurrentRenderingState()) return;
+        this.gameRenderer.registerPanoramaTextures(this.textureManager);
     }
 }
