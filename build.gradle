@@ -3,7 +3,7 @@ import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
 plugins {
     id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.8"
     id "com.gradleup.shadow" version "9.4.1"
-    id "xyz.wagyourtail.unimined" version "1.4.2+redlance.2"
+    id "xyz.wagyourtail.unimined" version "1.4.2+redlance.3"
     id "net.neoforged.licenser" version "0.7.5"
     id "org.redlance.dima_dencep.gradle.machete"  version "1.0.2"
 }
