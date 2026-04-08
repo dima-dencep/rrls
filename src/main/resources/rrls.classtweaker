@@ -49,3 +49,7 @@ accessible method net/minecraft/client/renderer/texture/TextureManager loadConte
 accessible method net/minecraft/util/ARGB from8BitChannel (I)F
 extendable class net/minecraft/server/packs/resources/PreparableReloadListener$SharedState
 accessible class com/mojang/blaze3d/opengl/GlCommandEncoder
+accessible class net/minecraft/client/resources/model/sprite/AtlasManager$AtlasEntry
+accessible field net/minecraft/client/resources/model/sprite/AtlasManager atlasById Ljava/util/Map;
+accessible field net/minecraft/client/resources/model/sprite/AtlasManager maxMipmapLevels I
+accessible method net/minecraft/client/resources/model/sprite/AtlasManager$AtlasEntry scheduleLoad (Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/concurrent/Executor;I)Ljava/util/concurrent/CompletableFuture;
