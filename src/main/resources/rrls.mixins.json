@@ -22,7 +22,8 @@
     "workaround.GuiGraphicsMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",
-    "workaround.textures.AbstractTextureMixin"
+    "workaround.textures.AbstractTextureMixin",
+    "accessors.ResourceLoaderImplAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

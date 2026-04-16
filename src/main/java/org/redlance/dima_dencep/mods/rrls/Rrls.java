@@ -13,9 +13,14 @@ package org.redlance.dima_dencep.mods.rrls;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Rrls {
     public static final String MOD_ID = "rrls";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
+    public static final AtomicReference<CompletableFuture<Void>> MOD_RELOADERS_FUTURE = new AtomicReference<>();
 
     protected void onInitializeClient() {
         Rrls.LOGGER.info("Config service: {}", RrlsConfig.INSTANCE.getClass().getName());

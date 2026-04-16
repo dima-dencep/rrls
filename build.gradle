@@ -121,6 +121,7 @@ dependencies {
     fabricCompileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    fabricCompileOnly(fabricApi.fabricModule("fabric-resource-loader-v1", "0.146.0+26.1.2"))
 
     // Neoforge
 }

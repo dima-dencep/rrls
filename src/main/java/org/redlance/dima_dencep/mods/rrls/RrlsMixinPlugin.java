@@ -13,6 +13,7 @@ package org.redlance.dima_dencep.mods.rrls;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import org.spongepowered.asm.service.MixinService;
 
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,16 @@ public class RrlsMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        if (mixinClassName.endsWith(".ResourceLoaderImplAccessor")) {
+            try {
+                ClassNode node = MixinService.getService().getBytecodeProvider()
+                        .getClassNode("net.fabricmc.fabric.impl.resource.ResourceLoaderImpl");
+
+                return node.fields.stream().anyMatch(f -> f.name.equals("addedReloaders"));
+            } catch (Exception ex) {
+                return false;
+            }
+        }
         if (mixinClassName.endsWith(".TranslatableEnumMixin")) return HAS_TRANSLATABLE_ENUM;
         return true;
     }

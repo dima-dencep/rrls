@@ -30,6 +30,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.util.Util;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
+import org.redlance.dima_dencep.mods.rrls.services.RrlsReloaderService;
 import org.redlance.dima_dencep.mods.rrls.utils.AtlasUtils;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.redlance.dima_dencep.mods.rrls.utils.WaitingSharedState;
@@ -41,6 +42,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -76,6 +78,25 @@ public class ReloadableResourceManagerMixin {
             this.resources = new MultiPackResourceManager(PackType.CLIENT_RESOURCES,
                     RRLS$MINECRAFT.getResourcePackRepository().openAllSelected()
             );
+
+            List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+            RrlsReloaderService.INSTANCE.collectEarlyReloaders((ReloadableResourceManager) (Object) this, modListener -> {
+                CompletableFuture<Void> future = new CompletableFuture<>();
+                futures.add(future);
+
+                rrls$reloadListener(modListener, Util.backgroundExecutor(), (_, throwable) -> {
+                    if (throwable != null) {
+                        future.completeExceptionally(throwable);
+                    } else {
+                        future.complete(null);
+                    }
+                });
+            });
+
+            if (!futures.isEmpty()) {
+                Rrls.MOD_RELOADERS_FUTURE.set(CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])));
+            }
         }
 
         if (listener instanceof FontManager fontManager &&

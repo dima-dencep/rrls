@@ -13,6 +13,7 @@ package org.redlance.dima_dencep.mods.rrls.mixins;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
@@ -39,7 +40,7 @@ import net.minecraft.client.main.GameConfig;
 import net.minecraft.network.chat.Component;
 
 @Mixin(Minecraft.class)
-public abstract class MinecraftClientMixin {
+public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<Runnable> {
     @Shadow
     protected abstract void addResourcePackLoadFailToast(@Nullable Component component);
     @Shadow
@@ -59,6 +60,10 @@ public abstract class MinecraftClientMixin {
     @Shadow
     @Final
     private TextureManager textureManager;
+
+    public MinecraftClientMixin(String name, boolean propagatesCrashes) {
+        super(name, propagatesCrashes);
+    }
 
     @WrapOperation(
             method = "<init>",
@@ -84,6 +89,11 @@ public abstract class MinecraftClientMixin {
         if (!OverlayHelper.isCurrentRenderingState()) return;
 
         try {
+            Rrls.LOGGER.info("Trying to complete load early...");
+
+            CompletableFuture<Void> modReloaders = Rrls.MOD_RELOADERS_FUTURE.getAndSet(null);
+            if (modReloaders != null) managedBlock(modReloaders::isDone);
+
             onResourceLoadFinished(gameLoadCookie);
         } catch (Throwable th) {
             Rrls.LOGGER.error("Failed to complete load early!", th);
