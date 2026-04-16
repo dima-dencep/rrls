@@ -83,6 +83,7 @@ jobs:
           game-versions: |
             ${{ steps.read_property.outputs.minecraft_version }}
             26.1.1
+            26.1.2
 
           dependencies: |
             forge-config-api-port(optional){modrinth:ohNO6lps}{curseforge:547434}
