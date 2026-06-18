@@ -21,7 +21,7 @@
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
     "workaround.GlCommandEncoderMixin",
-    "workaround.GuiGraphicsMixin",
+    "workaround.GuiGraphicsExtractorMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",
     "workaround.textures.AbstractTextureMixin"
