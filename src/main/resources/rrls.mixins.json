@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_21",
   "plugin": "org.redlance.dima_dencep.mods.rrls.RrlsMixinPlugin",
   "client": [
-    "TranslatableEnumMixin",
     "GameRendererMixin",
     "LoadingOverlayMixin",
     "MinecraftClientMixin",
-    "TitleScreenMixin",
+    "TranslatableEnumMixin",
+    "accessors.ResourceLoaderImplAccessor",
+    "animation.LoadingOverlayMixin",
+    "animation.TitleScreenMixin",
     "compat.CubeMapMixin",
     "compat.ItemModelResolverMixin",
     "compat.OverlayMixin",
@@ -22,8 +24,7 @@
     "workaround.GuiGraphicsMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",
-    "workaround.textures.AbstractTextureMixin",
-    "accessors.ResourceLoaderImplAccessor"
+    "workaround.textures.AbstractTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

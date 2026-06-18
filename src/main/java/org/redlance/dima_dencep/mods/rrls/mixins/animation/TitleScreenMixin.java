@@ -8,7 +8,7 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.mixins;
+package org.redlance.dima_dencep.mods.rrls.mixins.animation;
 
 import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(TitleScreen.class)
+@Mixin(value = TitleScreen.class, priority = 999)
 public abstract class TitleScreenMixin extends Screen {
     @Shadow
     private boolean fading;

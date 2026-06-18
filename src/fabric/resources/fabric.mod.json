@@ -52,7 +52,8 @@
     "forgeconfigapiport": "<${fcapip_version}"
   },
   "conflicts": {
-    "dynamicfps": "*"
+    "dynamicfps": "*",
+    "dark-loading-screen": ">=1.6.18"
   },
   "custom": {
     "dynamic_fps": {

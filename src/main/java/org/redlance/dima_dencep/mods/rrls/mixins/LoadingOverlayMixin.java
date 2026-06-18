@@ -34,9 +34,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
@@ -241,35 +239,14 @@ public abstract class LoadingOverlayMixin extends Overlay {
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;fadeOutStart:J",
-                    ordinal = 0
+                    ordinal = 0,
+                    opcode = Opcodes.GETFIELD
             )
     )
     public void rrls$interpolateAtEnd(CallbackInfo ci) {
         if (this.rrls$atEndStart == -1L && this.currentProgress >= 0.99999F) {
             this.rrls$atEndStart = Util.getMillis();
         }
-    }
-
-    @ModifyConstant(
-            method = "extractRenderState",
-            constant = {
-                    @Constant(
-                            floatValue = LoadingOverlay.FADE_OUT_TIME,
-                            ordinal = 0
-                    ),
-                    @Constant(
-                            floatValue = LoadingOverlay.FADE_IN_TIME,
-                            ordinal = 0
-                    )
-            },
-            require = 0
-    )
-    public float rrls$changeAnimationSpeed(float instance) {
-        if (!rrls$getState().isRendering()) {
-            return instance == LoadingOverlay.FADE_OUT_TIME ? RrlsConfig.INSTANCE.animationSpeed() : RrlsConfig.INSTANCE.animationSpeed() / 2;
-        }
-
-        return instance;
     }
 
     @Override // YAY Conflicts!!!
