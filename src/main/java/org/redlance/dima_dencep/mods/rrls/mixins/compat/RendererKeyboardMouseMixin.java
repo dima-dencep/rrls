@@ -11,19 +11,17 @@
 package org.redlance.dima_dencep.mods.rrls.mixins.compat;
 
 import com.mojang.blaze3d.platform.FramerateLimitTracker;
+import net.minecraft.client.gui.Gui;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.KeyboardHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.screens.Overlay;
-import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = {
-        GameRenderer.class,
         KeyboardHandler.class,
         MouseHandler.class,
         FramerateLimitTracker.class
@@ -33,10 +31,10 @@ public class RendererKeyboardMouseMixin {
             method = "*",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;getOverlay()Lnet/minecraft/client/gui/screens/Overlay;"
+                    target = "Lnet/minecraft/client/gui/Gui;overlay()Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
-    public Overlay rrls$checkRenderingState(Minecraft instance, Operation<Overlay> original) {
+    public Overlay rrls$checkRenderingState(Gui instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
 
         if (OverlayHelper.isRenderingState(overlay))

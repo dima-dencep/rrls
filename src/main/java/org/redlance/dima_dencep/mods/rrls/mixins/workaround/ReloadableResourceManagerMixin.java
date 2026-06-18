@@ -167,9 +167,9 @@ public class ReloadableResourceManagerMixin {
 
     @Unique
     private void rrls$refreshScreen() {
-        if (RrlsConfig.INSTANCE.reInitScreen() && RRLS$MINECRAFT.screen != null) {
+        if (RrlsConfig.INSTANCE.reInitScreen() && RRLS$MINECRAFT.gui.screen() != null) {
             Window window = RRLS$MINECRAFT.getWindow();
-            RRLS$MINECRAFT.screen.init(window.getGuiScaledWidth(), window.getGuiScaledHeight());
+            RRLS$MINECRAFT.gui.screen().init(window.getGuiScaledWidth(), window.getGuiScaledHeight());
         }
     }
 }

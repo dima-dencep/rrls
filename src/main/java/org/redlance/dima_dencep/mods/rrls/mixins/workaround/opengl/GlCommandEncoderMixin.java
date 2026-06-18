@@ -8,7 +8,7 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
+package org.redlance.dima_dencep.mods.rrls.mixins.workaround.opengl;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

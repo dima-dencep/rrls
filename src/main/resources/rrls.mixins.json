@@ -1,11 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
+  "minVersion": "0.8.7",
   "package": "org.redlance.dima_dencep.mods.rrls.mixins",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "plugin": "org.redlance.dima_dencep.mods.rrls.RrlsMixinPlugin",
   "client": [
-    "GameRendererMixin",
+    "GuiMixin",
     "LoadingOverlayMixin",
     "MinecraftClientMixin",
     "TranslatableEnumMixin",
@@ -20,7 +20,7 @@
     "workaround.CommandEncoderMixin",
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
-    "workaround.GlCommandEncoderMixin",
+    "workaround.opengl.GlCommandEncoderMixin",
     "workaround.GuiGraphicsExtractorMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",

@@ -1,11 +1,10 @@
 {
   "required": true,
-  "minVersion": "0.8",
+  "minVersion": "0.8.7",
   "package": "org.redlance.dima_dencep.mods.rrls.neoforge.mixins",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
-    "ScreenMixin",
-    "NeoForgeLoadingOverlayMixin"
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

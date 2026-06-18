@@ -11,14 +11,15 @@
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.FocusableTextWidget;
-import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
+import org.joml.Vector4f;
 import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
@@ -73,7 +74,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
             )
     )
     private void rrls$init(Minecraft client, ReloadInstance reload, Consumer<Optional<Throwable>> onFinish, boolean fadeIn, CallbackInfo ci) {
-        rrls$setState(OverlayHelper.lookupState(client.screen, fadeIn));
+        rrls$setState(OverlayHelper.lookupState(client.gui.screen(), fadeIn));
 
         if (RrlsConfig.INSTANCE.type() == Type.TEXT_WITH_BACKGROUND) {
             this.rrls$textWidget = FocusableTextWidget.builder(Component.literal(RrlsConfig.INSTANCE.reloadText()), minecraft.font)
@@ -170,10 +171,10 @@ public abstract class LoadingOverlayMixin extends Overlay {
             method = "extractRenderState",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
+                    target = "Lnet/minecraft/client/gui/Gui;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V"
             )
     )
-    public boolean rrls$reinitScreen(Minecraft instance, Overlay loadingGui) {
+    public boolean rrls$reinitScreen(Gui instance, Overlay loadingGui) {
         boolean isRemoved = rrls$getState() == OverlayHelper.State.DEFAULT || this.rrls$isFinished;
         if (isRemoved) Rrls.LOGGER.info("Overlay is removed!");
 
@@ -194,14 +195,13 @@ public abstract class LoadingOverlayMixin extends Overlay {
     @WrapOperation(
             method = "extractRenderState",
             at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/renderer/state/gui/GuiRenderState;clearColorOverride:I",
-                    opcode = Opcodes.PUTFIELD
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/ARGB;setVector4fFromARGB32(Lorg/joml/Vector4f;I)Lorg/joml/Vector4f;"
             )
     )
-    public void rrls$_clearColor(GuiRenderState instance, int value, Operation<Void> original, @Local(argsOnly = true) GuiGraphicsExtractor graphics) {
-        if (graphics instanceof DummyGuiGraphics) return;
-        original.call(instance, value);
+    public Vector4f rrls$_clearColor(Vector4f dest, int color, Operation<Vector4f> original, @Local(argsOnly = true) GuiGraphicsExtractor graphics) {
+        if (graphics instanceof DummyGuiGraphics) return dest;
+        return original.call(dest, color);
     }
 
     @WrapOperation(
@@ -250,7 +250,7 @@ public abstract class LoadingOverlayMixin extends Overlay {
     }
 
     @Override // YAY Conflicts!!!
-    public boolean isPauseScreen() {
-        return super.isPauseScreen();
+    public boolean isPausing() {
+        return super.isPausing();
     }
 }

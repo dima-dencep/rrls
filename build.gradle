@@ -1,11 +1,13 @@
 import org.redlance.dima_dencep.gradle.publish2discord.tasks.PublishDiscordTask
+import xyz.wagyourtail.unimined.api.minecraft.MinecraftConfig
+import xyz.wagyourtail.unimined.util.FinalizeOnRead
 
 plugins {
     id "org.redlance.dima_dencep.gradle.PublishToDiscord" version "1.0.8"
     id "com.gradleup.shadow" version "9.4.2"
-    id "xyz.wagyourtail.unimined" version "1.4.2+redlance.3"
+    id "xyz.wagyourtail.unimined" version "1.4.2-SNAPSHOT"
     id "net.neoforged.licenser" version "0.7.5"
-    id "org.redlance.dima_dencep.gradle.machete"  version "1.0.2"
+    id "org.redlance.dima_dencep.gradle.machete" version "1.0.2"
 }
 
 license {
@@ -50,54 +52,66 @@ configurations {
     shadow
 }
 
-unimined.minecraft(sourceSets.main) {
-    version minecraft_version
+unimined {
+    footgunChecks(false)
 
-    fabric {
-        loader fabric_loader_version
-        accessWidener file("src/main/resources/rrls.classtweaker")
+    minecraft(sourceSets.main) {
+        version minecraft_version
+
+        fabric {
+            loader fabric_loader_version
+            accessWidener file("src/main/resources/rrls.classtweaker")
+        }
+
+        defaultRemapJar = false
     }
 
-    defaultRemapJar = false
-}
+    minecraft(sourceSets.fabric) {
+        combineWith(sourceSets.main)
 
-unimined.minecraft(sourceSets.fabric) {
-    combineWith(sourceSets.main)
-
-    fabric {
-        loader fabric_loader_version
-        accessWidener file("src/main/resources/rrls.classtweaker")
+        fabric {
+            loader fabric_loader_version
+            accessWidener file("src/main/resources/rrls.classtweaker")
+        }
+        defaultRemapJar = true
     }
-    defaultRemapJar = true
-}
 
-unimined.minecraft(sourceSets.neoforge) {
-    combineWith(sourceSets.main)
+    minecraft(sourceSets.neoforge) {
+        combineWith(sourceSets.main)
 
-    neoForge {
-        loader("net.neoforged:neoforge:$neoforge_version:universal")
-        mixinConfig("rrls.mixins.json", "rrls-forge.mixins.json")
+        def versionDelegate = MinecraftConfig.getDeclaredField("version\$delegate")
+        versionDelegate.accessible = true
+        def finalizedField = FinalizeOnRead.class.getDeclaredField("finalized")
+        finalizedField.accessible = true
+        finalizedField.set(versionDelegate.get(delegate), false)
 
-        accessTransformer(provider {
-            def transformed = file("src/main/resources/rrls.classtweaker").text
-                    .replaceFirst(/classTweaker\s+v\d+\s+(\S+)/, 'accessWidener v2 $1')
-                    .readLines()
-                    .findAll { line ->
-                        !line.trim().startsWith("transitive-inject-interface") && !line.trim().startsWith("inject-interface")
-                    }
-                    .join("\n")
+        version minecraft_version
 
-            def out = layout.buildDirectory.file("generated/rrls.classtweaker").get().asFile
-            try {
-                out.parentFile.mkdirs()
-                out.write(transformed)
-                return aw2at(out)
-            } finally {
-                out.delete()
-            }
-        }.get())
+        neoForge {
+            loader("net.neoforged:neoforge:$neoforge_version:universal")
+            mixinConfig("rrls.mixins.json", "rrls-forge.mixins.json")
+
+            accessTransformer(provider {
+                def transformed = file("src/main/resources/rrls.classtweaker").text
+                        .replaceFirst(/classTweaker\s+v\d+\s+(\S+)/, 'accessWidener v2 $1')
+                        .readLines()
+                        .findAll { line ->
+                            !line.trim().startsWith("transitive-inject-interface") && !line.trim().startsWith("inject-interface")
+                        }
+                        .join("\n")
+
+                def out = layout.buildDirectory.file("generated/rrls.classtweaker").get().asFile
+                try {
+                    out.parentFile.mkdirs()
+                    out.write(transformed)
+                    return aw2at(out)
+                } finally {
+                    out.delete()
+                }
+            }.get())
+        }
+        defaultRemapJar = true
     }
-    defaultRemapJar = true
 }
 
 dependencies {

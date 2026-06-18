@@ -10,6 +10,8 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins;
 
+import net.minecraft.client.GameLoadCookie;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -20,7 +22,6 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -44,14 +45,14 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
     @Shadow
     protected abstract void addResourcePackLoadFailToast(@Nullable Component component);
     @Shadow
-    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    protected abstract CompletableFuture<Void> reloadResourcePacks(boolean bl, @Nullable GameLoadCookie gameLoadCookie);
     @Shadow
-    protected abstract void onResourceLoadFinished(@Nullable Minecraft.GameLoadCookie gameLoadCookie);
+    protected abstract void onResourceLoadFinished(@Nullable GameLoadCookie gameLoadCookie);
     @Shadow
     private boolean gameLoadFinished;
     @Shadow
-    @Nullable
-    public Overlay overlay;
+    @Final
+    public Gui gui;
 
     @Shadow
     @Final
@@ -85,7 +86,7 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
                     remap = false
             )
     )
-    public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) Minecraft.GameLoadCookie gameLoadCookie) {
+    public void rrls$init(GameConfig gameConfig, CallbackInfo ci, @Local(ordinal = 0) GameLoadCookie gameLoadCookie) {
         if (!OverlayHelper.isCurrentRenderingState()) return;
 
         try {
@@ -120,7 +121,7 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
             ),
             cancellable = true
     )
-    public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
+    public void rrls$onResourceReloadFailure(Throwable throwable, Component errorMessage, GameLoadCookie gameLoadCookie, CallbackInfo ci) {
         if (!RrlsConfig.INSTANCE.resetResources()) {
             ci.cancel();
 
@@ -137,12 +138,12 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
             method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     shift = At.Shift.BEFORE
             ),
             cancellable = true
     )
-    public void rrls$doubleLoad(Throwable throwable, Component errorMessage, Minecraft.GameLoadCookie gameLoadCookie, CallbackInfo ci) {
+    public void rrls$doubleLoad(Throwable throwable, Component errorMessage, GameLoadCookie gameLoadCookie, CallbackInfo ci) {
         if (!RrlsConfig.INSTANCE.doubleLoad().isLoad()) {
             ci.cancel();
         }
@@ -152,7 +153,7 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
             method = "clearResourcePacksOnError",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks(ZLnet/minecraft/client/GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
                     ordinal = 0
             ),
             require = 0
@@ -162,51 +163,28 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
     }
 
     @WrapOperation(
-            method = "handleKeybinds",
+            method = "tick",
             at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Gui;overlay()Lnet/minecraft/client/gui/screens/Overlay;"
             )
     )
-    public Overlay rrls$miniRender(Minecraft instance, Operation<Overlay> original) {
+    public Overlay rrls$miniRenderTick(Gui instance, Operation<Overlay> original) {
         Overlay overlay = original.call(instance);
         if (OverlayHelper.isRenderingState(overlay)) return null;
         return overlay;
     }
 
     @WrapOperation(
-            method = "tick",
-            at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;",
-                    ordinal = 2
-            )
-    )
-    public Overlay rrls$miniRenderTick(Minecraft instance, Operation<Overlay> original) {
-        return rrls$miniRender(instance, original);
-    }
-
-    @WrapOperation(
             method = "doWorldLoad",
             at = @At(
-                    value = "FIELD",
-                    target = "Lnet/minecraft/client/Minecraft;overlay:Lnet/minecraft/client/gui/screens/Overlay;",
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Gui;overlay()Lnet/minecraft/client/gui/screens/Overlay;",
                     ordinal = 0
             )
     )
-    public Overlay rrls$miniRenderWorldLoad(Minecraft instance, Operation<Overlay> original) {
-        return rrls$miniRender(instance, original);
-    }
-
-    @ModifyReturnValue(
-            method = "getOverlay",
-            at = @At(
-                    value = "RETURN"
-            )
-    )
-    public Overlay rrls$blockOverlay(Overlay original) {
-        if (RrlsConfig.INSTANCE.blockOverlay() && OverlayHelper.isRenderingState(original)) return null;
-        return original;
+    public Overlay rrls$miniRenderWorldLoad(Gui instance, Operation<Overlay> original) {
+        return rrls$miniRenderTick(instance, original);
     }
 
     @WrapOperation(
@@ -217,7 +195,7 @@ public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<R
             )
     )
     public void rrls$removeTick(Minecraft instance, boolean renderLevel, Operation<Void> original) {
-        if (!OverlayHelper.isRenderingState(overlay)) original.call(instance, renderLevel);
+        if (!OverlayHelper.isRenderingState(this.gui.overlay)) original.call(instance, renderLevel);
     }
 
     @WrapWithCondition(

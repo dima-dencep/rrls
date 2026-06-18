@@ -30,7 +30,6 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositione
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.object.banner.BannerFlagModel;
 import net.minecraft.client.model.object.book.BookModel;
-import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -48,10 +47,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import org.joml.Matrix3x2fStack;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
+import org.joml.Quaternionfc;
+import org.joml.Vector3fc;
 
 @SuppressWarnings("all")
 public class DummyGuiGraphics extends GuiGraphicsExtractor {
@@ -318,11 +316,11 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
-    public void entity(EntityRenderState renderState, float scale, Vector3f translation, Quaternionf rotation, Quaternionf overrideCameraAngle, int x0, int y0, int x1, int y1) {
+    public void entity(EntityRenderState renderState, float scale, Vector3fc translation, Quaternionfc rotation, Quaternionfc overrideCameraAngle, int x0, int y0, int x1, int y1) {
     }
 
     @Override
-    public void skin(PlayerModel playerModel, Identifier texture, float scale, float rotationX, float rotationY, float pivotY, int x0, int y0, int x1, int y1) {
+    public void skin(Model.Simple playerModel, Identifier texture, float scale, float rotationX, float rotationY, float pivotY, int x0, int y0, int x1, int y1) {
     }
 
     @Override
@@ -331,10 +329,6 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
 
     @Override
     public void bannerPattern(BannerFlagModel flag, DyeColor baseColor, BannerPatternLayers resultBannerPatterns, int x0, int y0, int x1, int y1) {
-    }
-
-    @Override
-    public void sign(Model.Simple signModel, float scale, WoodType woodType, int x0, int y0, int x1, int y1) {
     }
 
     @Override
@@ -419,7 +413,7 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
-    public ActiveTextCollector textRendererForWidget(AbstractWidget owner, GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects) {
+    public ActiveTextCollector textRendererForWidget(AbstractWidget owner, HoveredTextEffects hoveredTextEffects) {
         return null;
     }
 
@@ -429,12 +423,12 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects) {
+    public ActiveTextCollector textRenderer(HoveredTextEffects hoveredTextEffects) {
         return null;
     }
 
     @Override
-    public ActiveTextCollector textRenderer(GuiGraphicsExtractor.HoveredTextEffects hoveredTextEffects, Consumer<Style> additionalHoverStyleConsumer) {
+    public ActiveTextCollector textRenderer(HoveredTextEffects hoveredTextEffects, Consumer<Style> additionalHoverStyleConsumer) {
         return null;
     }
 

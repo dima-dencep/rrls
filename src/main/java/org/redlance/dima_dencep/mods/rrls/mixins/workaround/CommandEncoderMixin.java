@@ -10,26 +10,29 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.CommandEncoder;
+import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(CommandEncoder.class)
 public class CommandEncoderMixin {
-    @ModifyExpressionValue(
+    @WrapOperation(
             method = {
-                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIIIIIII)V",
-                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;Lcom/mojang/blaze3d/platform/NativeImage$Format;IIIIII)V",
-                    "createRenderPass(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalInt;Lcom/mojang/blaze3d/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/blaze3d/systems/RenderPass;"
+                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIII)V",
+                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;IIIIII)V",
+                    "createRenderPass(Lcom/mojang/blaze3d/systems/RenderPassDescriptor;)Lcom/mojang/blaze3d/systems/RenderPass;"
             },
             at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/systems/CommandEncoderBackend;isInRenderPass()Z"
+                    value = "FIELD",
+                    target = "Lcom/mojang/blaze3d/systems/CommandEncoder;isInRenderPass:Z",
+                    opcode = Opcodes.GETFIELD
             )
     )
-    private boolean rrls$exitRenderPass(boolean original) {
-        return !OverlayHelper.isCurrentRenderingState() && original;
+    private boolean rrls$exitRenderPass(CommandEncoder instance, Operation<Boolean> original) {
+        return !OverlayHelper.isCurrentRenderingState() && original.call(instance);
     }
 }

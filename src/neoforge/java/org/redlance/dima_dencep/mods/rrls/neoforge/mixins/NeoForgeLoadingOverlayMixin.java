@@ -8,7 +8,7 @@
  *     https://spdx.org/licenses/OSL-3.0.txt
  */
 
-package org.redlance.dima_dencep.mods.rrls.neoforge.mixins;
+/*package org.redlance.dima_dencep.mods.rrls.neoforge.mixins;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.redlance.dima_dencep.mods.rrls.RrlsConfig;
@@ -96,4 +96,4 @@ public abstract class NeoForgeLoadingOverlayMixin extends LoadingOverlay {
 
         return instance;
     }
-}
+}*/

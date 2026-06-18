@@ -36,8 +36,8 @@ public class ConfigurationSectionScreenWithOverlay extends ConfigurationScreen.C
     public void resetProgress() {
         this.currentProgress = 0F;
         this.overlay.rrls$resetProgress();
-        if (this.minecraft != null && this.minecraft.overlay == null) {
-            this.minecraft.setOverlay(this.overlay);
+        if (this.minecraft != null && this.minecraft.gui.overlay == null) {
+            this.minecraft.gui.setOverlay(this.overlay);
         }
     }
 
@@ -56,7 +56,7 @@ public class ConfigurationSectionScreenWithOverlay extends ConfigurationScreen.C
     @Override
     public void tick() {
         super.tick();
-        if (this.minecraft != null && this.minecraft.overlay == this.overlay) {
+        if (this.minecraft != null && this.minecraft.gui.overlay == this.overlay) {
             this.currentProgress += 0.1F;
         }
     }
@@ -70,8 +70,8 @@ public class ConfigurationSectionScreenWithOverlay extends ConfigurationScreen.C
     @Override
     public void removed() {
         super.removed();
-        if (this.minecraft != null && this.minecraft.overlay == this.overlay) {
-            this.minecraft.setOverlay(null);
+        if (this.minecraft != null && this.minecraft.gui.overlay == this.overlay) {
+            this.minecraft.gui.setOverlay(null);
         }
     }
 
@@ -87,6 +87,6 @@ public class ConfigurationSectionScreenWithOverlay extends ConfigurationScreen.C
 
     @Override
     public boolean isDone() {
-        return this.minecraft != null && this.minecraft.overlay == this.overlay && this.currentProgress > 1.5F;
+        return this.minecraft != null && this.minecraft.gui.overlay == this.overlay && this.currentProgress > 1.5F;
     }
 }

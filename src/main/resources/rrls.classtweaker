@@ -30,10 +30,9 @@ accessible method net/minecraft/client/gui/GuiGraphicsExtractor componentHoverEf
 extendable method net/minecraft/client/gui/GuiGraphicsExtractor componentHoverEffect (Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Style;II)V
 accessible method net/minecraft/client/gui/GuiGraphicsExtractor createDefaultTextParameters (F)Lnet/minecraft/client/gui/ActiveTextCollector$Parameters;
 extendable method net/minecraft/client/gui/GuiGraphicsExtractor createDefaultTextParameters (F)Lnet/minecraft/client/gui/ActiveTextCollector$Parameters;
-accessible field net/minecraft/client/Minecraft overlay Lnet/minecraft/client/gui/screens/Overlay;
+accessible field net/minecraft/client/gui/Gui overlay Lnet/minecraft/client/gui/screens/Overlay;
 accessible class net/minecraft/client/resources/server/ServerPackManager$ServerPackData
 accessible field net/minecraft/client/gui/screens/LoadingOverlay currentProgress F
-accessible class net/minecraft/client/Minecraft$GameLoadCookie
 accessible field net/minecraft/client/gui/font/FontManager fontSets Ljava/util/Map;
 accessible field net/minecraft/client/resources/model/sprite/AtlasManager spriteLookup Ljava/util/Map;
 accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;

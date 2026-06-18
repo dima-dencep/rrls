@@ -11,6 +11,7 @@
 package org.redlance.dima_dencep.mods.rrls.utils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.Screen;
@@ -31,11 +32,11 @@ public class OverlayHelper {
     }
 
     public static boolean isCurrentRenderingState() {
-        Overlay overlay = Minecraft.getInstance().overlay;
-        if (overlay == null) {
+        Gui gui = Minecraft.getInstance().gui;
+        if (gui == null || gui.overlay == null) {
             return RrlsConfig.INSTANCE.hideType().affectInitial;
         }
-        return isRenderingState(overlay);
+        return isRenderingState(gui.overlay);
     }
 
     public static boolean isRenderingState(Overlay overlay) {
