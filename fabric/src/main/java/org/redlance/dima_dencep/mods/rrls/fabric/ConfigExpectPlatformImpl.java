@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls.fabric;
 
+import net.minecraft.client.resources.model.BakedModel;
 import org.redlance.dima_dencep.mods.rrls.Rrls;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
@@ -124,5 +125,9 @@ public class ConfigExpectPlatformImpl implements ConfigData {
 
     public static boolean skipForgeOverlay() {
         return false; // Fabric is forge?
+    }
+
+    public static BakedModel getEmptyBakedModel() {
+        return null;
     }
 }

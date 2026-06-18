@@ -10,6 +10,7 @@
 
 package org.redlance.dima_dencep.mods.rrls;
 
+import net.minecraft.client.resources.model.BakedModel;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
@@ -83,6 +84,11 @@ public class ConfigExpectPlatform {
 
     @ExpectPlatform
     public static boolean skipForgeOverlay() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static BakedModel getEmptyBakedModel() {
         throw new AssertionError();
     }
 }

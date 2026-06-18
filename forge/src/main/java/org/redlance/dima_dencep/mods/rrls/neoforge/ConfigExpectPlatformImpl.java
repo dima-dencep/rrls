@@ -10,6 +10,8 @@
 
 package org.redlance.dima_dencep.mods.rrls.neoforge;
 
+import net.minecraft.client.resources.model.BakedModel;
+import net.neoforged.neoforge.client.model.EmptyModel;
 import org.redlance.dima_dencep.mods.rrls.config.DoubleLoad;
 import org.redlance.dima_dencep.mods.rrls.config.HideType;
 import org.redlance.dima_dencep.mods.rrls.config.Type;
@@ -168,5 +170,9 @@ public class ConfigExpectPlatformImpl { // TODO categorize
 
     public static boolean skipForgeOverlay() {
         return ConfigExpectPlatformImpl.CONFIG_SPEC_PAIR.getKey().skipForgeOverlay.get();
+    }
+
+    public static BakedModel getEmptyBakedModel() {
+        return EmptyModel.BAKED;
     }
 }
