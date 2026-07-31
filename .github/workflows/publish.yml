@@ -71,9 +71,10 @@ jobs:
           name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
           changelog: ${{steps.build_changelog.outputs.changelog}}
+          environment: client
 
           version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}"
-          version-type: alpha
+          version-type: beta
 
           loaders: |
             fabric
