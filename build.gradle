@@ -7,7 +7,7 @@ plugins {
     id "com.gradleup.shadow" version "9.6.1"
     id "xyz.wagyourtail.unimined" version "1.4.2-SNAPSHOT"
     id "net.neoforged.licenser" version "0.7.5"
-    id "org.redlance.dima_dencep.gradle.machete" version "1.0.2"
+    id "org.redlance.dima_dencep.gradle.machete" version "2.0.0"
 }
 
 license {
