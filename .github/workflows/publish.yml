@@ -43,7 +43,7 @@ jobs:
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: './gradle.properties'
-          properties: 'mod_version minecraft_version'
+          properties: 'mod_version minecraft_version archives_base_name'
 
       - name: Build
         run: ./gradlew build
@@ -66,7 +66,7 @@ jobs:
           github-prerelease: false
 
           files: |
-            build/libs/!(*-@(dev|sources|javadoc|shadow|fabric|neoforge)*).jar
+            build/libs/${{ steps.read_property.outputs.archives_base_name }}-${{ steps.read_property.outputs.mod_version }}+mc.${{ steps.read_property.outputs.minecraft_version }}.jar
 
           name: "[${{ steps.read_property.outputs.minecraft_version }}] v${{ steps.read_property.outputs.mod_version }}"
 
