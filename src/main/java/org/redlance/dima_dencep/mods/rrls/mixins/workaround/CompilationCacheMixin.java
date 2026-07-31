@@ -36,33 +36,17 @@ public class CompilationCacheMixin {
                     target = "Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;loadPostChain(Lnet/minecraft/resources/Identifier;Ljava/util/Set;)Lnet/minecraft/client/renderer/PostChain;"
             )
     )
-    private PostChain rrls$suppressMissingCache(ShaderManager.CompilationCache instance, Identifier name, Set<Identifier> externalTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
-        PostChain postChain = original.call(instance, name, externalTargets);
-
-        if (postChain == null && OverlayHelper.isCurrentRenderingState()) {
-            cir.setReturnValue(null);
-        }
-
-        return postChain;
-    }
-
-    @WrapOperation(
-            method = {
-                    "loadPostChain"
-            },
-            at = @At(
-                    value = "NEW",
-                    target = "(Ljava/lang/String;)Lnet/minecraft/client/renderer/ShaderManager$CompilationException;"
-            )
-    )
-    private ShaderManager.CompilationException rrls$suppressMissingCache(String s, Operation<ShaderManager.CompilationException> original, @Cancellable CallbackInfoReturnable<Boolean> cir) {
-        ShaderManager.CompilationException exc = original.call(s);
-        if (OverlayHelper.isCurrentRenderingState()) {
-            Rrls.LOGGER.warn("Failed to compile!", exc);
-            cir.setReturnValue(null);
-            return null;
-        } else {
-            return exc;
+    private PostChain rrls$suppressMissingCache(ShaderManager.CompilationCache instance, Identifier id, Set<Identifier> allowedTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
+        try {
+            return original.call(instance, id, allowedTargets);
+        } catch (Exception ex) {
+            if (OverlayHelper.isCurrentRenderingState()) {
+                Rrls.LOGGER.warn("Failed to compile!", ex);
+                cir.setReturnValue(null);
+                return null;
+            } else {
+                throw ex;
+            }
         }
     }
 }
