@@ -35,7 +35,9 @@ public class TextureUtils {
     }
 
     public static CompletableFuture<TextureContents> reloadTexture(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
-        return PENDING_TEXTURES.computeIfAbsent(rl, _ -> reloadTextureInternal(manager, rl, texture));
+        CompletableFuture<TextureContents> future = PENDING_TEXTURES.computeIfAbsent(rl, _ -> reloadTextureInternal(manager, rl, texture));
+        future.whenComplete((_, _) -> PENDING_TEXTURES.remove(rl, future)); // Outside computeIfAbsent, otherwise "Recursive update"
+        return future;
     }
 
     private static CompletableFuture<TextureContents> reloadTextureInternal(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
@@ -44,11 +46,9 @@ public class TextureUtils {
 
         return reload.newContents().thenApplyAsync(textureContents -> {
             reload.texture().apply(textureContents);
-            PENDING_TEXTURES.remove(rl);
             return textureContents;
         }, Minecraft.getInstance()).exceptionally(th -> {
             Rrls.LOGGER.error("Failed to force-reload texture!", th);
-            PENDING_TEXTURES.remove(rl);
             return null;
         });
     }

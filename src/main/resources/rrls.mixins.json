@@ -20,11 +20,12 @@
     "workaround.CommandEncoderMixin",
     "workaround.CompilationCacheMixin",
     "workaround.EntityRenderDispatcherMixin",
-    "workaround.opengl.GlCommandEncoderMixin",
     "workaround.GuiGraphicsExtractorMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",
-    "workaround.textures.AbstractTextureMixin"
+    "workaround.opengl.GlCommandEncoderMixin",
+    "workaround.textures.AbstractTextureMixin",
+    "workaround.vulkan.VulkanRenderPassMixin"
   ],
   "injectors": {
     "defaultRequire": 1
