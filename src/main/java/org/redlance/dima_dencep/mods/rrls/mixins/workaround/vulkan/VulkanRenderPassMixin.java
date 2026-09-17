@@ -46,7 +46,7 @@ public class VulkanRenderPassMixin {
     }
 
     @Unique
-    private static IllegalStateException rrls$handleVulkanThrow(String from, String s, Operation<IllegalStateException> original, @Cancellable CallbackInfo ci) {
+    private static IllegalStateException rrls$handleVulkanThrow(String from, String s, Operation<IllegalStateException> original, CallbackInfo ci) {
         IllegalStateException exc = original.call(s);
         if (OverlayHelper.isCurrentRenderingState()) {
             Rrls.LOGGER.warn("Failed to {}!", from, exc);
