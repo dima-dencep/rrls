@@ -74,7 +74,7 @@ jobs:
           environment: client
 
           version: "${{ steps.read_property.outputs.mod_version }}+mc${{ steps.read_property.outputs.minecraft_version }}"
-          version-type: beta
+          version-type: alpha
 
           loaders: |
             fabric

@@ -211,9 +211,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     target = "Ljava/lang/Math;round(F)I"
             )
     )
-    public int rrls$lerp(float i, Operation<Integer> original, @Local(argsOnly = true) float partialTick) {
+    public int rrls$lerp(float i, Operation<Integer> original, @Local(argsOnly = true) float fade) {
         if (rrls$getState() != OverlayHelper.State.DEFAULT) {
-            return original.call(Mth.lerp(partialTick, 0.0F, 255.0F));
+            return original.call(Mth.lerp(fade, 0.0F, 255.0F));
         }
 
         return original.call(i);
@@ -226,9 +226,9 @@ public abstract class LoadingOverlayMixin extends Overlay {
                     target = "Lnet/minecraft/util/ARGB;color(IIII)I"
             )
     )
-    public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original, @Local(argsOnly = true) float partialTick) {
+    public int rrls$rainbowProgress(int alpha, int red, int green, int blue, Operation<Integer> original, @Local(argsOnly = true) float fade) {
         if (RrlsConfig.INSTANCE.rgbProgress() && rrls$getState() != OverlayHelper.State.DEFAULT) {
-            return RainbowUtils.rainbowColor(partialTick);
+            return RainbowUtils.rainbowColor(fade);
         }
 
         return original.call(alpha, red, green, blue);

@@ -41,7 +41,7 @@ public class TextureUtils {
     }
 
     private static CompletableFuture<TextureContents> reloadTextureInternal(ResourceManager manager, Identifier rl, ReloadableTexture texture) {
-        TextureManager.PendingReload reload = TextureManager.scheduleLoad(manager, rl, texture, Util.backgroundExecutor());
+        TextureManager.PendingReload reload = TextureManager.scheduleLoad(manager, texture, Util.backgroundExecutor());
         Rrls.LOGGER.info("Reloading texture '{}'!", rl);
 
         return reload.newContents().thenApplyAsync(textureContents -> {

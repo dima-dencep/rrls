@@ -10,19 +10,11 @@
 
 package org.redlance.dima_dencep.mods.rrls.mixins.workaround.opengl;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Cancellable;
-import com.mojang.blaze3d.opengl.GlCommandEncoder;
-import org.redlance.dima_dencep.mods.rrls.Rrls;
-import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(GlCommandEncoder.class)
+@Mixin(targets = "com.mojang.renderpearl.backend.opengl.GlCommandEncoder")
 public class GlCommandEncoderMixin {
-    @WrapOperation(
+    /*@WrapOperation(
             method = "trySetup",
             at = @At(
                     value = "NEW",
@@ -39,5 +31,5 @@ public class GlCommandEncoderMixin {
         } else {
             return exc;
         }
-    }
+    }*/
 }

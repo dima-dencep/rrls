@@ -128,7 +128,7 @@ public class ReloadableResourceManagerMixin {
         }
 
         if (listener instanceof ShaderManager shaderManager &&
-                shaderManager.compilationCache.configs == ShaderManager.Configs.EMPTY
+                shaderManager.postChains.configs == ShaderManager.Configs.EMPTY
         ) {
             rrls$reloadListener(shaderManager, RRLS$MINECRAFT, (_, _) -> {});
         }

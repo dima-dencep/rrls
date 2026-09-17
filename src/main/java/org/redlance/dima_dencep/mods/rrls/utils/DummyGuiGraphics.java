@@ -10,11 +10,11 @@
 
 package org.redlance.dima_dencep.mods.rrls.utils;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.platform.cursor.CursorType;
-import com.mojang.blaze3d.textures.GpuSampler;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.textures.GpuSampler;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -176,11 +176,13 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
-    public void textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col) {
+    public int textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col) {
+        return 0;
     }
 
     @Override
-    public void textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col, boolean dropShadow) {
+    public int textWithWordWrap(Font font, FormattedText string, int x, int y, int width, int col, boolean dropShadow) {
+        return 0;
     }
 
     @Override
@@ -356,6 +358,10 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
+    public void setTooltipForNextFrame(Font font, List<Component> texts, Optional<TooltipComponent> optionalImage, int xo, int yo, Identifier style, boolean extraSpaceAfterFirstLine) {
+    }
+
+    @Override
     public void setTooltipForNextFrame(Font font, List<FormattedCharSequence> tooltip, Optional<TooltipComponent> component, ClientTooltipPositioner positioner, int xo, int yo, boolean replaceExisting, Identifier style) {
     }
 
@@ -392,7 +398,11 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
     }
 
     @Override
-    public void tooltip(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style) {
+    public void setTooltipForNextFrameInternal(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style, boolean replaceExisting, boolean extraSpaceAfterFirstLine) {
+    }
+
+    @Override
+    public void tooltip(Font font, List<ClientTooltipComponent> lines, int xo, int yo, ClientTooltipPositioner positioner, Identifier style, boolean extraSpaceAfterFirstLine) {
     }
 
     @Override

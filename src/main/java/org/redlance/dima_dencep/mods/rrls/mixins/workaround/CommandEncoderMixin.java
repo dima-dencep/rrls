@@ -12,27 +12,27 @@ package org.redlance.dima_dencep.mods.rrls.mixins.workaround;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mojang.blaze3d.systems.CommandEncoder;
+import com.mojang.renderpearl.frontend.FrontendCommandEncoder;
 import org.objectweb.asm.Opcodes;
 import org.redlance.dima_dencep.mods.rrls.utils.OverlayHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(CommandEncoder.class)
+@Mixin(FrontendCommandEncoder.class)
 public class CommandEncoderMixin {
     @WrapOperation(
             method = {
-                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIII)V",
-                    "writeToTexture(Lcom/mojang/blaze3d/textures/GpuTexture;Ljava/nio/ByteBuffer;IIIIII)V",
-                    "createRenderPass(Lcom/mojang/blaze3d/systems/RenderPassDescriptor;)Lcom/mojang/blaze3d/systems/RenderPass;"
+                    "writeToTexture(Lcom/mojang/renderpearl/api/textures/GpuTexture;Lcom/mojang/blaze3d/platform/NativeImage;IIII)V",
+                    "writeToTexture(Lcom/mojang/renderpearl/api/textures/GpuTexture;Ljava/nio/ByteBuffer;IIIIII)V",
+                    "createRenderPass(Lcom/mojang/renderpearl/api/commands/RenderPassDescriptor;)Lcom/mojang/renderpearl/api/commands/RenderPass;"
             },
             at = @At(
                     value = "FIELD",
-                    target = "Lcom/mojang/blaze3d/systems/CommandEncoder;isInRenderPass:Z",
+                    target = "Lcom/mojang/renderpearl/frontend/FrontendCommandEncoder;isInRenderPass:Z",
                     opcode = Opcodes.GETFIELD
             )
     )
-    private boolean rrls$exitRenderPass(CommandEncoder instance, Operation<Boolean> original) {
+    private boolean rrls$exitRenderPass(FrontendCommandEncoder instance, Operation<Boolean> original) {
         return !OverlayHelper.isCurrentRenderingState() && original.call(instance);
     }
 }

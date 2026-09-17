@@ -23,9 +23,7 @@
     "workaround.GuiGraphicsExtractorMixin",
     "workaround.ReloadableResourceManagerMixin",
     "workaround.TextureManagerMixin",
-    "workaround.opengl.GlCommandEncoderMixin",
-    "workaround.textures.AbstractTextureMixin",
-    "workaround.vulkan.VulkanRenderPassMixin"
+    "workaround.textures.AbstractTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -27,16 +27,16 @@ import java.util.Set;
 /**
  * Used to prevent the game from crashing if rrls failed to load the reloader early.
  */
-@Mixin(ShaderManager.CompilationCache.class)
+@Mixin(ShaderManager.PostChainCache.class)
 public class CompilationCacheMixin {
     @WrapOperation(
             method = "getOrLoadPostChain",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/ShaderManager$CompilationCache;loadPostChain(Lnet/minecraft/resources/Identifier;Ljava/util/Set;)Lnet/minecraft/client/renderer/PostChain;"
+                    target = "Lnet/minecraft/client/renderer/ShaderManager$PostChainCache;loadPostChain(Lnet/minecraft/resources/Identifier;Ljava/util/Set;)Lnet/minecraft/client/renderer/PostChain;"
             )
     )
-    private PostChain rrls$suppressMissingCache(ShaderManager.CompilationCache instance, Identifier id, Set<Identifier> allowedTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
+    private PostChain rrls$suppressMissingCache(ShaderManager.PostChainCache instance, Identifier id, Set<Identifier> allowedTargets, Operation<PostChain> original, @Cancellable CallbackInfoReturnable<?> cir) {
         try {
             return original.call(instance, id, allowedTargets);
         } catch (Exception ex) {
