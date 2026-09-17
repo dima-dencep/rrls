@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Changelog
         id: build_changelog
-        uses: metcalfc/changelog-generator@v4.7.0
+        uses: metcalfc/changelog-generator@v5.0.1
         if: env.previous_tag
         with:
           mytoken: ${{ secrets.GITHUB_TOKEN }}
