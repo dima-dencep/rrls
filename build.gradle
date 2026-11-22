@@ -143,7 +143,8 @@ dependencies {
     fabricCompileOnly("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${fcapip_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    fabricRuntimeOnly("maven.modrinth:fabric-api:0.166.2+26.3")
+    fabricCompileOnly(fabricApi.fabricModule("fabric-resource-loader-v1", fabric_api_version))
+    fabricRuntimeOnly("maven.modrinth:fabric-api:${fabric_api_version}")
 
     // Neoforge
 }

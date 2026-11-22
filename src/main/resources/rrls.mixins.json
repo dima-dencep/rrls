@@ -14,6 +14,7 @@
     "animation.TitleScreenMixin",
     "compat.CubeMapMixin",
     "compat.ItemModelResolverMixin",
+    "compat.ModelManagerMixin",
     "compat.OverlayMixin",
     "compat.RendererKeyboardMouseMixin",
     "compat.ServerPackManagerMixin",
