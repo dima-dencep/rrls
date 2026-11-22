@@ -20,7 +20,7 @@ import org.redlance.dima_dencep.mods.rrls.utils.Ease;
 public class FallbackConfigImpl implements RrlsConfig {
     @Override
     public HideType hideType() {
-        return HideType.ALL;
+        return HideType.RELOADING;
     }
 
     @Override
