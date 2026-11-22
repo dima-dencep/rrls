@@ -47,7 +47,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
-import org.joml.Matrix3x2fStack;
 import org.joml.Quaternionfc;
 import org.joml.Vector3fc;
 
@@ -65,21 +64,6 @@ public class DummyGuiGraphics extends GuiGraphicsExtractor {
 
     @Override
     public void applyCursor(Window window) {
-    }
-
-    @Override
-    public int guiWidth() {
-        return 0;
-    }
-
-    @Override
-    public int guiHeight() {
-        return 0;
-    }
-
-    @Override
-    public Matrix3x2fStack pose() {
-        return null;
     }
 
     @Override

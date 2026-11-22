@@ -156,15 +156,16 @@ public abstract class LoadingOverlayMixin extends Overlay {
         }
     }*/
 
-    @WrapWithCondition(
+    @WrapOperation(
             method = "extractRenderState",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/Screen;extractRenderStateWithTooltipAndSubtitles(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V"
+                    target = "Lnet/minecraft/client/gui/Gui;screen()Lnet/minecraft/client/gui/screens/Screen;"
             )
     )
-    public boolean rrls$screenrender(Screen instance, GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        return !(graphics instanceof DummyGuiGraphics);
+    public Screen rrls$screenRender(Gui instance, Operation<Screen> original, @Local(argsOnly = true) GuiGraphicsExtractor graphics) {
+        if (graphics instanceof DummyGuiGraphics) return null;
+        return original.call(instance);
     }
 
     @WrapWithCondition(

@@ -31,6 +31,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.function.Consumer;
+
 @Mixin(Gui.class)
 public class GuiMixin {
     @Shadow
@@ -46,7 +48,7 @@ public class GuiMixin {
     public void rrls$miniRender(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci, @Local(ordinal = 0) GuiGraphicsExtractor graphics) {
         try {
             if (OverlayHelper.isRenderingState(this.overlay)) {
-                rrls$enableScissor(graphics, () -> this.overlay.extractRenderState(
+                rrls$enableScissor(graphics, this.overlay, overlay -> overlay.extractRenderState(
                         DummyGuiGraphics.INSTANCE, 0, 0, deltaTracker.getGameTimeDeltaTicks()
                 ));
 
@@ -55,7 +57,7 @@ public class GuiMixin {
             }
 
         } catch (RuntimeException ex) {
-            Rrls.LOGGER.error("Failed to draw overlay!", ex);
+            Rrls.LOGGER.error("Failed to draw mini-overlay!", ex);
         }
     }
 
@@ -71,17 +73,17 @@ public class GuiMixin {
     }
 
     @Unique
-    private static void rrls$enableScissor(GuiGraphicsExtractor graphics, Runnable runnable) {
+    private static void rrls$enableScissor(GuiGraphicsExtractor graphics, Overlay overlay, Consumer<Overlay> consumer) {
         if (RrlsConfig.INSTANCE.enableScissor()) {
             graphics.pose().pushMatrix();
             graphics.enableScissor(0, 0, 0, 0);
 
-            runnable.run();
+            consumer.accept(overlay);
 
             graphics.disableScissor();
             graphics.pose().popMatrix();
         } else {
-            runnable.run();
+            consumer.accept(overlay);
         }
     }
 
